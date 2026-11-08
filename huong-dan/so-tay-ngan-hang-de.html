@@ -30,18 +30,7 @@ html { -webkit-text-size-adjust: 100%; }
   --step-1: 1.125rem;
   --step-2: 1.375rem;
   --step-3: clamp(1.75rem, 1.4rem + 1.5vw, 2.375rem);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f141b; --surface: #161d27; --fg: #e5eaf1; --muted: #9aa5b4; --line: #283342;
-    --accent: #8aa6ff; --accent-soft: #1b2850; --warn: #f0b25a; --warn-soft: #33250f; --ok: #63cf8c;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f141b; --surface: #161d27; --fg: #e5eaf1; --muted: #9aa5b4; --line: #283342;
-  --accent: #8aa6ff; --accent-soft: #1b2850; --warn: #f0b25a; --warn-soft: #33250f; --ok: #63cf8c;
-  color-scheme: dark;
+  color-scheme: light;
 }
 body {
   margin: 0;
@@ -81,7 +70,6 @@ section > header { display: grid; gap: 6px; }
 /* Sơ đồ và bảng: khung cuộn riêng */
 .dia { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; overflow-x: auto; }
 .dia pre.mermaid { margin: 0; text-align: center; background: transparent; }
-.dia pre.mermaid svg { max-width: none; }
 .cap { font-size: var(--step--1); color: var(--muted); }
 .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
@@ -164,7 +152,7 @@ flowchart TD
   DE --> E["Tổ chức thi: ca, phòng, giám thị"]:::mo
   E --> F["Thi online, chấm tự động"]:::mo
   E --> G["Thi viết: phách, túi bài"]:::mo
-  F --> I
+  F -.->|cần xác nhận| I
   G --> H["Chấm và nhập điểm"]:::tam
   H --> I["Rà soát, chốt, duyệt, công bố"]:::mo
   I --> J["Phúc khảo"]:::mo
@@ -174,6 +162,28 @@ flowchart TD
 </pre>
     </div>
     <p class="cap">Ô xanh đậm là phạm vi kế hoạch, cần nắm chi tiết. Ô viền đứt chỉ cần biết tên và thứ tự.</p>
+  </section>
+
+  <section id="vai-tro">
+    <header>
+      <span class="eyebrow">Bản đồ</span>
+      <h2>Ai làm gì</h2>
+    </header>
+    <p>Hệ thống không có vai trò cố định. Quyền được gán lẻ theo <b>từng người, từng học phần</b> ở tab Phân quyền. Bảng dưới gom quyền thành các vai trò hay gặp; ai giữ vai trò nào trong thực tế (giảng viên, trưởng bộ môn, chuyên viên…) BA chốt với PO.</p>
+    <div class="tbl">
+      <table class="wide">
+        <thead><tr><th>Vai trò</th><th>Việc chính</th><th>Làm ở đâu</th></tr></thead>
+        <tbody>
+          <tr><td>Người soạn câu hỏi</td><td>Thêm, nhập file, sửa câu; gửi duyệt</td><td>Đề thi › Tổng quan › học phần › Ngân hàng câu hỏi</td></tr>
+          <tr><td>Người duyệt câu hỏi</td><td>Duyệt hoặc yêu cầu chỉnh sửa</td><td>Cùng tab Ngân hàng câu hỏi</td></tr>
+          <tr><td>Người ra đề</td><td>Soạn ma trận, sinh bộ đề, xem đề; duyệt ma trận nếu được gán</td><td>Tab Ma trận đề, Bộ đề</td></tr>
+          <tr><td>Quản trị khảo thí</td><td>Gán quyền theo học phần, mức điểm; tạo ca thi online, gắn bộ đề, kích hoạt, công bố lịch</td><td>Tab Phân quyền, Mức điểm; Tổ chức thi › Lịch thi › Online</td></tr>
+          <tr><td>Cán bộ chấm</td><td>Nhập điểm các túi được phân công</td><td>Chấm điểm › Chính thức, Thẩm định</td></tr>
+          <tr><td>Chuyên viên khảo thí</td><td>Rà soát, nhập điểm bằng Excel, chốt, duyệt, công bố</td><td>Kết quả thi</td></tr>
+          <tr><td>Sinh viên</td><td>Vào ca bằng mật khẩu phòng, làm bài, nộp</td><td>Trang thi sinh viên</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section id="ngan-hang">
@@ -212,7 +222,7 @@ flowchart TD
     <h3>Đưa câu hỏi vào ngân hàng</h3>
     <div class="dia">
 <pre class="mermaid">
-flowchart LR
+flowchart TD
   W["File Word .docx"] --> IMP["Tách chương, kiểm lỗi, loại trùng"]
   T["Thêm tay trên giao diện"] --> CG
   IMP -->|Hợp lệ| CG["Chưa gửi"]
@@ -249,7 +259,7 @@ flowchart LR
     <p><b>Ma trận</b> là công thức của đề: mỗi dòng chọn một hoặc nhiều khối kiến thức, một độ khó, một dạng câu và số câu, kèm thời gian làm bài và có được dùng tài liệu không. Ma trận có trạng thái Chờ duyệt, Duyệt, Yêu cầu chỉnh sửa lại, Không duyệt. <b>Bộ đề</b> áp ma trận vào ngân hàng để sinh ra N mã đề.</p>
     <div class="dia">
 <pre class="mermaid">
-flowchart LR
+flowchart TD
   MT["Ma trận đề"] --> BD{"Tạo bộ đề, chọn số mã đề"}
   BD -->|Sinh từ đề gốc| G1["Rút câu một lần; mọi mã đề cùng câu, đảo thứ tự"]
   BD -->|Sinh toàn bộ đề từ ngân hàng| G2["Mỗi mã đề rút ngẫu nhiên riêng"]
@@ -274,7 +284,7 @@ flowchart LR
     </header>
     <div class="dia">
 <pre class="mermaid">
-flowchart LR
+flowchart TD
   P["Sinh phách"] --> T["Chia túi bài"] --> PC["Phân công cán bộ chấm 1 và 2"]
   PC --> N["Nhập điểm theo phách, tay hoặc Excel"]
   N --> CL{"Hai lần chấm lệch nhiều?"}
@@ -283,9 +293,22 @@ flowchart LR
   DC --> RS["Nộp điểm, rà soát, chốt, duyệt, công bố"]
 </pre>
     </div>
+    <h3>Điểm đi vào từ đâu</h3>
+    <div class="tbl">
+      <table class="wide">
+        <thead><tr><th>Nguồn điểm</th><th>Ai, ở đâu</th><th>Cách nhập hiện có</th></tr></thead>
+        <tbody>
+          <tr><td>Thi online</td><td>Hệ thống, khi sinh viên nộp bài</td><td>Tự chấm theo Mức điểm, lưu vào kết quả bài thi của ca (xem ở chi tiết ca thi online)</td></tr>
+          <tr><td>Thi viết, chấm chính thức</td><td>Cán bộ chấm 1 và 2, Chấm điểm › Chính thức</td><td>Nhập tay theo mã phách (điểm, điểm thành phần, số tờ) hoặc Nhập dữ liệu từ Excel</td></tr>
+          <tr><td>Chấm thẩm định</td><td>Cán bộ được phân công, Chấm điểm › Thẩm định</td><td>Khi hai lần chấm chênh lệch, khi cần thẩm định, hoặc theo yêu cầu</td></tr>
+          <tr><td>Chuyên viên</td><td>Kết quả thi › Rà soát điểm</td><td>Biểu mẫu Excel nhập điểm theo đợt thi</td></tr>
+          <tr><td>Phúc khảo</td><td>Chấm điểm › Phúc khảo</td><td>Chấm lại theo đợt phúc khảo; bản demo chưa có màn đợt phúc khảo</td></tr>
+          <tr><td>Đi ra QLDT</td><td>Cấu hình ở Danh mục › Cấu hình › Cài đặt</td><td>Đồng bộ điểm sang QLDT: ngay, khi nộp điểm, khi chốt điểm, hoặc theo luồng</td></tr>
+        </tbody>
+      </table>
+    </div>
     <ul class="tight">
-      <li>Cán bộ chấm làm ở <b>Chấm điểm › Chính thức</b>: thấy các túi được phân công và nhập điểm theo mã phách.</li>
-      <li>Mỗi bài lưu điểm của từng cán bộ, độ lệch, điểm trung bình, điểm cuối và điểm sau khi trừ vi phạm.</li>
+      <li>Mỗi bài lưu điểm của từng cán bộ, độ lệch, điểm trung bình, điểm cuối và điểm sau khi trừ vi phạm. Bài bị yêu cầu chấm lại quay về cán bộ chấm.</li>
       <li>Nhánh <code>develop</code> có thêm mẫu Excel "giảng viên nộp điểm thi" và báo cáo thống kê nhập điểm. Bản demo dựng từ nhánh <code>main</code> nên chưa có.</li>
     </ul>
   </section>
@@ -302,10 +325,10 @@ flowchart LR
         <tbody>
           <tr><td>Ngân hàng hướng người dùng, làm lại UI/UX</td><td>Ngân hàng, ma trận, bộ đề nằm trong 7 tab của trang chi tiết học phần, dùng chung cho mọi vai trò.</td><td>Hành trình riêng của người soạn câu, người duyệt, người ra đề.</td></tr>
           <tr><td>Cấu trúc được kho câu hỏi</td><td>Phân loại theo 3 trục: chương (một cấp), độ khó, dạng câu. Chưa có chuẩn đầu ra hay chủ đề con, dù phần chấm điểm đã có "điểm chuẩn đầu ra".</td><td>Bộ trục phân loại mới; cách chuyển câu cũ sang.</td></tr>
-          <tr><td>Thêm dạng câu hỏi</td><td>Backend khai báo 12 dạng, trang thi xử lý khoảng 10, nhưng giao diện soạn và file nhập chỉ có 4. Mỗi dạng mới phải đi qua 5 chỗ: soạn, nhập file, ma trận, hiển thị khi thi, chấm.</td><td>Dạng nào ưu tiên; quy tắc chấm của từng dạng.</td></tr>
+          <tr><td>Thêm dạng câu hỏi</td><td>Backend khai báo 12 dạng, trang thi xử lý khoảng 10, nhưng giao diện soạn và file nhập chỉ có 4. Mỗi dạng mới phải đi qua 5 chỗ: soạn, nhập file, ma trận, hiển thị khi thi, chấm.</td><td>Dạng nào ưu tiên; quy tắc chấm của từng dạng. Note 2 ghi "bổ sung nhiều câu hỏi hơn": hỏi lại là thêm dạng câu hay tăng số lượng câu.</td></tr>
           <tr><td>Sinh câu hỏi theo môn và chương</td><td>Chưa có. Đầu vào có sẵn: khối kiến thức theo chương, đề cương học phần trên QLDT, câu cũ làm mẫu.</td><td>Câu sinh ra vào trạng thái Chờ duyệt để giữ khâu duyệt; ai được dùng.</td></tr>
           <tr><td>Ma trận đề thông minh hơn</td><td>Nhập tay từng dòng. Chỉ biết thiếu câu khi tạo bộ đề.</td><td>Hiện số câu còn trong kho ngay lúc soạn; gợi ý phân bổ theo chương và độ khó.</td></tr>
-          <tr><td>Nhập điểm thông minh hơn</td><td>Nhập theo túi và phách, hai lần chấm, xử lý lệch, có nhập Excel.</td><td>Điểm nghẽn thực tế của cán bộ chấm; phần nào của nhánh <code>develop</code> giữ lại.</td></tr>
+          <tr><td>Nhập điểm thông minh hơn</td><td>Nhập theo túi và phách, hai lần chấm, xử lý lệch, có nhập Excel.</td><td>"Nhập điểm" là ở cửa nào trong bảng Điểm đi vào từ đâu; điểm nghẽn thực tế của người nhập; phần nào của nhánh <code>develop</code> giữ lại.</td></tr>
         </tbody>
       </table>
     </div>
@@ -342,6 +365,7 @@ flowchart LR
       <div><span class="id">TC-03</span><div class="body"><b>Nhập lại cùng một file Word.</b><span class="muted">Mong đợi: câu đã có nằm ở tab Trùng, ngân hàng không bị nhân đôi.</span></div></div>
       <div><span class="id">TC-04</span><div class="body"><b>Học phần chưa cấu hình Mức điểm.</b><span class="muted">Mong đợi: điểm thi online dùng trọng số mặc định 1, 2, 3, 4 theo độ khó.</span></div></div>
       <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được chấm thế nào?</b><span class="muted">Chưa thấy quy tắc chấm rõ trong code. Đây cũng là câu hỏi mở cho BA.</span></div></div>
+      <div><span class="id">TC-06</span><div class="body"><b>Điểm thi online có tự sang Kết quả thi › Rà soát điểm không?</b><span class="muted">Khi nộp bài, điểm được lưu vào kết quả bài thi của ca; chưa thấy bước chuyển sang hồ sơ điểm của sinh viên.</span></div></div>
     </div>
   </section>
 
@@ -371,13 +395,26 @@ flowchart LR
     </div>
   </section>
 
+  <section id="buoc-tiep">
+    <header>
+      <span class="eyebrow">Đến khi lên kế hoạch</span>
+      <h2>Bước tiếp theo của nhóm</h2>
+    </header>
+    <ol class="steps">
+      <li><div class="body"><b>Đọc sổ tay và làm 5 bước thực hành.</b><span class="muted">Mục tiêu: tự đi hết luồng từ câu hỏi đến điểm trên bản demo.</span></div></li>
+      <li><div class="body"><b>Tester chạy TC-01 đến TC-06, ghi kết quả.</b><span class="muted">Chỗ nào khác sổ tay thì sửa sổ tay trước khi bàn tiếp.</span></div></li>
+      <li><div class="body"><b>BA mang cột "BA cần làm rõ" đi hỏi PO.</b><span class="muted">Chốt các câu hỏi mở: Excel hay Word, dạng câu ưu tiên, vai trò thực tế, nhập điểm ở cửa nào.</span></div></li>
+      <li><div class="body"><b>Cả nhóm ngồi lại, thống nhất luồng hiện tại.</b><span class="muted">Mọi người mô tả được cùng một luồng như nhau.</span></div></li>
+      <li><div class="body"><b>Lên kế hoạch theo note và làm báo cáo chi tiết cho thầy.</b><span class="muted">Mỗi hạng mục trong kế hoạch gắn với một dòng trong bảng Kỳ vọng và hiện trạng.</span></div></li>
+    </ol>
+  </section>
+
   <footer>Nội dung đối chiếu từ code bản demo ngày 08/11/2026. Khi thấy giao diện khác mô tả, báo trong nhóm để cập nhật sổ tay.</footer>
 </div>
 
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
-  const toi = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  mermaid.initialize({ startOnLoad: false, securityLevel: "strict", flowchart: { useMaxWidth: false }, theme: toi ? "dark" : "default", fontFamily: '"Be Vietnam Pro", system-ui, sans-serif' });
+  mermaid.initialize({ startOnLoad: false, securityLevel: "strict", flowchart: { useMaxWidth: true }, theme: "default", fontFamily: '"Be Vietnam Pro", system-ui, sans-serif' });
   await mermaid.run({ querySelector: "pre.mermaid" });
 </script>
 </body>
