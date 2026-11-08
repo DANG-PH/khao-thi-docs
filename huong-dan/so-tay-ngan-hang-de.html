@@ -169,7 +169,7 @@ flowchart TD
       <span class="eyebrow">Bản đồ</span>
       <h2>Ai làm gì</h2>
     </header>
-    <p>Hệ thống không có vai trò cố định. Quyền được gán lẻ theo <b>từng người, từng học phần</b> ở tab Phân quyền. Bảng dưới gom quyền thành các vai trò hay gặp; ai giữ vai trò nào trong thực tế (giảng viên, trưởng bộ môn, chuyên viên…) BA chốt với PO.</p>
+    <p>Hệ thống không có vai trò cố định. Quyền được gán lẻ theo <b>từng người, từng học phần</b> ở tab Phân quyền. Bảng dưới gom quyền thành các vai trò hay gặp để dễ hình dung.</p>
     <div class="tbl">
       <table class="wide">
         <thead><tr><th>Vai trò</th><th>Việc chính</th><th>Làm ở đâu</th></tr></thead>
@@ -247,7 +247,7 @@ flowchart TD
     </div>
     <div class="note">
       <span class="tag">Đính chính so với note họp</span>
-      <p>Note ghi "ngân hàng đã import được từ Excel". Theo code, nhập câu hỏi <b>chỉ nhận file Word .docx</b> theo mẫu ITest (nút Biểu mẫu nhập › Tải mẫu ITest, mở file trên Google Docs). Excel chỉ dùng để <b>xuất</b> ngân hàng, ma trận, bộ đề ở trang Tổng quan. BA cần chốt lại với PO.</p>
+      <p>Note ghi "ngân hàng đã import được từ Excel". Theo code, nhập câu hỏi <b>chỉ nhận file Word .docx</b> theo mẫu ITest (nút Biểu mẫu nhập › Tải mẫu ITest, mở file trên Google Docs). Excel chỉ dùng để <b>xuất</b> ngân hàng, ma trận, bộ đề ở trang Tổng quan.</p>
     </div>
   </section>
 
@@ -318,17 +318,17 @@ flowchart TD
       <span class="eyebrow">Từ note họp</span>
       <h2>Kỳ vọng và hiện trạng</h2>
     </header>
-    <p class="muted">Đây là điểm xuất phát để BA viết yêu cầu. Cột cuối là việc cần làm rõ, chưa phải giải pháp.</p>
+    <p class="muted">Các ý trong note họp đang chạm vào phần nào của hệ thống hiện tại.</p>
     <div class="tbl">
       <table class="wide">
-        <thead><tr><th>Kỳ vọng</th><th>Hiện trạng</th><th>BA cần làm rõ</th></tr></thead>
+        <thead><tr><th>Kỳ vọng</th><th>Hiện trạng</th></tr></thead>
         <tbody>
-          <tr><td>Ngân hàng hướng người dùng, làm lại UI/UX</td><td>Ngân hàng, ma trận, bộ đề nằm trong 7 tab của trang chi tiết học phần, dùng chung cho mọi vai trò.</td><td>Hành trình riêng của người soạn câu, người duyệt, người ra đề.</td></tr>
-          <tr><td>Cấu trúc được kho câu hỏi</td><td>Phân loại theo 3 trục: chương (một cấp), độ khó, dạng câu. Chưa có chuẩn đầu ra hay chủ đề con, dù phần chấm điểm đã có "điểm chuẩn đầu ra".</td><td>Bộ trục phân loại mới; cách chuyển câu cũ sang.</td></tr>
-          <tr><td>Thêm dạng câu hỏi</td><td>Backend khai báo 12 dạng, trang thi xử lý khoảng 10, nhưng giao diện soạn và file nhập chỉ có 4. Mỗi dạng mới phải đi qua 5 chỗ: soạn, nhập file, ma trận, hiển thị khi thi, chấm.</td><td>Dạng nào ưu tiên; quy tắc chấm của từng dạng. Note 2 ghi "bổ sung nhiều câu hỏi hơn": hỏi lại là thêm dạng câu hay tăng số lượng câu.</td></tr>
-          <tr><td>Sinh câu hỏi theo môn và chương</td><td>Chưa có. Đầu vào có sẵn: khối kiến thức theo chương, đề cương học phần trên QLDT, câu cũ làm mẫu.</td><td>Câu sinh ra vào trạng thái Chờ duyệt để giữ khâu duyệt; ai được dùng.</td></tr>
-          <tr><td>Ma trận đề thông minh hơn</td><td>Nhập tay từng dòng. Chỉ biết thiếu câu khi tạo bộ đề.</td><td>Hiện số câu còn trong kho ngay lúc soạn; gợi ý phân bổ theo chương và độ khó.</td></tr>
-          <tr><td>Nhập điểm thông minh hơn</td><td>Nhập theo túi và phách, hai lần chấm, xử lý lệch, có nhập Excel.</td><td>"Nhập điểm" là ở cửa nào trong bảng Điểm đi vào từ đâu; điểm nghẽn thực tế của người nhập; phần nào của nhánh <code>develop</code> giữ lại.</td></tr>
+          <tr><td>Ngân hàng hướng người dùng, làm lại UI/UX</td><td>Ngân hàng, ma trận, bộ đề nằm trong 7 tab của trang chi tiết học phần, dùng chung cho mọi vai trò.</td></tr>
+          <tr><td>Cấu trúc được kho câu hỏi</td><td>Phân loại theo 3 trục: chương (một cấp), độ khó, dạng câu. Chưa có chuẩn đầu ra hay chủ đề con, dù phần chấm điểm đã có "điểm chuẩn đầu ra".</td></tr>
+          <tr><td>Thêm dạng câu hỏi</td><td>Backend khai báo 12 dạng, trang thi xử lý khoảng 10, nhưng giao diện soạn và file nhập chỉ có 4. Mỗi dạng mới phải đi qua 5 chỗ: soạn, nhập file, ma trận, hiển thị khi thi, chấm.</td></tr>
+          <tr><td>Sinh câu hỏi theo môn và chương</td><td>Chưa có. Đầu vào có sẵn: khối kiến thức theo chương, đề cương học phần trên QLDT, câu cũ làm mẫu.</td></tr>
+          <tr><td>Ma trận đề thông minh hơn</td><td>Nhập tay từng dòng. Chỉ biết thiếu câu khi tạo bộ đề.</td></tr>
+          <tr><td>Nhập điểm thông minh hơn</td><td>Nhập theo túi và phách, hai lần chấm, xử lý lệch, có nhập Excel.</td></tr>
         </tbody>
       </table>
     </div>
@@ -358,13 +358,13 @@ flowchart TD
       <span class="eyebrow">Cho Tester</span>
       <h2>Điểm cần kiểm chứng</h2>
     </header>
-    <p class="muted">Rút ra khi đọc code; chưa ai xác nhận trên giao diện. Làm xong thì ghi kết quả cho BA.</p>
+    <p class="muted">Rút ra khi đọc code; chưa ai xác nhận trên giao diện. Làm xong thì ghi kết quả gửi trong nhóm.</p>
     <div class="tc">
       <div><span class="id">TC-01</span><div class="body"><b>Câu chưa duyệt có bị rút vào đề không?</b><span class="muted">Phần sinh đề lọc câu theo cờ đang dùng, không thấy lọc theo trạng thái duyệt.</span></div></div>
       <div><span class="id">TC-02</span><div class="body"><b>Ma trận chưa duyệt có tạo được bộ đề không?</b><span class="muted">Không thấy bước kiểm trạng thái ma trận khi tạo bộ đề.</span></div></div>
       <div><span class="id">TC-03</span><div class="body"><b>Nhập lại cùng một file Word.</b><span class="muted">Mong đợi: câu đã có nằm ở tab Trùng, ngân hàng không bị nhân đôi.</span></div></div>
       <div><span class="id">TC-04</span><div class="body"><b>Học phần chưa cấu hình Mức điểm.</b><span class="muted">Mong đợi: điểm thi online dùng trọng số mặc định 1, 2, 3, 4 theo độ khó.</span></div></div>
-      <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được chấm thế nào?</b><span class="muted">Chưa thấy quy tắc chấm rõ trong code. Đây cũng là câu hỏi mở cho BA.</span></div></div>
+      <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được chấm thế nào?</b><span class="muted">Chưa thấy quy tắc chấm rõ trong code.</span></div></div>
       <div><span class="id">TC-06</span><div class="body"><b>Điểm thi online có tự sang Kết quả thi › Rà soát điểm không?</b><span class="muted">Khi nộp bài, điểm được lưu vào kết quả bài thi của ca; chưa thấy bước chuyển sang hồ sơ điểm của sinh viên.</span></div></div>
     </div>
   </section>
@@ -381,32 +381,6 @@ flowchart TD
       <li>Dữ liệu mẫu có thể được tạo lại; mọi thứ tự nhập sẽ mất. Sẽ có thông báo trong nhóm trước khi tạo lại.</li>
       <li>Trang thi hiện cảnh báo nếu chạy trong máy ảo. Cảnh báo không chặn vào thi.</li>
     </ul>
-  </section>
-
-  <section id="cach-lam">
-    <header>
-      <span class="eyebrow">Cách làm việc</span>
-      <h2>BA, Dev, Test khép kín</h2>
-    </header>
-    <div class="roles">
-      <div><b>BA</b><span class="muted">Viết yêu cầu theo màn hình, kèm tiêu chí chấp nhận đo được. Dùng bảng Kỳ vọng và hiện trạng làm điểm bắt đầu.</span></div>
-      <div><b>Dev</b><span class="muted">Làm theo yêu cầu đã chốt; đổi luồng đang chạy thật phải có cờ bật tắt, mặc định tắt.</span></div>
-      <div><b>Test</b><span class="muted">Viết test case từ tiêu chí chấp nhận, chạy trên bản demo, trả kết quả về BA để khép vòng.</span></div>
-    </div>
-  </section>
-
-  <section id="buoc-tiep">
-    <header>
-      <span class="eyebrow">Đến khi lên kế hoạch</span>
-      <h2>Bước tiếp theo của nhóm</h2>
-    </header>
-    <ol class="steps">
-      <li><div class="body"><b>Đọc sổ tay và làm 5 bước thực hành.</b><span class="muted">Mục tiêu: tự đi hết luồng từ câu hỏi đến điểm trên bản demo.</span></div></li>
-      <li><div class="body"><b>Tester chạy TC-01 đến TC-06, ghi kết quả.</b><span class="muted">Chỗ nào khác sổ tay thì sửa sổ tay trước khi bàn tiếp.</span></div></li>
-      <li><div class="body"><b>BA mang cột "BA cần làm rõ" đi hỏi PO.</b><span class="muted">Chốt các câu hỏi mở: Excel hay Word, dạng câu ưu tiên, vai trò thực tế, nhập điểm ở cửa nào.</span></div></li>
-      <li><div class="body"><b>Cả nhóm ngồi lại, thống nhất luồng hiện tại.</b><span class="muted">Mọi người mô tả được cùng một luồng như nhau.</span></div></li>
-      <li><div class="body"><b>Lên kế hoạch theo note và làm báo cáo chi tiết cho thầy.</b><span class="muted">Mỗi hạng mục trong kế hoạch gắn với một dòng trong bảng Kỳ vọng và hiện trạng.</span></div></li>
-    </ol>
   </section>
 
   <footer>Nội dung đối chiếu từ code bản demo ngày 08/11/2026. Khi thấy giao diện khác mô tả, báo trong nhóm để cập nhật sổ tay.</footer>
