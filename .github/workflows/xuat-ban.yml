@@ -1,0 +1,24 @@
+# Đẩy lên main thì đồng bộ sang nhánh gh-pages; GitHub Pages xuất bản từ gh-pages.
+name: Xuất bản GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: xuat-ban
+  cancel-in-progress: true
+
+jobs:
+  dong-bo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Đồng bộ main sang gh-pages
+        run: git push --force origin HEAD:refs/heads/gh-pages
