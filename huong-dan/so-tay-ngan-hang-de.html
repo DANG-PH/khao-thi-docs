@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Onboarding cho BA và Tester: ngân hàng câu hỏi, ma trận đề, bộ đề, nhập điểm của phân hệ Khảo thí.">
+<title>Sổ tay Ngân hàng đề</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+/* Bố cục: một cột đọc ~70 ký tự; bảng và sơ đồ rộng hơn trong khung cuộn riêng. Màu mực xanh của phiếu thi, cam cho chỗ cần chú ý. */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --fg: #16202c;
+  --muted: #586474;
+  --line: #d9e0e8;
+  --accent: #2348c8;
+  --accent-soft: #e8edfd;
+  --warn: #a14b06;
+  --warn-soft: #fdf1e3;
+  --ok: #17733a;
+  --font-body: "Be Vietnam Pro", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 0.9375rem;
+  --step-1: 1.125rem;
+  --step-2: 1.375rem;
+  --step-3: clamp(1.75rem, 1.4rem + 1.5vw, 2.375rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141b; --surface: #161d27; --fg: #e5eaf1; --muted: #9aa5b4; --line: #283342;
+    --accent: #8aa6ff; --accent-soft: #1b2850; --warn: #f0b25a; --warn-soft: #33250f; --ok: #63cf8c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141b; --surface: #161d27; --fg: #e5eaf1; --muted: #9aa5b4; --line: #283342;
+  --accent: #8aa6ff; --accent-soft: #1b2850; --warn: #f0b25a; --warn-soft: #33250f; --ok: #63cf8c;
+  color-scheme: dark;
+}
+body {
+  margin: 0;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 72px;
+}
+.wrap { max-width: 880px; margin: 0 auto; display: grid; gap: 52px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.25; margin: 0; }
+h1 { font-size: var(--step-3); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: var(--step-2); font-weight: 700; }
+h3 { font-size: var(--step-1); font-weight: 600; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+code { background: var(--accent-soft); color: var(--fg); padding: 1px 6px; border-radius: 4px; white-space: nowrap; }
+.eyebrow { font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+section { display: grid; gap: 16px; min-width: 0; }
+section > header { display: grid; gap: 6px; }
+
+/* Đầu trang */
+.hero { display: grid; gap: 14px; }
+.hero .lead { font-size: var(--step-1); color: var(--muted); max-width: 62ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: var(--step--1); border: 1px solid var(--line); background: var(--surface); padding: 3px 10px; border-radius: 999px; color: var(--muted); }
+
+.env { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 10px; }
+.env dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 0; }
+.env dt { color: var(--muted); }
+.env dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 560px) { .env dl { grid-template-columns: 1fr; } .env dd { margin-bottom: 6px; } }
+
+/* Sơ đồ và bảng: khung cuộn riêng */
+.dia { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; overflow-x: auto; }
+.dia pre.mermaid { margin: 0; text-align: center; background: transparent; }
+.dia pre.mermaid svg { max-width: none; }
+.cap { font-size: var(--step--1); color: var(--muted); }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+th { font-size: var(--step--1); font-weight: 600; color: var(--muted); letter-spacing: 0.03em; background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; }
+.wide td { min-width: 180px; }
+
+/* Ghi chú cần chú ý */
+.note { background: var(--warn-soft); border-radius: 10px; padding: 14px 18px; display: grid; gap: 6px; }
+.note .tag { font-size: var(--step--1); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--warn); }
+
+/* Danh sách gạch đầu dòng gọn */
+ul.tight { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+
+/* Các bước thực hành: đúng là một trình tự */
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: b; }
+ol.steps > li { counter-increment: b; display: grid; grid-template-columns: 34px 1fr; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+ol.steps > li::before { content: counter(b); font-family: var(--font-mono); font-weight: 500; color: var(--accent); background: var(--accent-soft); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 0.9rem; }
+ol.steps .body { display: grid; gap: 4px; min-width: 0; }
+.expect { font-size: 0.875rem; color: var(--ok); }
+.expect b { font-weight: 600; }
+
+.tc { display: grid; gap: 10px; }
+.tc > div { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.tc > div:first-child { border-top: 0; padding-top: 0; }
+.tc .id { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); padding-top: 2px; }
+.tc .body { min-width: 0; display: grid; gap: 2px; }
+
+.roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.roles > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.roles b { font-size: var(--step-1); }
+@media (max-width: 640px) { .roles { grid-template-columns: 1fr; } }
+
+.back { font-size: var(--step--1); font-weight: 600; text-decoration: none; }
+footer { font-size: var(--step--1); color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <a class="back" href="../">← Tài liệu Khảo thí</a>
+
+  <header class="hero">
+    <span class="eyebrow">Onboarding · Phân hệ Khảo thí</span>
+    <h1>Sổ tay Ngân hàng đề</h1>
+    <p class="lead">Dành cho BA và Tester mới. Chỉ đi sâu phần nằm trong kế hoạch sắp tới: ngân hàng câu hỏi, ma trận đề, bộ đề và nhập điểm. Phần còn lại chỉ cần biết nằm ở đâu trên bản đồ.</p>
+    <div class="meta">
+      <span class="chip">Đọc khoảng 15 phút</span>
+      <span class="chip">Thực hành khoảng 30 phút</span>
+      <span class="chip">Cập nhật 08/11/2026</span>
+      <span class="chip">Đối chiếu từ code bản demo</span>
+    </div>
+  </header>
+
+  <div class="env" aria-label="Môi trường demo">
+    <h3>Môi trường demo</h3>
+    <dl>
+      <dt>Trang quản trị</dt><dd><a href="https://khaothi.dangpham.id.vn" target="_blank" rel="noopener">khaothi.dangpham.id.vn</a></dd>
+      <dt>Trang thi sinh viên</dt><dd><a href="https://thi-online.dangpham.id.vn" target="_blank" rel="noopener">thi-online.dangpham.id.vn</a></dd>
+      <dt>Tài khoản SSO RIPT</dt><dd>Một tài khoản quản trị (kiêm giám thị, cán bộ chấm) và một tài khoản sinh viên, dùng chung cả nhóm. Tên đăng nhập và mật khẩu hỏi lead.</dd>
+      <dt>Dữ liệu</dt><dd>Danh mục học kỳ, học phần, đơn vị lấy từ RIPT. Đợt thi, câu hỏi, ca thi là dữ liệu mẫu, có thể được tạo lại.</dd>
+    </dl>
+  </div>
+
+  <section id="ban-do">
+    <header>
+      <span class="eyebrow">Bản đồ</span>
+      <h2>Vòng đời một đợt thi</h2>
+    </header>
+    <div class="dia">
+<pre class="mermaid">
+flowchart TD
+  A["Lập kế hoạch: đợt thi, học phần, thí sinh"]:::mo --> DE
+  subgraph DE["Chuẩn bị đề"]
+    direction LR
+    B["Ngân hàng câu hỏi"]:::tam --> C["Ma trận đề"]:::tam --> D["Bộ đề nhiều mã đề"]:::tam
+  end
+  DE --> E["Tổ chức thi: ca, phòng, giám thị"]:::mo
+  E --> F["Thi online, chấm tự động"]:::mo
+  E --> G["Thi viết: phách, túi bài"]:::mo
+  F --> I
+  G --> H["Chấm và nhập điểm"]:::tam
+  H --> I["Rà soát, chốt, duyệt, công bố"]:::mo
+  I --> J["Phúc khảo"]:::mo
+  classDef tam fill:#2348c8,stroke:#2348c8,color:#ffffff
+  classDef mo fill:none,stroke:#8a94a3,stroke-dasharray:4 3
+  style DE fill:none,stroke:#8a94a3
+</pre>
+    </div>
+    <p class="cap">Ô xanh đậm là phạm vi kế hoạch, cần nắm chi tiết. Ô viền đứt chỉ cần biết tên và thứ tự.</p>
+  </section>
+
+  <section id="ngan-hang">
+    <header>
+      <span class="eyebrow">Phạm vi kế hoạch</span>
+      <h2>Ngân hàng câu hỏi</h2>
+    </header>
+    <p>Mọi thứ của phần đề thi nằm ở <b>Đề thi › Tổng quan</b>: chọn một học phần sẽ mở 7 tab là Thông tin chung, Phân quyền, Mức điểm, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề. Ngân hàng, ma trận và bộ đề đều gắn với <b>học phần</b>, không gắn với đợt thi.</p>
+    <div class="dia">
+<pre class="mermaid">
+flowchart TD
+  HP["Học phần, ví dụ INT1340_CLC"] --> KKT["Khối kiến thức = chương, một cấp"]
+  KKT --> CH["Câu hỏi: dạng, độ khó, trạng thái duyệt"]
+  HP --> MD["Mức điểm: điểm mỗi câu theo độ khó"]
+  HP --> PQ["Phân quyền: 17 quyền gán cho từng người"]
+  HP --> MT["Ma trận đề: các dòng khối x độ khó x dạng x số câu"]
+  MT --> BD["Bộ đề: N mã đề"]
+  CH -.->|rút ngẫu nhiên| BD
+</pre>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Thuộc tính của câu hỏi</th><th>Hiện trạng</th></tr></thead>
+        <tbody>
+          <tr><td>Khối kiến thức</td><td>Theo chương, một cấp, riêng từng học phần.</td></tr>
+          <tr><td>Độ khó</td><td>Dễ, Trung bình, Khó, Rất khó.</td></tr>
+          <tr><td>Dạng câu</td><td>Giao diện soạn và file nhập hỗ trợ 4 dạng: trắc nghiệm một đáp án, tự luận trả lời ngắn, câu nối, câu nhóm (đoạn dẫn kèm câu con). Backend khai báo sẵn 12 dạng; trang thi đã có xử lý hiển thị cho khoảng 10 dạng.</td></tr>
+          <tr><td>Trạng thái</td><td>Chưa gửi, Chờ duyệt, Duyệt, Yêu cầu chỉnh sửa.</td></tr>
+          <tr><td>Chống trùng</td><td>Mỗi câu có mã băm từ nội dung và đáp án. Khi nhập file, câu trùng bị tách ra tab Trùng.</td></tr>
+          <tr><td>Mức điểm</td><td>Trọng số mỗi câu theo độ khó, cấu hình theo học phần. Chưa cấu hình thì dùng Dễ 1, Trung bình 2, Khó 3, Rất khó 4.</td></tr>
+          <tr><td>Phân quyền</td><td>Theo từng học phần: khối kiến thức (thêm, sửa, xóa), ngân hàng (tạo, nhập, sửa, gửi duyệt, duyệt, xóa), ma trận (tạo, sửa, duyệt, xóa), bộ đề (tạo, xem đề, sửa, xóa). Tài khoản quản trị thấy đủ nút; người khác chỉ thấy nút đã được gán ở tab Phân quyền.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Đưa câu hỏi vào ngân hàng</h3>
+    <div class="dia">
+<pre class="mermaid">
+flowchart LR
+  W["File Word .docx"] --> IMP["Tách chương, kiểm lỗi, loại trùng"]
+  T["Thêm tay trên giao diện"] --> CG
+  IMP -->|Hợp lệ| CG["Chưa gửi"]
+  IMP -->|Trùng hoặc Thất bại| X["Bị loại, có lý do"]
+  CG -->|Gửi duyệt| CD["Chờ duyệt"]
+  CD -->|Duyệt| D["Duyệt"]
+  CD -->|Yêu cầu chỉnh sửa| YC["Yêu cầu chỉnh sửa"]
+  YC -->|Sửa, gửi lại| CD
+</pre>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Trong file Word</th><th>Hệ thống hiểu là</th></tr></thead>
+        <tbody>
+          <tr><td>Dòng chữ đậm ngoài bảng</td><td>Tên chương. Chương chưa có sẽ tự tạo thành khối kiến thức mới.</td></tr>
+          <tr><td>Mỗi câu là một bảng</td><td>Mã dòng <code>H</code> câu hỏi, <code>Đ</code> đáp án đúng, <code>T1</code> <code>T2</code> <code>T3</code> phương án sai, <code>K</code> độ khó từ 1 đến 4.</td></tr>
+          <tr><td>Chỉ có <code>Đ</code>, không có <code>T</code></td><td>Câu tự luận trả lời ngắn.</td></tr>
+          <tr><td>Các dòng <code>a</code>, <code>b</code>, <code>c</code>…</td><td>Câu nối: vế trái, vế phải, thang điểm theo số cặp đúng.</td></tr>
+          <tr><td><code>##</code> … <code>/#</code></td><td>Câu nhóm: đoạn dẫn chung, các câu con nằm giữa hai dấu.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <span class="tag">Đính chính so với note họp</span>
+      <p>Note ghi "ngân hàng đã import được từ Excel". Theo code, nhập câu hỏi <b>chỉ nhận file Word .docx</b> theo mẫu ITest (nút Biểu mẫu nhập › Tải mẫu ITest, mở file trên Google Docs). Excel chỉ dùng để <b>xuất</b> ngân hàng, ma trận, bộ đề ở trang Tổng quan. BA cần chốt lại với PO.</p>
+    </div>
+  </section>
+
+  <section id="ma-tran-bo-de">
+    <header>
+      <span class="eyebrow">Phạm vi kế hoạch</span>
+      <h2>Ma trận đề và bộ đề</h2>
+    </header>
+    <p><b>Ma trận</b> là công thức của đề: mỗi dòng chọn một hoặc nhiều khối kiến thức, một độ khó, một dạng câu và số câu, kèm thời gian làm bài và có được dùng tài liệu không. Ma trận có trạng thái Chờ duyệt, Duyệt, Yêu cầu chỉnh sửa lại, Không duyệt. <b>Bộ đề</b> áp ma trận vào ngân hàng để sinh ra N mã đề.</p>
+    <div class="dia">
+<pre class="mermaid">
+flowchart LR
+  MT["Ma trận đề"] --> BD{"Tạo bộ đề, chọn số mã đề"}
+  BD -->|Sinh từ đề gốc| G1["Rút câu một lần; mọi mã đề cùng câu, đảo thứ tự"]
+  BD -->|Sinh toàn bộ đề từ ngân hàng| G2["Mỗi mã đề rút ngẫu nhiên riêng"]
+  BD -->|Kho không đủ câu| ERR["Báo lỗi: số lượng câu ... không đủ, tối đa N"]
+  G1 --> CA["Ca thi online gắn một bộ đề"]
+  G2 --> CA
+  CA --> SV["Mỗi thí sinh nhận một mã đề"]
+  SV --> NB["Nộp bài, chấm tự động thang 10"]
+</pre>
+    </div>
+    <ul class="tight">
+      <li>Mặc định là <b>Sinh từ đề gốc</b>. Nếu một đề rút phải hai câu trùng nội dung thì bộ đề bị từ chối.</li>
+      <li>Điểm thi online: mỗi câu nhân trọng số theo Mức điểm, quy về thang 10. Câu nối chấm theo số cặp nối đúng.</li>
+      <li>Hệ thống chỉ báo thiếu câu khi bấm tạo bộ đề, không báo lúc soạn ma trận.</li>
+    </ul>
+  </section>
+
+  <section id="nhap-diem">
+    <header>
+      <span class="eyebrow">Phạm vi kế hoạch</span>
+      <h2>Chấm và nhập điểm thi viết</h2>
+    </header>
+    <div class="dia">
+<pre class="mermaid">
+flowchart LR
+  P["Sinh phách"] --> T["Chia túi bài"] --> PC["Phân công cán bộ chấm 1 và 2"]
+  PC --> N["Nhập điểm theo phách, tay hoặc Excel"]
+  N --> CL{"Hai lần chấm lệch nhiều?"}
+  CL -->|Không| DC["Điểm cuối"]
+  CL -->|Có| XN["Chấm xác nhận hoặc thẩm định"] --> DC
+  DC --> RS["Nộp điểm, rà soát, chốt, duyệt, công bố"]
+</pre>
+    </div>
+    <ul class="tight">
+      <li>Cán bộ chấm làm ở <b>Chấm điểm › Chính thức</b>: thấy các túi được phân công và nhập điểm theo mã phách.</li>
+      <li>Mỗi bài lưu điểm của từng cán bộ, độ lệch, điểm trung bình, điểm cuối và điểm sau khi trừ vi phạm.</li>
+      <li>Nhánh <code>develop</code> có thêm mẫu Excel "giảng viên nộp điểm thi" và báo cáo thống kê nhập điểm. Bản demo dựng từ nhánh <code>main</code> nên chưa có.</li>
+    </ul>
+  </section>
+
+  <section id="doi-chieu">
+    <header>
+      <span class="eyebrow">Từ note họp</span>
+      <h2>Kỳ vọng và hiện trạng</h2>
+    </header>
+    <p class="muted">Đây là điểm xuất phát để BA viết yêu cầu. Cột cuối là việc cần làm rõ, chưa phải giải pháp.</p>
+    <div class="tbl">
+      <table class="wide">
+        <thead><tr><th>Kỳ vọng</th><th>Hiện trạng</th><th>BA cần làm rõ</th></tr></thead>
+        <tbody>
+          <tr><td>Ngân hàng hướng người dùng, làm lại UI/UX</td><td>Ngân hàng, ma trận, bộ đề nằm trong 7 tab của trang chi tiết học phần, dùng chung cho mọi vai trò.</td><td>Hành trình riêng của người soạn câu, người duyệt, người ra đề.</td></tr>
+          <tr><td>Cấu trúc được kho câu hỏi</td><td>Phân loại theo 3 trục: chương (một cấp), độ khó, dạng câu. Chưa có chuẩn đầu ra hay chủ đề con, dù phần chấm điểm đã có "điểm chuẩn đầu ra".</td><td>Bộ trục phân loại mới; cách chuyển câu cũ sang.</td></tr>
+          <tr><td>Thêm dạng câu hỏi</td><td>Backend khai báo 12 dạng, trang thi xử lý khoảng 10, nhưng giao diện soạn và file nhập chỉ có 4. Mỗi dạng mới phải đi qua 5 chỗ: soạn, nhập file, ma trận, hiển thị khi thi, chấm.</td><td>Dạng nào ưu tiên; quy tắc chấm của từng dạng.</td></tr>
+          <tr><td>Sinh câu hỏi theo môn và chương</td><td>Chưa có. Đầu vào có sẵn: khối kiến thức theo chương, đề cương học phần trên QLDT, câu cũ làm mẫu.</td><td>Câu sinh ra vào trạng thái Chờ duyệt để giữ khâu duyệt; ai được dùng.</td></tr>
+          <tr><td>Ma trận đề thông minh hơn</td><td>Nhập tay từng dòng. Chỉ biết thiếu câu khi tạo bộ đề.</td><td>Hiện số câu còn trong kho ngay lúc soạn; gợi ý phân bổ theo chương và độ khó.</td></tr>
+          <tr><td>Nhập điểm thông minh hơn</td><td>Nhập theo túi và phách, hai lần chấm, xử lý lệch, có nhập Excel.</td><td>Điểm nghẽn thực tế của cán bộ chấm; phần nào của nhánh <code>develop</code> giữ lại.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="thuc-hanh">
+    <header>
+      <span class="eyebrow">Thực hành</span>
+      <h2>30 phút trên bản demo</h2>
+    </header>
+    <ol class="steps">
+      <li><div class="body"><b>Xem một ngân hàng có sẵn.</b> Đăng nhập trang quản trị bằng tài khoản quản trị, vào Đề thi › Tổng quan, tìm <code>INT1340_CLC</code> và mở.
+        <span class="expect"><b>Mong đợi:</b> 7 tab; 2 khối kiến thức, 15 câu đã duyệt, 1 ma trận, 1 bộ đề 2 mã đề.</span></div></li>
+      <li><div class="body"><b>Đi hết vòng duyệt một câu.</b> Tab Ngân hàng câu hỏi: thêm một câu trắc nghiệm, gửi duyệt, rồi duyệt.
+        <span class="expect"><b>Mong đợi:</b> trạng thái đổi lần lượt Chưa gửi, Chờ duyệt, Duyệt.</span></div></li>
+      <li><div class="body"><b>Sinh đề theo hai hình thức.</b> Tạo một ma trận 2 dòng (3 câu Dễ, 2 câu Trung bình). Tạo bộ đề 2 mã đề lần lượt với Sinh từ đề gốc và Sinh toàn bộ đề từ ngân hàng, mở xem từng mã đề. Sau đó sửa một dòng thành 30 câu Dễ.
+        <span class="expect"><b>Mong đợi:</b> hình thức thứ nhất cùng câu khác thứ tự, thứ hai khác câu; 30 câu thì báo không đủ kèm số tối đa.</span></div></li>
+      <li><div class="body"><b>Thi thử như sinh viên.</b> Lấy mật khẩu phòng ở Tổ chức thi › Lịch thi › Online, nút xem mật khẩu của ca <code>INT1340_CLC</code>. Đăng nhập trang thi bằng tài khoản sinh viên, vào ca, làm vài câu và nộp.
+        <span class="expect"><b>Mong đợi:</b> đề 10 câu, đồng hồ đếm ngược, có điểm sau khi nộp. Mỗi tài khoản chỉ nộp được một lần mỗi ca.</span></div></li>
+      <li><div class="body"><b>Nhập điểm thi viết.</b> Vào Chấm điểm › Chính thức, chọn <code>INT1434_CLC</code>, mở túi bài, nhập điểm vài phách. Xem lại ở Kết quả thi › Rà soát điểm.
+        <span class="expect"><b>Mong đợi:</b> túi có 14 bài; điểm vừa nhập xuất hiện ở trang rà soát.</span></div></li>
+    </ol>
+  </section>
+
+  <section id="kiem-chung">
+    <header>
+      <span class="eyebrow">Cho Tester</span>
+      <h2>Điểm cần kiểm chứng</h2>
+    </header>
+    <p class="muted">Rút ra khi đọc code; chưa ai xác nhận trên giao diện. Làm xong thì ghi kết quả cho BA.</p>
+    <div class="tc">
+      <div><span class="id">TC-01</span><div class="body"><b>Câu chưa duyệt có bị rút vào đề không?</b><span class="muted">Phần sinh đề lọc câu theo cờ đang dùng, không thấy lọc theo trạng thái duyệt.</span></div></div>
+      <div><span class="id">TC-02</span><div class="body"><b>Ma trận chưa duyệt có tạo được bộ đề không?</b><span class="muted">Không thấy bước kiểm trạng thái ma trận khi tạo bộ đề.</span></div></div>
+      <div><span class="id">TC-03</span><div class="body"><b>Nhập lại cùng một file Word.</b><span class="muted">Mong đợi: câu đã có nằm ở tab Trùng, ngân hàng không bị nhân đôi.</span></div></div>
+      <div><span class="id">TC-04</span><div class="body"><b>Học phần chưa cấu hình Mức điểm.</b><span class="muted">Mong đợi: điểm thi online dùng trọng số mặc định 1, 2, 3, 4 theo độ khó.</span></div></div>
+      <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được chấm thế nào?</b><span class="muted">Chưa thấy quy tắc chấm rõ trong code. Đây cũng là câu hỏi mở cho BA.</span></div></div>
+    </div>
+  </section>
+
+  <section id="gioi-han">
+    <header>
+      <span class="eyebrow">Không phải lỗi</span>
+      <h2>Giới hạn của bản demo</h2>
+    </header>
+    <ul class="tight">
+      <li>Bản demo không nối được QLDT, CSVC thật. Không dùng nút <b>Khởi tạo</b> học phần thi và <b>Đồng bộ với QLDT</b>; dùng Thêm mới hoặc nhập Excel.</li>
+      <li>Hiệu chỉnh điểm và Đợt phúc khảo báo lỗi, vì bản demo dựng từ nhánh <code>main</code> chưa có hai tính năng này. Phân công › Theo kỳ thi báo lỗi vì cần dữ liệu đơn vị từ hệ thống nhân sự.</li>
+      <li>Hai tài khoản dùng chung cho cả nhóm. Báo nhau trước khi thi thử để không tranh lượt nộp bài.</li>
+      <li>Dữ liệu mẫu có thể được tạo lại; mọi thứ tự nhập sẽ mất. Lead sẽ báo trước.</li>
+      <li>Trang thi hiện cảnh báo nếu chạy trong máy ảo. Cảnh báo không chặn vào thi.</li>
+    </ul>
+  </section>
+
+  <section id="cach-lam">
+    <header>
+      <span class="eyebrow">Cách làm việc</span>
+      <h2>BA, Dev, Test khép kín</h2>
+    </header>
+    <div class="roles">
+      <div><b>BA</b><span class="muted">Viết yêu cầu theo màn hình, kèm tiêu chí chấp nhận đo được. Dùng bảng Kỳ vọng và hiện trạng làm điểm bắt đầu.</span></div>
+      <div><b>Dev</b><span class="muted">Làm theo yêu cầu đã chốt; đổi luồng đang chạy thật phải có cờ bật tắt, mặc định tắt.</span></div>
+      <div><b>Test</b><span class="muted">Viết test case từ tiêu chí chấp nhận, chạy trên bản demo, trả kết quả về BA để khép vòng.</span></div>
+    </div>
+  </section>
+
+  <footer>Nội dung đối chiếu từ code bản demo ngày 08/11/2026. Khi thấy giao diện khác mô tả, báo lead để cập nhật sổ tay.</footer>
+</div>
+
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+  const toi = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  mermaid.initialize({ startOnLoad: false, securityLevel: "strict", flowchart: { useMaxWidth: false }, theme: toi ? "dark" : "default", fontFamily: '"Be Vietnam Pro", system-ui, sans-serif' });
+  await mermaid.run({ querySelector: "pre.mermaid" });
+</script>
+</body>
+</html>
