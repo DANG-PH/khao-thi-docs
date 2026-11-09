@@ -152,7 +152,7 @@ flowchart TD
   DE --> E["Tổ chức thi: ca, phòng, giám thị"]:::mo
   E --> F["Thi online, chấm tự động"]:::mo
   E --> G["Thi viết: phách, túi bài"]:::mo
-  F -.->|cần xác nhận| I
+  F -->|khi bấm Kết thúc ca thi| I
   G --> H["Chấm và nhập điểm"]:::tam
   H --> I["Rà soát, chốt, duyệt, công bố"]:::mo
   I --> J["Phúc khảo"]:::mo
@@ -272,8 +272,8 @@ flowchart TD
     </div>
     <ul class="tight">
       <li>Mặc định là <b>Sinh từ đề gốc</b>. Nếu một đề rút phải hai câu trùng nội dung thì bộ đề bị từ chối.</li>
-      <li>Điểm thi online: mỗi câu nhân trọng số theo Mức điểm, quy về thang 10. Câu nối chấm theo số cặp nối đúng.</li>
-      <li>Hệ thống chỉ báo thiếu câu khi bấm tạo bộ đề, không báo lúc soạn ma trận.</li>
+      <li>Điểm thi online: mỗi câu nhân trọng số theo Mức điểm, quy về thang 10. Câu nối chấm theo số cặp nối đúng. Trắc nghiệm nhiều đáp án phải chọn đúng đủ mới có điểm. Câu tự luận không được tự chấm.</li>
+      <li>Hệ thống kiểm đủ câu khi lưu ma trận mới và khi tạo bộ đề; khi sửa ma trận thì không kiểm lại.</li>
     </ul>
   </section>
 
@@ -298,7 +298,7 @@ flowchart TD
       <table class="wide">
         <thead><tr><th>Nguồn điểm</th><th>Ai, ở đâu</th><th>Cách nhập hiện có</th></tr></thead>
         <tbody>
-          <tr><td>Thi online</td><td>Hệ thống, khi sinh viên nộp bài</td><td>Tự chấm theo Mức điểm, lưu vào kết quả bài thi của ca (xem ở chi tiết ca thi online)</td></tr>
+          <tr><td>Thi online</td><td>Hệ thống, khi sinh viên nộp bài</td><td>Tự chấm theo Mức điểm, lưu vào kết quả bài thi của ca; chuyển sang hồ sơ điểm khi giám thị hoặc quản trị bấm Kết thúc ca thi. Câu tự luận không được tự chấm.</td></tr>
           <tr><td>Thi viết, chấm chính thức</td><td>Cán bộ chấm 1 và 2, Chấm điểm › Chính thức</td><td>Nhập tay theo mã phách (điểm, điểm thành phần, số tờ) hoặc Nhập dữ liệu từ Excel</td></tr>
           <tr><td>Chấm thẩm định</td><td>Cán bộ được phân công, Chấm điểm › Thẩm định</td><td>Khi hai lần chấm chênh lệch, khi cần thẩm định, hoặc theo yêu cầu</td></tr>
           <tr><td>Chuyên viên</td><td>Kết quả thi › Rà soát điểm</td><td>Biểu mẫu Excel nhập điểm theo đợt thi</td></tr>
@@ -327,7 +327,7 @@ flowchart TD
           <tr><td>Cấu trúc được kho câu hỏi</td><td>Phân loại theo 3 trục: chương (một cấp), độ khó, dạng câu. Chưa có chuẩn đầu ra hay chủ đề con, dù phần chấm điểm đã có "điểm chuẩn đầu ra".</td></tr>
           <tr><td>Thêm dạng câu hỏi</td><td>Backend khai báo 12 dạng, trang thi xử lý khoảng 10, nhưng giao diện soạn và file nhập chỉ có 4. Mỗi dạng mới phải đi qua 5 chỗ: soạn, nhập file, ma trận, hiển thị khi thi, chấm.</td></tr>
           <tr><td>Sinh câu hỏi theo môn và chương</td><td>Chưa có. Đầu vào có sẵn: khối kiến thức theo chương, đề cương học phần trên QLDT, câu cũ làm mẫu.</td></tr>
-          <tr><td>Ma trận đề thông minh hơn</td><td>Nhập tay từng dòng. Chỉ biết thiếu câu khi tạo bộ đề.</td></tr>
+          <tr><td>Ma trận đề thông minh hơn</td><td>Nhập tay từng dòng, không thấy số câu còn trong kho lúc soạn; chỉ biết thiếu khi bấm lưu.</td></tr>
           <tr><td>Nhập điểm thông minh hơn</td><td>Nhập theo túi và phách, hai lần chấm, xử lý lệch, có nhập Excel.</td></tr>
         </tbody>
       </table>
@@ -360,12 +360,12 @@ flowchart TD
     </header>
     <p class="muted">Rút ra khi đọc code; chưa ai xác nhận trên giao diện. Làm xong thì ghi kết quả gửi trong nhóm.</p>
     <div class="tc">
-      <div><span class="id">TC-01</span><div class="body"><b>Câu chưa duyệt có bị rút vào đề không?</b><span class="muted">Phần sinh đề lọc câu theo cờ đang dùng, không thấy lọc theo trạng thái duyệt.</span></div></div>
-      <div><span class="id">TC-02</span><div class="body"><b>Ma trận chưa duyệt có tạo được bộ đề không?</b><span class="muted">Không thấy bước kiểm trạng thái ma trận khi tạo bộ đề.</span></div></div>
+      <div><span class="id">TC-01</span><div class="body"><b>Câu chưa duyệt nhưng bật Kích hoạt có bị rút vào đề không?</b><span class="muted">Duyệt thì hệ thống tự bật Kích hoạt, và sinh đề chỉ lấy câu đang kích hoạt. Nhưng nút Kích hoạt bật được cả câu chưa duyệt.</span></div></div>
+      <div><span class="id">TC-02</span><div class="body"><b>Ma trận chưa duyệt có tạo được bộ đề không?</b><span class="muted">Theo code: tạo được, không có bước kiểm trạng thái ma trận.</span></div></div>
       <div><span class="id">TC-03</span><div class="body"><b>Nhập lại cùng một file Word.</b><span class="muted">Mong đợi: câu đã có nằm ở tab Trùng, ngân hàng không bị nhân đôi.</span></div></div>
       <div><span class="id">TC-04</span><div class="body"><b>Học phần chưa cấu hình Mức điểm.</b><span class="muted">Mong đợi: điểm thi online dùng trọng số mặc định 1, 2, 3, 4 theo độ khó.</span></div></div>
-      <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được chấm thế nào?</b><span class="muted">Chưa thấy quy tắc chấm rõ trong code.</span></div></div>
-      <div><span class="id">TC-06</span><div class="body"><b>Điểm thi online có tự sang Kết quả thi › Rà soát điểm không?</b><span class="muted">Khi nộp bài, điểm được lưu vào kết quả bài thi của ca; chưa thấy bước chuyển sang hồ sơ điểm của sinh viên.</span></div></div>
+      <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được tính điểm thế nào?</b><span class="muted">Theo code: không tự chấm, tính 0 điểm; chưa thấy màn chấm tay cho câu này.</span></div></div>
+      <div><span class="id">TC-06</span><div class="body"><b>Bấm Kết thúc ca thi khi sinh viên còn đang làm bài.</b><span class="muted">Theo code: nút chỉ chặn trước giờ bắt đầu ca, không chặn trước giờ kết thúc; ai chưa nộp sẽ bị ghi không có bài.</span></div></div>
     </div>
   </section>
 
