@@ -52,6 +52,7 @@
       <li><b>AI tích hợp tại chỗ</b> ở từng màn hình (F-08): gợi ý câu cho đúng ô đang thiếu, soạn câu từ tài liệu, tạo câu tương đương, đưa đề cũ vào ngân hàng, rà soát trước khi duyệt. Gom thành một tính năng để PO duyệt một lần; các tính năng khác vẫn chạy được khi chưa bật AI.</li>
       <li><b>Thêm dạng câu hỏi</b> (F-03) kèm bảng hiện trạng từng dạng, làm đầu vào cho việc phân tích dạng câu.</li>
       <li><b>Hướng refactor</b> (phụ lục) để thêm dạng câu, sửa ma trận, bộ đề không phải sửa nhiều chỗ như hiện nay.</li>
+      <li><b>Mức chắc chắn khác nhau:</b> F-02, F-05, F-06 và dạng "nhiều đáp án" của F-03 giải quyết việc người dùng gặp hằng ngày, ít phụ thuộc điều kiện. F-07 và phần dự báo ở F-05, F-06 chỉ có giá trị khi có đủ ca thi trực tuyến (Q-04). F-04 là đề xuất từ đối chiếu code, chờ PO xác nhận (Q-05). F-08 cần thí điểm để đo chất lượng.</li>
       <li>Vấn đề ở mỗi tính năng được xác định từ note họp và từ thao tác thực tế trên hệ thống. Chưa phỏng vấn người dùng; trước giai đoạn 1 nên hỏi nhanh 2–3 giảng viên soạn đề và 1–2 trưởng bộ môn để xác nhận thứ tự ưu tiên.</li>
     </ul>
     <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được và mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không bị ảnh hưởng. Gợi ý tự động (thống kê, AI) chỉ để hỗ trợ; người có thẩm quyền quyết định. Mọi tính năng tuân theo phân quyền ngân hàng hiện có.</div>
@@ -116,8 +117,8 @@
       </ul></div>
       <div class="bang"><table>
         <tbody>
-          <tr><th style="width:150px">Hệ thống đã có</th><td>Trang Tổng quan liệt kê học phần theo quyền, kèm số câu, số ma trận, số bộ đề; danh sách khối kiến thức có bật/tắt; API đếm câu theo chương, độ khó, dạng câu (ma trận đang dùng); kéo thả hàng trong bảng đã có ở ma trận, đang tắt ở khối kiến thức.</td></tr>
-          <tr><th>Cần làm thêm</th><td>Lưới chương × độ khó; bật kéo thả sắp xếp chương; các số đếm theo trạng thái trên Tổng quan.</td></tr>
+          <tr><th style="width:150px">Hệ thống đã có</th><td>Trang Tổng quan liệt kê học phần theo quyền, kèm số câu, số ma trận, số bộ đề; danh sách khối kiến thức có bật/tắt; API đếm câu theo chương, độ khó, dạng câu (ma trận đang dùng); kéo thả hàng trong bảng đã có ở ma trận.</td></tr>
+          <tr><th>Cần làm thêm</th><td>Lưới chương × độ khó; các số đếm theo trạng thái trên Tổng quan; trường thứ tự cho khối kiến thức (hiện chưa có) để kéo thả sắp xếp chương.</td></tr>
         </tbody>
       </table></div>
       <div class="muc"><h4>Giải pháp</h4><ul>
@@ -128,7 +129,7 @@
       <p><b>Ví dụ.</b> Trưởng bộ môn mở Khối kiến thức, thấy chương 4 chỉ có 2 câu Khó. Bấm vào ô đó, chọn "Gợi ý bằng AI" 5 câu, rồi giao giảng viên rà và gửi duyệt.</p>
       <div class="muc"><h4>Tiêu chí nghiệm thu</h4><ol class="ac">
         <li>Số trên mỗi ô khớp với số câu khi lọc danh sách theo chương và độ khó đó.</li>
-        <li>Thứ tự chương sau khi kéo thả được lưu, và dùng ở ma trận, xuất đề.</li>
+        <li>Thứ tự chương sau khi kéo thả được lưu, và dùng khi hiển thị lưới và ma trận.</li>
         <li>Số chờ duyệt, cần sửa trên Tổng quan khớp với danh sách câu của học phần.</li>
       </ol></div>
     </div>
@@ -203,7 +204,7 @@
 
     <div class="khoi" id="f-04">
       <div class="khoi-dau"><span class="ma">F-04</span><h3>Gắn câu hỏi với chuẩn đầu ra</h3></div>
-      <div class="meta"><span><b>Yêu cầu:</b> YC-02</span><span><b>Màn hình:</b> Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề</span><span><b>AI:</b> không</span><span><b>Giai đoạn:</b> 2</span></div>
+      <div class="meta"><span><b>Yêu cầu:</b> YC-02 (đề xuất từ đối chiếu code, note không nêu trực tiếp)</span><span><b>Màn hình:</b> Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề</span><span><b>AI:</b> không</span><span><b>Giai đoạn:</b> 2</span></div>
       <div class="muc"><h4>Vấn đề hiện nay</h4><ul>
         <li>Thi viết đã chấm theo chuẩn đầu ra học phần (CLO): cán bộ chấm nhập điểm từng chuẩn đầu ra, hệ thống tính điểm theo tỷ lệ ảnh hưởng của học phần.</li>
         <li>Nhưng khối kiến thức, câu hỏi, ma trận, bộ đề chưa biết chuẩn đầu ra. Người ra đề không biết đề đã kiểm tra đủ các chuẩn đầu ra chưa; khi kiểm định chất lượng, không chỉ ra được câu nào đo chuẩn đầu ra nào.</li>
@@ -386,7 +387,7 @@
         <tr><td><span class="ma">Q-01</span></td><td>Có được dùng dịch vụ AI bên ngoài với nội dung đề thi và tài liệu giảng dạy không? Ngân sách hằng tháng bao nhiêu?</td><td>F-08</td></tr>
         <tr><td><span class="ma">Q-02</span></td><td>Dạng câu nào cần trước, cho môn nào? Câu nhiều đáp án, kéo thả chấm kiểu "đúng đủ mới có điểm" hay có điểm từng phần?</td><td>F-03</td></tr>
         <tr><td><span class="ma">Q-03</span></td><td>Tỉ lệ độ khó chuẩn của ma trận theo quy chế ra đề là bao nhiêu? Bao nhiêu đợt thì một câu được dùng lại?</td><td>F-05<br>F-06</td></tr>
-        <tr><td><span class="ma">Q-04</span></td><td>Cần tối thiểu bao nhiêu lượt làm mới đánh giá một câu (đề xuất 30)? Ai nhận cảnh báo câu nghi sai đáp án?</td><td>F-07</td></tr>
+        <tr><td><span class="ma">Q-04</span></td><td>Mỗi học kỳ có khoảng bao nhiêu ca thi trực tuyến, cho những học phần nào? Cần tối thiểu bao nhiêu lượt làm mới đánh giá một câu (đề xuất 30)? Ai nhận cảnh báo câu nghi sai đáp án?</td><td>F-07<br>F-05<br>F-06</td></tr>
         <tr><td><span class="ma">Q-05</span></td><td>Những học phần nào đánh giá theo chuẩn đầu ra, và có cần gắn chuẩn đầu ra cho câu hỏi không?</td><td>F-04<br>F-05</td></tr>
       </tbody>
     </table></div>
