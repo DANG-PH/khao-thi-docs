@@ -7,47 +7,45 @@
 <title>Tài liệu Khảo thí</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/tai-lieu.css">
 <style>
-/* Mục lục tài liệu: một cột, mỗi nhóm là một danh sách liên kết. Cùng bộ màu với các trang tài liệu. */
-*, *::before, *::after { box-sizing: border-box; }
-:root {
-  --bg: #f4f6f9; --surface: #ffffff; --fg: #16202c; --muted: #586474; --line: #d9e0e8;
-  --accent: #2348c8; --accent-soft: #e8edfd;
-  --font-body: "Be Vietnam Pro", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-  color-scheme: light;
-}
-body {
-  margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.6;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 48px 72px;
-}
-.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 40px; }
-header { display: grid; gap: 10px; }
-.eyebrow { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
-h1 { margin: 0; font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem); line-height: 1.2; text-wrap: balance; }
-h2 { margin: 0; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-p { margin: 0; max-width: 64ch; }
-.lead { color: var(--muted); font-size: 1.0625rem; }
-section { display: grid; gap: 12px; }
-ul.docs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-ul.docs a { display: grid; gap: 4px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; color: inherit; text-decoration: none; }
-ul.docs a:hover { border-color: var(--accent); }
-ul.docs a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.ten { font-weight: 600; font-size: 1.0625rem; color: var(--accent); }
-.mo-ta { color: var(--muted); }
-.ngay { font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-footer { font-size: 0.8125rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+/* Mục lục tài liệu: mỗi nhóm là một danh sách liên kết */
+ul.docs { list-style: none; padding: 0; display: grid; gap: 10px; }
+ul.docs a { display: grid; gap: 4px; padding: 14px 16px; border: 1px solid var(--line); text-decoration: none; color: inherit; }
+ul.docs a:hover { border-color: var(--strong); }
+ul.docs a:focus-visible { outline: 2px solid var(--strong); outline-offset: 2px; }
+.ten { font-weight: 700; font-size: 1.0625rem; }
+.dong { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.8125rem; color: var(--muted); align-items: baseline; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <span class="eyebrow">Phân hệ Khảo thí</span>
+<main class="doc">
+  <header class="muc">
+    <span class="nhan">Phân hệ Khảo thí</span>
     <h1>Tài liệu Khảo thí</h1>
-    <p class="lead">Tài liệu chung của nhóm BA, Dev, Test: hướng dẫn nghiệp vụ, kế hoạch và tiến độ phát triển.</p>
+    <p class="muted">Tài liệu chung của nhóm BA, Dev, Test: nghiệp vụ, hướng dẫn, kế hoạch phát triển.</p>
   </header>
+
+  <section aria-labelledby="nhom-nghiep-vu">
+    <h2 id="nhom-nghiep-vu">Nghiệp vụ</h2>
+    <ul class="docs">
+      <li>
+        <a href="nghiep-vu/tong-quan-nghiep-vu.html">
+          <span class="ten">Tổng quan nghiệp vụ phân hệ Khảo thí</span>
+          <span class="muted">Thuật ngữ, tác nhân, 9 quy trình từ lập kế hoạch đến phúc khảo, trạng thái, danh mục màn hình. Nên đọc trước.</span>
+          <span class="dong"><span class="ma">KT-NV-01</span><span>Phiên bản 1.0</span><span>10/11/2026</span></span>
+        </a>
+      </li>
+      <li>
+        <a href="nghiep-vu/dac-ta-tinh-nang.html">
+          <span class="ten">Đặc tả tính năng phát triển</span>
+          <span class="muted">Yêu cầu từ cuộc họp, 25 tính năng cho ngân hàng đề, ma trận đề, nhập điểm: user story, quy tắc, tiêu chí chấp nhận, câu hỏi cần chốt.</span>
+          <span class="dong"><span class="ma">KT-DT-01</span><span>Phiên bản 0.1, chờ PO duyệt</span><span>10/11/2026</span></span>
+        </a>
+      </li>
+    </ul>
+  </section>
 
   <section aria-labelledby="nhom-huong-dan">
     <h2 id="nhom-huong-dan">Hướng dẫn</h2>
@@ -55,14 +53,14 @@ footer { font-size: 0.8125rem; color: var(--muted); border-top: 1px solid var(--
       <li>
         <a href="huong-dan/so-tay-ngan-hang-de.html">
           <span class="ten">Sổ tay Ngân hàng đề</span>
-          <span class="mo-ta">Onboarding cho BA và Tester: ngân hàng câu hỏi, ma trận đề, bộ đề, nhập điểm, đối chiếu với note họp, bài thực hành trên bản demo.</span>
-          <span class="ngay">Cập nhật 08/11/2026</span>
+          <span class="muted">Thực hành trên bản demo: ngân hàng câu hỏi, ma trận đề, bộ đề, nhập điểm; các điểm cần kiểm chứng.</span>
+          <span class="dong"><span>Cập nhật 10/11/2026</span></span>
         </a>
       </li>
     </ul>
   </section>
 
   <footer>Repo công khai: không đưa mật khẩu, khóa bí mật hay dữ liệu cá nhân lên đây.</footer>
-</div>
+</main>
 </body>
 </html>

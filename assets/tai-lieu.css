@@ -1,0 +1,82 @@
+/* Giao diện tài liệu nghiệp vụ: trắng đen, dạng văn bản BA (thông tin tài liệu, mục lục, mục đánh số, bảng). */
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #555555;
+  --line: #d4d4d4;
+  --soft: #f3f3f3;
+  --strong: #000000;
+  --font-body: "Be Vietnam Pro", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+}
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 0.9375rem; line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 72px;
+}
+.doc { max-width: 920px; margin: 0 auto; display: grid; gap: 36px; }
+a { color: var(--fg); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--strong); outline-offset: 2px; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.3; text-wrap: balance; }
+h1 { font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.1rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.3rem; font-weight: 700; padding-bottom: 8px; border-bottom: 2px solid var(--strong); }
+h3 { font-size: 1.05rem; font-weight: 700; }
+h4 { font-size: 0.95rem; font-weight: 600; }
+p { margin: 0; max-width: 72ch; }
+ul, ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+section { display: grid; gap: 14px; min-width: 0; }
+.back { font-size: 0.8125rem; font-weight: 600; text-decoration: none; }
+.nhan { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.ma { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; border: 1px solid var(--strong); padding: 0 6px; border-radius: 3px; white-space: nowrap; }
+
+/* Thông tin tài liệu */
+.thong-tin { border: 1px solid var(--strong); }
+.thong-tin dl { display: grid; grid-template-columns: max-content 1fr; margin: 0; }
+.thong-tin dt, .thong-tin dd { margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--line); }
+.thong-tin dt { background: var(--soft); font-weight: 600; font-size: 0.85rem; border-right: 1px solid var(--line); }
+.thong-tin dl > :nth-last-child(-n+2) { border-bottom: 0; }
+@media (max-width: 560px) { .thong-tin dl { grid-template-columns: 1fr; } .thong-tin dt { border-right: 0; } }
+
+/* Mục lục */
+.muc-luc { border: 1px solid var(--line); padding: 14px 18px; background: var(--soft); }
+.muc-luc ol { columns: 2; column-gap: 32px; display: block; }
+.muc-luc li { break-inside: avoid; margin-bottom: 4px; }
+@media (max-width: 640px) { .muc-luc ol { columns: 1; } }
+
+/* Bảng */
+.bang { overflow-x: auto; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 0.875rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+th:last-child, td:last-child { border-right: 0; }
+tr:last-child td { border-bottom: 0; }
+th { background: var(--soft); font-weight: 600; font-size: 0.8125rem; }
+td.so, th.so { width: 44px; text-align: center; font-variant-numeric: tabular-nums; }
+td.nowrap { white-space: nowrap; }
+
+/* Khối quy trình, tính năng */
+.khoi { border-top: 2px solid var(--strong); padding-top: 14px; display: grid; gap: 12px; }
+.khoi-dau { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.8125rem; color: var(--muted); }
+.meta b { color: var(--fg); font-weight: 600; }
+.muc { display: grid; gap: 6px; }
+.quy-tac li::marker, .ac li::marker { font-family: var(--font-mono); }
+.chu-y { border: 1px dashed var(--strong); padding: 10px 14px; font-size: 0.875rem; }
+.chu-y b { font-weight: 700; }
+
+/* Sơ đồ */
+.so-do { border: 1px solid var(--line); padding: 16px; overflow-x: auto; background: var(--bg); }
+.so-do pre.mermaid { margin: 0; text-align: center; background: transparent; }
+
+footer { font-size: 0.8125rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+@media print {
+  body { padding: 0; font-size: 11pt; }
+  .back, .muc-luc { display: none; }
+  .khoi, section { break-inside: avoid-page; }
+  a { text-decoration: none; }
+}

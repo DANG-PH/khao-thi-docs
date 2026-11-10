@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tổng quan nghiệp vụ phân hệ Khảo thí: thuật ngữ, tác nhân, các quy trình, trạng thái, màn hình.">
+<title>Tổng quan nghiệp vụ Khảo thí</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/tai-lieu.css">
+</head>
+<body>
+<main class="doc">
+  <a class="back" href="../">← Tài liệu Khảo thí</a>
+
+  <header class="muc">
+    <span class="nhan">Tài liệu nghiệp vụ</span>
+    <h1>Tổng quan nghiệp vụ phân hệ Khảo thí</h1>
+  </header>
+
+  <div class="thong-tin">
+    <dl>
+      <dt>Mã tài liệu</dt><dd>KT-NV-01</dd>
+      <dt>Phiên bản</dt><dd>1.0 (bản nháp để thống nhất)</dd>
+      <dt>Ngày</dt><dd>10/11/2026</dd>
+      <dt>Đối tượng đọc</dt><dd>BA, Tester, Dev</dd>
+      <dt>Căn cứ</dt><dd>Hệ thống đang vận hành và môi trường demo</dd>
+      <dt>Tài liệu liên quan</dt><dd><a href="dac-ta-tinh-nang.html">KT-DT-01 Đặc tả tính năng phát triển</a> · <a href="../huong-dan/so-tay-ngan-hang-de.html">Sổ tay Ngân hàng đề</a></dd>
+    </dl>
+  </div>
+
+  <nav class="muc-luc" aria-label="Mục lục">
+    <ol>
+      <li><a href="#gioi-thieu">Giới thiệu</a></li>
+      <li><a href="#thuat-ngu">Thuật ngữ</a></li>
+      <li><a href="#tac-nhan">Tác nhân</a></li>
+      <li><a href="#tong-the">Bức tranh tổng thể</a></li>
+      <li><a href="#quy-trinh">Quy trình nghiệp vụ</a></li>
+      <li><a href="#trang-thai">Trạng thái chính</a></li>
+      <li><a href="#man-hinh">Danh mục màn hình</a></li>
+    </ol>
+  </nav>
+
+  <section id="gioi-thieu">
+    <h2>1. Giới thiệu</h2>
+    <h3>1.1 Mục đích</h3>
+    <p>Mô tả các quy trình nghiệp vụ của phân hệ Khảo thí ở mức tổng quan, để các thành viên có chung một cách hiểu trước khi phân tích tính năng mới. Tài liệu mô tả hệ thống như đang vận hành, không mô tả giải pháp kỹ thuật.</p>
+    <h3>1.2 Phạm vi</h3>
+    <p>Từ lập kế hoạch đợt thi đến công bố điểm, hiệu chỉnh điểm và phúc khảo; gồm cả thi viết và thi trực tuyến.</p>
+    <h3>1.3 Hệ thống liên quan</h3>
+    <div class="bang">
+      <table>
+        <thead><tr><th>Hệ thống</th><th>Khảo thí dùng gì</th></tr></thead>
+        <tbody>
+          <tr><td>QLDT (đào tạo)</td><td>Học kỳ, học phần, lớp học phần, sinh viên, đề cương, điểm thành phần; nhận lại điểm thi được đồng bộ</td></tr>
+          <tr><td>TCNS (nhân sự)</td><td>Đơn vị, cán bộ (giám thị, cán bộ chấm, người ra đề)</td></tr>
+          <tr><td>CSVC (cơ sở vật chất)</td><td>Phòng, lịch sử dụng phòng (để không trùng lịch)</td></tr>
+          <tr><td>SSO</td><td>Đăng nhập cho cán bộ và sinh viên</td></tr>
+          <tr><td>Thông báo</td><td>Gửi thông báo, nhắc lịch thi</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="thuat-ngu">
+    <h2>2. Thuật ngữ</h2>
+    <div class="bang">
+      <table>
+        <thead><tr><th>Thuật ngữ</th><th>Giải thích</th></tr></thead>
+        <tbody>
+          <tr><td>Đợt thi (kỳ thi)</td><td>Một đợt tổ chức thi trong học kỳ, có các mốc thời gian: xét tư cách, công nợ, phân công, coi thi.</td></tr>
+          <tr><td>Học phần thi</td><td>Học phần được tổ chức thi trong đợt, kèm loại thi và hình thức thi.</td></tr>
+          <tr><td>Tư cách dự thi</td><td>Kết quả xét sinh viên có được dự thi hay không, dựa trên kết quả học tập và công nợ.</td></tr>
+          <tr><td>Khối kiến thức</td><td>Nhóm câu hỏi theo chương của học phần.</td></tr>
+          <tr><td>Ngân hàng câu hỏi</td><td>Tập câu hỏi của một học phần. Chỉ câu đã duyệt mới được dùng để ra đề.</td></tr>
+          <tr><td>Mức điểm</td><td>Điểm của mỗi câu theo độ khó, đặt riêng cho từng học phần.</td></tr>
+          <tr><td>Ma trận đề</td><td>Cấu trúc của đề. Mỗi dòng gồm khối kiến thức, độ khó, dạng câu, số câu.</td></tr>
+          <tr><td>Bộ đề, mã đề</td><td>Bộ đề là tập các mã đề sinh ra từ ma trận và ngân hàng. Mỗi mã đề là một đề hoàn chỉnh.</td></tr>
+          <tr><td>Ca thi (lịch thi)</td><td>Một buổi thi gồm phòng, giờ, học phần, thí sinh, giám thị. Ca thi trực tuyến gắn thêm một bộ đề.</td></tr>
+          <tr><td>Phách</td><td>Mã số thay cho tên trên bài thi viết, để chấm khách quan.</td></tr>
+          <tr><td>Túi bài thi</td><td>Nhóm bài thi viết giao cho cán bộ chấm.</td></tr>
+          <tr><td>Chấm lần 1, lần 2</td><td>Hai cán bộ chấm độc lập cùng một túi.</td></tr>
+          <tr><td>Chênh lệch</td><td>Độ lệch giữa điểm của hai cán bộ chấm cho cùng một bài.</td></tr>
+          <tr><td>Thẩm định</td><td>Chấm lại bởi cán bộ khác, theo quy tắc (chênh lệch, điểm cố định, ngẫu nhiên) hoặc theo yêu cầu.</td></tr>
+          <tr><td>Rà soát, chốt, duyệt, công bố</td><td>Các bước kiểm soát điểm theo thứ tự: chuyên viên kiểm tra → gửi điểm → lãnh đạo đối chiếu, duyệt → công bố cho sinh viên.</td></tr>
+          <tr><td>Hiệu chỉnh điểm</td><td>Sửa điểm sau khi công bố, có đề xuất và duyệt nhiều cấp.</td></tr>
+          <tr><td>Phúc khảo</td><td>Sinh viên yêu cầu chấm lại sau khi công bố, trong thời gian của đợt phúc khảo.</td></tr>
+          <tr><td>Ký số</td><td>Ký điện tử lên bảng điểm.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="tac-nhan">
+    <h2>3. Tác nhân</h2>
+    <div class="bang">
+      <table>
+        <thead><tr><th>Tác nhân</th><th>Vai trò chính</th></tr></thead>
+        <tbody>
+          <tr><td>Chuyên viên khảo thí</td><td>Lập kế hoạch, tổ chức thi, phân công, rà soát và chốt điểm, công bố</td></tr>
+          <tr><td>Giảng viên</td><td>Soạn câu hỏi; coi thi và chấm thi khi được phân công</td></tr>
+          <tr><td>Trưởng bộ môn</td><td>Duyệt câu hỏi, ma trận đề; duyệt hiệu chỉnh điểm của bộ môn</td></tr>
+          <tr><td>Người ra đề</td><td>Lập ma trận, sinh và quản lý bộ đề</td></tr>
+          <tr><td>Giám thị</td><td>Coi thi, quản lý ca thi trực tuyến</td></tr>
+          <tr><td>Cán bộ chấm thi</td><td>Chấm, nhập và nộp điểm các túi bài được giao</td></tr>
+          <tr><td>Người duyệt điểm</td><td>Đối chiếu và duyệt điểm</td></tr>
+          <tr><td>Sinh viên</td><td>Dự thi trực tuyến, xem điểm, đăng ký phúc khảo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="chu-y"><b>Phân quyền có hai lớp.</b> Quyền theo chức năng quyết định ai thấy màn hình nào. Riêng phần đề thi có thêm quyền theo từng học phần, gán cho từng người: soạn, nhập, gửi duyệt, duyệt câu; tạo, duyệt ma trận; tạo, xem, sửa bộ đề.</div>
+  </section>
+
+  <section id="tong-the">
+    <h2>4. Bức tranh tổng thể</h2>
+    <div class="so-do">
+<pre class="mermaid">
+flowchart TD
+  Q1["QT-01 Lập kế hoạch thi"] --> Q2["QT-02 Ngân hàng câu hỏi"]
+  Q2 --> Q3["QT-03 Ma trận đề và bộ đề"]
+  Q1 --> Q4["QT-04 Xếp lịch, phân công coi thi"]
+  Q3 --> Q5["QT-05 Thi trực tuyến"]
+  Q4 --> Q5
+  Q4 --> Q6["QT-06 Thi viết: chấm và nhập điểm"]
+  Q5 --> Q7["QT-07 Kết quả thi"]
+  Q6 --> Q7
+  Q7 --> Q8["QT-08 Hiệu chỉnh điểm"]
+  Q7 --> Q9["QT-09 Phúc khảo"]
+</pre>
+    </div>
+    <p>Thi viết và thi trực tuyến tách thành hai nhánh, rồi cùng đi vào bước kiểm soát và công bố điểm (QT-07).</p>
+  </section>
+
+  <section id="quy-trinh">
+    <h2>5. Quy trình nghiệp vụ</h2>
+
+    <div class="khoi" id="qt-01">
+      <div class="khoi-dau"><span class="ma">QT-01</span><h3>Lập kế hoạch thi</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> xác định đợt thi, học phần thi và thí sinh</span><span><b>Tác nhân:</b> chuyên viên khảo thí</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Chuyên viên</td><td>Tạo đợt thi: học kỳ, bậc và hình thức đào tạo, các mốc thời gian</td><td>Lập kế hoạch › Đợt thi</td></tr>
+          <tr><td class="so">2</td><td>Chuyên viên</td><td>Tạo học phần thi: khởi tạo từ lớp học phần kết thúc trong kỳ, thêm tay hoặc nhập Excel</td><td>Lập kế hoạch › Học phần thi</td></tr>
+          <tr><td class="so">3</td><td>Chuyên viên</td><td>Phân công theo học phần: cán bộ chấm lần 1 và lần 2, thời gian chấm, cách chia túi</td><td>Phân công › Theo học phần</td></tr>
+          <tr><td class="so">4</td><td>Chuyên viên</td><td>Xét tư cách dự thi theo kết quả học tập và công nợ; điều chỉnh từng trường hợp</td><td>Lập kế hoạch › Tư cách dự thi</td></tr>
+          <tr><td class="so">5</td><td>Chuyên viên</td><td>Chốt danh sách thí sinh</td><td>Lập kế hoạch › Tư cách dự thi</td></tr>
+        </tbody>
+      </table></div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-01</span> Mỗi đợt thi gắn với một học kỳ. Các mốc thời gian của đợt giới hạn lúc được xét tư cách, công nợ và phân công.</li>
+        <li><span class="ma">BR-02</span> Trạng thái thí sinh: Chưa duyệt, Đủ điều kiện, Không đủ điều kiện, Hoãn thi.</li>
+        <li><span class="ma">BR-03</span> Sau khi chốt danh sách, không thêm hoặc xóa thí sinh trên màn tư cách dự thi được nữa.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-02">
+      <div class="khoi-dau"><span class="ma">QT-02</span><h3>Quản lý ngân hàng câu hỏi</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> xây dựng kho câu hỏi đã duyệt cho từng học phần</span><span><b>Tác nhân:</b> giảng viên, trưởng bộ môn, quản trị</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Quản trị</td><td>Phân quyền theo học phần cho từng cán bộ; đặt Mức điểm theo độ khó</td><td>Đề thi › Tổng quan › học phần › Phân quyền, Mức điểm</td></tr>
+          <tr><td class="so">2</td><td>Giảng viên</td><td>Tạo khối kiến thức (chương)</td><td>Tab Khối kiến thức</td></tr>
+          <tr><td class="so">3</td><td>Giảng viên</td><td>Soạn câu trên form, hoặc nhập file Word theo mẫu ITest; xem trước kết quả (hợp lệ, trùng, lỗi) rồi lưu</td><td>Tab Ngân hàng câu hỏi</td></tr>
+          <tr><td class="so">4</td><td>Giảng viên</td><td>Gửi duyệt các câu đã chọn hoặc tất cả</td><td>Tab Ngân hàng câu hỏi</td></tr>
+          <tr><td class="so">5</td><td>Trưởng bộ môn</td><td>Duyệt, hoặc yêu cầu chỉnh sửa kèm ghi chú</td><td>Tab Ngân hàng câu hỏi</td></tr>
+          <tr><td class="so">6</td><td>Giảng viên</td><td>Sửa câu bị yêu cầu chỉnh sửa, gửi duyệt lại</td><td>Tab Ngân hàng câu hỏi</td></tr>
+        </tbody>
+      </table></div>
+      <div class="so-do">
+<pre class="mermaid">
+flowchart LR
+  A["Chưa gửi"] -->|Gửi duyệt| B["Chờ duyệt"]
+  B -->|Duyệt| C["Duyệt: được dùng ra đề"]
+  B -->|Yêu cầu chỉnh sửa| D["Yêu cầu chỉnh sửa"]
+  D -->|Sửa, gửi lại| B
+</pre>
+      </div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-04</span> Chỉ câu ở trạng thái Duyệt và đang kích hoạt mới được rút vào đề.</li>
+        <li><span class="ma">BR-05</span> Dạng câu soạn được: trắc nghiệm một đáp án, tự luận trả lời ngắn, câu nối, câu nhóm.</li>
+        <li><span class="ma">BR-06</span> Độ khó: Dễ, Trung bình, Khó, Rất khó. Học phần chưa đặt Mức điểm thì dùng mặc định 1, 2, 3, 4 điểm.</li>
+        <li><span class="ma">BR-07</span> Câu giống hệt câu đã có (cả nội dung lẫn phương án) không được thêm vào kho.</li>
+        <li><span class="ma">BR-08</span> Câu đã duyệt không sửa được; chỉ người có quyền duyệt bật hoặc tắt kích hoạt được.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-03">
+      <div class="khoi-dau"><span class="ma">QT-03</span><h3>Ma trận đề và bộ đề</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> tạo các mã đề đúng cấu trúc từ ngân hàng đã duyệt</span><span><b>Tác nhân:</b> người ra đề, trưởng bộ môn</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Người ra đề</td><td>Lập ma trận: tên, thời gian làm bài, có được dùng tài liệu không; thêm các dòng khối × độ khó × dạng × số câu. Hệ thống báo số câu còn trong kho.</td><td>Tab Ma trận đề</td></tr>
+          <tr><td class="so">2</td><td>Trưởng bộ môn</td><td>Duyệt, yêu cầu chỉnh sửa lại, hoặc không duyệt</td><td>Tab Ma trận đề</td></tr>
+          <tr><td class="so">3</td><td>Người ra đề</td><td>Tạo bộ đề: chọn ma trận đã duyệt, số mã đề, hình thức sinh đề</td><td>Tab Bộ đề</td></tr>
+          <tr><td class="so">4</td><td>Người ra đề</td><td>Xem, chỉnh sửa đề; xuất đề ra Word hoặc PDF, kèm hoặc không kèm đáp án</td><td>Tab Bộ đề</td></tr>
+        </tbody>
+      </table></div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-09</span> Ma trận mới ở trạng thái Chờ duyệt. Chỉ ma trận đã duyệt mới được chọn khi tạo bộ đề.</li>
+        <li><span class="ma">BR-10</span> Một dòng ma trận không đủ câu đã duyệt thì ma trận không lưu được, bộ đề không sinh được.</li>
+        <li><span class="ma">BR-11</span> "Sinh từ đề gốc": các mã đề cùng một bộ câu, chỉ khác thứ tự câu và phương án. "Sinh toàn bộ đề từ ngân hàng": mỗi mã đề rút câu riêng.</li>
+        <li><span class="ma">BR-12</span> Dòng "trắc nghiệm" trong ma trận lấy cả câu trắc nghiệm lẫn câu nối.</li>
+        <li><span class="ma">BR-13</span> Sửa nội dung của đề đã dùng để thi thì hệ thống chấm lại bài của các sinh viên làm đề đó.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-04">
+      <div class="khoi-dau"><span class="ma">QT-04</span><h3>Xếp lịch và phân công coi thi</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> lập lịch thi, phòng thi, giám thị</span><span><b>Tác nhân:</b> chuyên viên, đơn vị, giảng viên, giám thị</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Chuyên viên</td><td>Xếp lịch thi viết theo nhóm thi, phòng, ca</td><td>Tổ chức thi › Lịch thi › Xếp lịch thi, Truyền thống</td></tr>
+          <tr><td class="so">2</td><td>Chuyên viên</td><td>Tạo ca thi trực tuyến (xem QT-05)</td><td>Tổ chức thi › Lịch thi › Online</td></tr>
+          <tr><td class="so">3</td><td>Chuyên viên, đơn vị</td><td>Phân số lượng coi thi cho đơn vị; đơn vị cử cán bộ</td><td>Tổ chức thi › Phân công coi thi; Phân công › Theo kỳ thi</td></tr>
+          <tr><td class="so">4</td><td>Giảng viên</td><td>Đăng ký coi thi, khi đợt thi cho phép</td><td>Giám thị › Đăng ký coi thi</td></tr>
+          <tr><td class="so">5</td><td>Chuyên viên</td><td>Công bố lịch thi cho sinh viên và lịch coi thi cho giám thị</td><td>Tổ chức thi › Lịch thi</td></tr>
+          <tr><td class="so">6</td><td>Giám thị</td><td>Xem ca thi của mình, coi thi, ghi nhận trạng thái dự thi và vi phạm</td><td>Giám thị › Ca thi của tôi; Tổ chức thi › Trạng thái dự thi, Vi phạm</td></tr>
+        </tbody>
+      </table></div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-14</span> Lịch thi không được trùng phòng, trùng lịch sinh viên hoặc trùng lịch cán bộ; hệ thống đối chiếu với lịch sử dụng phòng.</li>
+        <li><span class="ma">BR-15</span> Sinh viên và giám thị chỉ thấy lịch sau khi lịch được công bố.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-05">
+      <div class="khoi-dau"><span class="ma">QT-05</span><h3>Thi trực tuyến</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> tổ chức thi trên máy, chấm tự động</span><span><b>Tác nhân:</b> chuyên viên, giám thị, sinh viên</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Chuyên viên</td><td>Tạo ca: phòng, học phần, bộ đề, giờ bắt đầu, thời lượng, giám thị, thí sinh</td><td>Lịch thi › Online</td></tr>
+          <tr><td class="so">2</td><td>Chuyên viên</td><td>Kích hoạt ca (hệ thống sinh mật khẩu phòng); công bố lịch</td><td>Lịch thi › Online</td></tr>
+          <tr><td class="so">3</td><td>Giám thị</td><td>Đưa mật khẩu phòng cho thí sinh; theo dõi trạng thái, vi phạm; dừng thi khi cần</td><td>Giám thị › Ca thi của tôi</td></tr>
+          <tr><td class="so">4</td><td>Sinh viên</td><td>Đăng nhập, chọn ca, nhập mật khẩu phòng, làm bài, nộp bài</td><td>Trang thi</td></tr>
+          <tr><td class="so">5</td><td>Hệ thống</td><td>Chấm tự động khi sinh viên nộp bài</td><td>—</td></tr>
+          <tr><td class="so">6</td><td>Giám thị hoặc quản trị</td><td>Kết thúc ca: điểm chuyển sang hồ sơ điểm để rà soát</td><td>Giám thị › Ca thi của tôi</td></tr>
+        </tbody>
+      </table></div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-16</span> Mỗi thí sinh nhận một mã đề, chia theo thứ tự trong danh sách ca.</li>
+        <li><span class="ma">BR-17</span> Câu trắc nghiệm một hoặc nhiều đáp án: chọn đúng đủ mới có điểm. Câu nối: tính theo số cặp nối đúng. Câu tự luận: chưa được chấm, tính 0 điểm.</li>
+        <li><span class="ma">BR-18</span> Điểm bài = tổng điểm các câu theo Mức điểm, quy về thang 10.</li>
+        <li><span class="ma">BR-19</span> Bài làm được tự lưu trong lúc thi. Mỗi thí sinh nộp một lần.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-06">
+      <div class="khoi-dau"><span class="ma">QT-06</span><h3>Thi viết: chấm và nhập điểm</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> chấm bài thi viết khách quan qua phách và hai lần chấm</span><span><b>Tác nhân:</b> chuyên viên, cán bộ chấm</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Chuyên viên</td><td>Sinh phách cho bài thi, chia túi bài</td><td>Tổ chức thi › Phách thi</td></tr>
+          <tr><td class="so">2</td><td>Chuyên viên</td><td>Phân công cán bộ chấm 1 và chấm 2 cho từng túi</td><td>Kết quả thi › Rà soát điểm</td></tr>
+          <tr><td class="so">3</td><td>Cán bộ chấm</td><td>Chọn học phần, chọn túi; nhập điểm theo phách (từng bài, hoặc nhập Excel); xuất hoặc in bảng điểm theo phách</td><td>Chấm điểm › Chính thức</td></tr>
+          <tr><td class="so">4</td><td>Cán bộ chấm</td><td>Nộp điểm túi; được hủy nộp trước khi chốt</td><td>Chấm điểm › Chính thức</td></tr>
+          <tr><td class="so">5</td><td>Chuyên viên</td><td>Đặt ngưỡng chênh lệch; sinh túi thẩm định theo quy tắc; phân công thẩm định</td><td>Kết quả thi › Rà soát điểm</td></tr>
+          <tr><td class="so">6</td><td>Cán bộ thẩm định</td><td>Chấm thẩm định</td><td>Chấm điểm › Thẩm định</td></tr>
+        </tbody>
+      </table></div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-20</span> Bài thi viết được nhận diện bằng mã phách khi chấm.</li>
+        <li><span class="ma">BR-21</span> Điểm bài là trung bình điểm của các cán bộ chấm chính thức. Có thẩm định thì lấy điểm thẩm định; có phúc khảo thì lấy điểm phúc khảo.</li>
+        <li><span class="ma">BR-22</span> Bài vi phạm quy chế bị trừ theo phần trăm: điểm sau vi phạm = điểm × (1 − mức phạt).</li>
+        <li><span class="ma">BR-23</span> Điểm hợp lệ trong khoảng 0–10.</li>
+        <li><span class="ma">BR-24</span> Ngưỡng chênh lệch đặt riêng cho từng đợt thi. Quy tắc thẩm định có ba chế độ: theo chênh lệch, theo điểm cố định, lấy mẫu ngẫu nhiên.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-07">
+      <div class="khoi-dau"><span class="ma">QT-07</span><h3>Kết quả thi</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> kiểm soát, phê duyệt và công bố điểm</span><span><b>Tác nhân:</b> chuyên viên, người duyệt điểm</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Chuyên viên</td><td>Rà soát: lọc điểm lệch, lọc bài không có, xử lý vi phạm, khóa rà soát từng bài</td><td>Kết quả thi › Rà soát điểm</td></tr>
+          <tr><td class="so">2</td><td>Chuyên viên</td><td>Chốt (gửi) điểm theo học phần</td><td>Kết quả thi › Chốt điểm</td></tr>
+          <tr><td class="so">3</td><td>Người duyệt</td><td>Đối chiếu, duyệt điểm</td><td>Kết quả thi › Duyệt điểm</td></tr>
+          <tr><td class="so">4</td><td>Chuyên viên</td><td>Công bố điểm theo học phần</td><td>Kết quả thi › Công bố điểm</td></tr>
+          <tr><td class="so">5</td><td>Hệ thống</td><td>Đồng bộ điểm sang QLDT theo cấu hình; ký số bảng điểm</td><td>Danh mục › Cấu hình › Cài đặt</td></tr>
+        </tbody>
+      </table></div>
+      <div class="so-do">
+<pre class="mermaid">
+flowchart LR
+  N["Cán bộ nộp điểm"] --> R["Rà soát"] --> C["Chốt"] --> D["Duyệt"] --> B["Công bố"] --> Q["Đồng bộ QLDT"]
+</pre>
+      </div>
+      <div class="muc"><h4>Quy tắc nghiệp vụ</h4><ul class="quy-tac">
+        <li><span class="ma">BR-25</span> Thứ tự bắt buộc: rà soát → chốt → duyệt → công bố. Học phần chưa chốt xong thì chưa duyệt được.</li>
+        <li><span class="ma">BR-26</span> Bước nào cũng có thao tác hủy, và mọi thao tác đều được ghi nhật ký.</li>
+        <li><span class="ma">BR-27</span> Thời điểm đồng bộ điểm sang QLDT theo cấu hình: đồng bộ ngay, khi nộp điểm, khi chốt điểm, hoặc theo luồng.</li>
+      </ul></div>
+    </div>
+
+    <div class="khoi" id="qt-08">
+      <div class="khoi-dau"><span class="ma">QT-08</span><h3>Hiệu chỉnh điểm</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> sửa điểm sai sau khi công bố, có kiểm soát</span><span><b>Tác nhân:</b> cán bộ chấm, bộ môn, chuyên viên khảo thí</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Trạng thái sau bước</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>—</td><td>Yêu cầu hiệu chỉnh được lập cho sinh viên, học phần</td><td>Chờ nhập điểm đề xuất</td></tr>
+          <tr><td class="so">2</td><td>Cán bộ chấm</td><td>Nhập điểm đề xuất (màn chấm có mục "Xem yêu cầu hiệu chỉnh")</td><td>Đã đối soát</td></tr>
+          <tr><td class="so">3</td><td>Bộ môn</td><td>Duyệt</td><td>Bộ môn đã duyệt</td></tr>
+          <tr><td class="so">4</td><td>Chuyên viên khảo thí</td><td>Xác nhận; điểm được cập nhật, bảng điểm được ký số</td><td>Đã xác nhận</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted">Ở bước nào cũng có thể từ chối, yêu cầu chỉnh sửa hoặc hủy yêu cầu. Màn hình: Kết quả thi › Hiệu chỉnh điểm.</p>
+    </div>
+
+    <div class="khoi" id="qt-09">
+      <div class="khoi-dau"><span class="ma">QT-09</span><h3>Phúc khảo</h3></div>
+      <div class="meta"><span><b>Mục tiêu:</b> chấm lại theo yêu cầu của sinh viên</span><span><b>Tác nhân:</b> chuyên viên, sinh viên, cán bộ chấm, người duyệt</span></div>
+      <div class="bang"><table>
+        <thead><tr><th class="so">Bước</th><th>Tác nhân</th><th>Hoạt động</th><th>Màn hình</th></tr></thead>
+        <tbody>
+          <tr><td class="so">1</td><td>Chuyên viên</td><td>Tạo đợt phúc khảo: thời gian, học phần</td><td>Phúc khảo › Đợt phúc khảo</td></tr>
+          <tr><td class="so">2</td><td>Sinh viên</td><td>Đăng ký phúc khảo (kèm lệ phí nếu có cấu hình)</td><td>Cổng sinh viên</td></tr>
+          <tr><td class="so">3</td><td>Chuyên viên</td><td>Chia túi phúc khảo, phân công chấm</td><td>Phúc khảo › Rà soát điểm</td></tr>
+          <tr><td class="so">4</td><td>Cán bộ chấm</td><td>Chấm phúc khảo</td><td>Chấm điểm › Phúc khảo</td></tr>
+          <tr><td class="so">5</td><td>Chuyên viên, người duyệt</td><td>Rà soát → chốt → duyệt → công bố điểm phúc khảo</td><td>Phúc khảo › các màn tương ứng</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="trang-thai">
+    <h2>6. Trạng thái chính</h2>
+    <div class="bang"><table>
+      <thead><tr><th>Đối tượng</th><th>Các trạng thái theo thứ tự</th></tr></thead>
+      <tbody>
+        <tr><td>Câu hỏi</td><td>Chưa gửi → Chờ duyệt → Duyệt hoặc Yêu cầu chỉnh sửa → (sửa) → Chờ duyệt</td></tr>
+        <tr><td>Ma trận đề</td><td>Chờ duyệt → Duyệt, Yêu cầu chỉnh sửa lại, hoặc Không duyệt</td></tr>
+        <tr><td>Ca thi trực tuyến</td><td>Đã tạo → Kích hoạt (có mật khẩu phòng) → Công bố → Đang thi → Kết thúc ca</td></tr>
+        <tr><td>Điểm một bài thi viết</td><td>Đã nhập → Đã nộp → (Thẩm định nếu có) → Đã rà soát → Đã chốt → Đã duyệt → Đã công bố</td></tr>
+        <tr><td>Yêu cầu hiệu chỉnh</td><td>Chờ nhập điểm đề xuất → Đã đối soát → Bộ môn đã duyệt → Đã xác nhận; hoặc Từ chối, Yêu cầu chỉnh sửa, Hủy</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="man-hinh">
+    <h2>7. Danh mục màn hình</h2>
+    <div class="bang"><table>
+      <thead><tr><th>Nhóm menu</th><th>Màn hình</th><th>Tác nhân chính</th></tr></thead>
+      <tbody>
+        <tr><td>Lập kế hoạch thi</td><td>Đợt thi, Lớp thi trong đợt, Học phần thi, Tư cách dự thi, Nộp bài thi cuối kỳ</td><td>Chuyên viên</td></tr>
+        <tr><td>Ngân hàng câu hỏi</td><td>Tổng quan (theo học phần: Thông tin chung, Phân quyền, Mức điểm, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề)</td><td>Giảng viên, trưởng bộ môn, người ra đề</td></tr>
+        <tr><td>Tổ chức thi</td><td>Lịch thi (Xếp lịch, Truyền thống, Online), Phân công coi thi, Phách thi, Trạng thái dự thi, Vi phạm</td><td>Chuyên viên</td></tr>
+        <tr><td>Kết quả thi</td><td>Rà soát điểm (Chính thức, Thẩm định), Chốt điểm, Duyệt điểm, Công bố điểm, Hiệu chỉnh điểm</td><td>Chuyên viên, người duyệt</td></tr>
+        <tr><td>Phúc khảo</td><td>Đợt phúc khảo, Rà soát, Chốt, Duyệt, Công bố điểm phúc khảo</td><td>Chuyên viên, người duyệt</td></tr>
+        <tr><td>Phân công</td><td>Theo học phần, Theo kỳ thi</td><td>Chuyên viên, đơn vị</td></tr>
+        <tr><td>Giám thị coi thi</td><td>Đăng ký coi thi, Ca thi của tôi</td><td>Giảng viên, giám thị</td></tr>
+        <tr><td>Chấm điểm</td><td>Chính thức, Thẩm định, Phúc khảo</td><td>Cán bộ chấm</td></tr>
+        <tr><td>Thống kê báo cáo</td><td>Lập kế hoạch, Tổ chức thi, Kết quả thi, Kết quả học phần, Hiệu chỉnh điểm, Phúc khảo, Trạng thái ký số</td><td>Chuyên viên, lãnh đạo</td></tr>
+        <tr><td>Danh mục, cấu hình</td><td>Phương thức, Hình thức, Phòng thi, Khung giờ thi, Phân quyền học phần, Cài đặt</td><td>Quản trị</td></tr>
+        <tr><td>Trang thi (sinh viên)</td><td>Danh sách ca thi, Làm bài, Kết quả</td><td>Sinh viên</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>KT-NV-01 · Phiên bản 1.0 · 10/11/2026 · Khi phát hiện điểm mô tả chưa khớp hệ thống, báo trong nhóm để cập nhật.</footer>
+</main>
+<script type="module" src="../assets/so-do.js"></script>
+</body>
+</html>

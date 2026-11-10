@@ -13,16 +13,16 @@
 html { -webkit-text-size-adjust: 100%; }
 /* Bố cục: một cột đọc ~70 ký tự; bảng và sơ đồ rộng hơn trong khung cuộn riêng. Màu mực xanh của phiếu thi, cam cho chỗ cần chú ý. */
 :root {
-  --bg: #f4f6f9;
+  --bg: #ffffff;
   --surface: #ffffff;
-  --fg: #16202c;
-  --muted: #586474;
-  --line: #d9e0e8;
-  --accent: #2348c8;
-  --accent-soft: #e8edfd;
-  --warn: #a14b06;
-  --warn-soft: #fdf1e3;
-  --ok: #17733a;
+  --fg: #111111;
+  --muted: #555555;
+  --line: #d4d4d4;
+  --accent: #111111;
+  --accent-soft: #efefef;
+  --warn: #111111;
+  --warn-soft: #f3f3f3;
+  --ok: #111111;
   --font-body: "Be Vietnam Pro", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
   --step--1: 0.8125rem;
@@ -156,8 +156,8 @@ flowchart TD
   G --> H["Chấm và nhập điểm"]:::tam
   H --> I["Rà soát, chốt, duyệt, công bố"]:::mo
   I --> J["Phúc khảo"]:::mo
-  classDef tam fill:#2348c8,stroke:#2348c8,color:#ffffff
-  classDef mo fill:none,stroke:#8a94a3,stroke-dasharray:4 3
+  classDef tam fill:#111111,stroke:#111111,color:#ffffff
+  classDef mo fill:#ffffff,stroke:#777777,stroke-dasharray:4 3
   style DE fill:none,stroke:#8a94a3
 </pre>
     </div>
@@ -309,7 +309,7 @@ flowchart TD
     </div>
     <ul class="tight">
       <li>Mỗi bài lưu điểm của từng cán bộ, độ lệch, điểm trung bình, điểm cuối và điểm sau khi trừ vi phạm. Bài bị yêu cầu chấm lại quay về cán bộ chấm.</li>
-      <li>Nhánh <code>develop</code> có thêm mẫu Excel "giảng viên nộp điểm thi" và báo cáo thống kê nhập điểm. Bản demo dựng từ nhánh <code>main</code> nên chưa có.</li>
+      <li>Bản demo chạy nhánh <code>develop</code>, đã có mẫu Excel "giảng viên nộp điểm thi" và báo cáo thống kê nhập điểm.</li>
     </ul>
   </section>
 
@@ -361,7 +361,7 @@ flowchart TD
     <p class="muted">Rút ra khi đọc code; chưa ai xác nhận trên giao diện. Làm xong thì ghi kết quả gửi trong nhóm.</p>
     <div class="tc">
       <div><span class="id">TC-01</span><div class="body"><b>Câu chưa duyệt nhưng bật Kích hoạt có bị rút vào đề không?</b><span class="muted">Duyệt thì hệ thống tự bật Kích hoạt, và sinh đề chỉ lấy câu đang kích hoạt. Nhưng nút Kích hoạt bật được cả câu chưa duyệt.</span></div></div>
-      <div><span class="id">TC-02</span><div class="body"><b>Ma trận chưa duyệt có tạo được bộ đề không?</b><span class="muted">Theo code: tạo được, không có bước kiểm trạng thái ma trận.</span></div></div>
+      <div><span class="id">TC-02</span><div class="body"><b>Ma trận chưa duyệt có tạo được bộ đề không?</b><span class="muted">Mong đợi: form tạo bộ đề chỉ cho chọn ma trận đã duyệt.</span></div></div>
       <div><span class="id">TC-03</span><div class="body"><b>Nhập lại cùng một file Word.</b><span class="muted">Mong đợi: câu đã có nằm ở tab Trùng, ngân hàng không bị nhân đôi.</span></div></div>
       <div><span class="id">TC-04</span><div class="body"><b>Học phần chưa cấu hình Mức điểm.</b><span class="muted">Mong đợi: điểm thi online dùng trọng số mặc định 1, 2, 3, 4 theo độ khó.</span></div></div>
       <div><span class="id">TC-05</span><div class="body"><b>Câu tự luận trong ca thi online được tính điểm thế nào?</b><span class="muted">Theo code: không tự chấm, tính 0 điểm; chưa thấy màn chấm tay cho câu này.</span></div></div>
@@ -376,19 +376,19 @@ flowchart TD
     </header>
     <ul class="tight">
       <li>Bản demo không nối được QLDT, CSVC thật. Không dùng nút <b>Khởi tạo</b> học phần thi và <b>Đồng bộ với QLDT</b>; dùng Thêm mới hoặc nhập Excel.</li>
-      <li>Hiệu chỉnh điểm và Đợt phúc khảo báo lỗi, vì bản demo dựng từ nhánh <code>main</code> chưa có hai tính năng này. Phân công › Theo kỳ thi báo lỗi vì cần dữ liệu đơn vị từ hệ thống nhân sự.</li>
+      <li>Phân công › Theo kỳ thi báo lỗi, vì cần dữ liệu đơn vị từ hệ thống nhân sự, mà bản demo đang dùng giả lập. Quy trình › Tiếp nhận lỗi do dịch vụ bên ngoài.</li>
       <li>Hai tài khoản dùng chung cho cả nhóm. Báo nhau trước khi thi thử để không tranh lượt nộp bài.</li>
       <li>Dữ liệu mẫu có thể được tạo lại; mọi thứ tự nhập sẽ mất. Sẽ có thông báo trong nhóm trước khi tạo lại.</li>
       <li>Trang thi hiện cảnh báo nếu chạy trong máy ảo. Cảnh báo không chặn vào thi.</li>
     </ul>
   </section>
 
-  <footer>Nội dung đối chiếu từ code bản demo ngày 08/11/2026. Khi thấy giao diện khác mô tả, báo trong nhóm để cập nhật sổ tay.</footer>
+  <footer>Nội dung đối chiếu từ code bản demo (nhánh develop), cập nhật 10/11/2026. Khi thấy giao diện khác mô tả, báo trong nhóm để cập nhật sổ tay.</footer>
 </div>
 
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
-  mermaid.initialize({ startOnLoad: false, securityLevel: "strict", flowchart: { useMaxWidth: true }, theme: "default", fontFamily: '"Be Vietnam Pro", system-ui, sans-serif' });
+  mermaid.initialize({ startOnLoad: false, securityLevel: "strict", flowchart: { useMaxWidth: true }, theme: "neutral", fontFamily: '"Be Vietnam Pro", system-ui, sans-serif' });
   await mermaid.run({ querySelector: "pre.mermaid" });
 </script>
 </body>
