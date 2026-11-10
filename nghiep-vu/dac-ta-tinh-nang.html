@@ -22,7 +22,7 @@
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-DT-01</dd>
-      <dt>Phiên bản</dt><dd>0.6 (bản nháp)</dd>
+      <dt>Phiên bản</dt><dd>0.7 (bản nháp)</dd>
       <dt>Ngày</dt><dd>10/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>PO, BA, Tester, Dev</dd>
       <dt>Phạm vi</dt><dd>Menu Ngân hàng câu hỏi: Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề</dd>
@@ -33,7 +33,6 @@
 
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
-      <li><a href="#tom-tat">Tóm tắt</a></li>
       <li><a href="#yeu-cau">Yêu cầu từ cuộc họp</a></li>
       <li><a href="#danh-sach">Danh sách tính năng và lộ trình</a></li>
       <li><a href="#dac-ta">Đặc tả từng tính năng</a></li>
@@ -41,19 +40,8 @@
     </ol>
   </nav>
 
-  <section id="tom-tat">
-    <h2>1. Tóm tắt</h2>
-    <ul>
-      <li><b>8 tính năng</b> cho menu Ngân hàng câu hỏi, phủ cả 5 màn hình và mọi ý trong note họp (mục 2). Danh sách và lộ trình ở mục 3, đặc tả chi tiết ở mục 4, việc kỹ thuật nền cho Dev ở mục 5.</li>
-      <li><b>Giao diện làm lại cho cả 5 màn hình.</b> Tính năng thông minh chỉ chọn cái giúp bớt việc hoặc tránh sai sót có thật. AI gắn tại chỗ ở từng màn hình, bật/tắt riêng; tắt AI thì mọi thứ khác vẫn chạy.</li>
-      <li><b>Nên làm trước:</b> F-02, F-05, F-06 và dạng "nhiều đáp án" của F-03, vì chắc chắn hữu ích và ít phụ thuộc điều kiện. F-07 cần đủ ca thi trực tuyến; F-04 là đề xuất từ đối chiếu code; F-08 cần thí điểm.</li>
-      <li>Vấn đề ở mỗi tính năng lấy từ note họp và từ thao tác thực tế trên hệ thống, chưa hỏi người dùng. Trước giai đoạn 1 nên hỏi nhanh 2–3 giảng viên soạn đề và 1–2 trưởng bộ môn để xác nhận.</li>
-    </ul>
-    <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được và mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không bị ảnh hưởng. Gợi ý tự động (thống kê, AI) chỉ để hỗ trợ; người có thẩm quyền quyết định. Mọi tính năng tuân theo phân quyền ngân hàng hiện có.</div>
-  </section>
-
   <section id="yeu-cau">
-    <h2>2. Yêu cầu từ cuộc họp</h2>
+    <h2>1. Yêu cầu từ cuộc họp</h2>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Yêu cầu</th><th>Hiện trạng (đối chiếu code)</th><th>Tính năng</th></tr></thead>
       <tbody>
@@ -63,13 +51,13 @@
         <tr><td><span class="ma">YC-04</span></td><td>Tính năng thông minh cho ngân hàng, ví dụ sinh câu theo môn và chương</td><td>Chưa có gợi ý hay phân tích nào. Đã lưu đúng/sai từng câu của mỗi bài thi trực tuyến nhưng chưa dùng.</td><td>F-07<br>F-08</td></tr>
         <tr><td><span class="ma">YC-05</span></td><td>Tạo ma trận đề thông minh hơn</td><td>Thêm từng dòng, chỉ thấy số câu tối đa của dòng đang soạn. Không biết trước đề khó hay dễ.</td><td>F-05</td></tr>
         <tr><td><span class="ma">YC-06</span></td><td>Thông minh hơn về nhập điểm</td><td>Mức điểm đặt theo độ khó rồi tự áp cho mọi câu; khi thi, điểm được quy về thang 10 theo cấu trúc đề, nên người ra đề không thấy trước mỗi câu đáng bao nhiêu điểm.</td><td>F-05</td></tr>
-        <tr><td><span class="ma">YC-07</span></td><td>Danh sách tính năng thông minh và hướng refactor cho dạng câu, bộ đề, ma trận (họp nhóm 10/11)</td><td>Mã dạng câu khai báo lặp ở nhiều nơi và đang lệch nhau; logic rút câu lặp giữa ma trận và bộ đề.</td><td>Mục 4<br>Mục 5</td></tr>
+        <tr><td><span class="ma">YC-07</span></td><td>Danh sách tính năng thông minh và hướng refactor cho dạng câu, bộ đề, ma trận (họp nhóm 10/11)</td><td>Mã dạng câu khai báo lặp ở nhiều nơi và đang lệch nhau; logic rút câu lặp giữa ma trận và bộ đề.</td><td>Mục 3<br>Mục 4</td></tr>
       </tbody>
     </table></div>
   </section>
 
   <section id="danh-sach">
-    <h2>3. Danh sách tính năng và lộ trình</h2>
+    <h2>2. Danh sách tính năng và lộ trình</h2>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Tính năng</th><th>Để làm gì</th><th>Giá trị</th><th>Rủi ro</th><th>Giai đoạn</th></tr></thead>
       <tbody>
@@ -85,15 +73,17 @@
     </table></div>
     <p><b>Điều kiện từng giai đoạn:</b></p>
     <ul>
-      <li><b>Giai đoạn 1</b>, giao diện mới và bớt thao tác ngay: không cần AI; làm A1, A2 ở mục 5 trước hoặc cùng lúc.</li>
+      <li><b>Giai đoạn 1</b>, giao diện mới và bớt thao tác ngay: không cần AI; làm A1, A2 ở mục 4 trước hoặc cùng lúc.</li>
       <li><b>Giai đoạn 2</b>, cấu trúc kho và khai thác dữ liệu: thi trực tuyến đã được kiểm tra lại và chấm đúng.</li>
       <li><b>Giai đoạn 3</b>, AI tại chỗ: được phép dùng dịch vụ AI; có thể làm song song giai đoạn 2.</li>
     </ul>
+    <p><b>Lưu ý:</b> F-02, F-05, F-06 và dạng "nhiều đáp án" của F-03 chắc chắn hữu ích và ít phụ thuộc điều kiện. F-07 cần đủ ca thi trực tuyến; F-04 là đề xuất từ đối chiếu code; F-08 cần thí điểm. Vấn đề ở mỗi tính năng lấy từ note họp và từ thao tác thực tế trên hệ thống, chưa hỏi người dùng; trước giai đoạn 1 nên hỏi nhanh 2–3 giảng viên soạn đề và 1–2 trưởng bộ môn để xác nhận.</p>
+    <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được và mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không bị ảnh hưởng. Gợi ý tự động (thống kê, AI) chỉ để hỗ trợ; người có thẩm quyền quyết định. Mọi tính năng tuân theo phân quyền ngân hàng hiện có.</div>
   </section>
 
 
   <section id="dac-ta">
-    <h2>4. Đặc tả từng tính năng</h2>
+    <h2>3. Đặc tả từng tính năng</h2>
 
     <div class="khoi" id="f-01">
       <div class="khoi-dau"><span class="ma">F-01</span><h3>Bản đồ kho câu hỏi</h3></div>
@@ -172,7 +162,7 @@
       </table></div>
       <div class="bang"><table>
         <tbody>
-          <tr><th style="width:150px">Cần làm thêm</th><td>Dạng nhiều đáp án: mở trên form soạn và ma trận, thêm quy ước nhiều đáp án đúng vào file Word mẫu. Các dạng sau: thống nhất mã dạng câu (mục 5, A1), rồi làm đủ các bước cho từng dạng.</td></tr>
+          <tr><th style="width:150px">Cần làm thêm</th><td>Dạng nhiều đáp án: mở trên form soạn và ma trận, thêm quy ước nhiều đáp án đúng vào file Word mẫu. Các dạng sau: thống nhất mã dạng câu (mục 4, A1), rồi làm đủ các bước cho từng dạng.</td></tr>
           <tr><th>Rủi ro, điều kiện</th><td>Các dạng sau tốn công hơn dạng đầu vì máy chủ chưa chấm được. Hai dòng "chưa xác minh" cần kiểm tra khi test lại thi trực tuyến.</td></tr>
         </tbody>
       </table></div>
@@ -332,7 +322,7 @@
       <div class="bang"><table>
         <tbody>
           <tr><th style="width:150px">Hệ thống đã có</th><td>Chặn câu trùng y hệt khi nhập file; màn kết quả nhập file (Hợp lệ, Thất bại, Trùng) dùng lại được để xem, sửa và chọn câu do AI đề xuất; tên chương và câu đã duyệt để làm mẫu. Đề cương lấy từ QLDT chỉ có trọng số và file đính kèm, không có nội dung từng chương.</td></tr>
-          <tr><th>Cần làm thêm</th><td>Phần AI ở máy chủ (mục 5, A5); kiểm soát quyền, giới hạn lượt dùng và chi phí; các nút AI trên từng màn hình.</td></tr>
+          <tr><th>Cần làm thêm</th><td>Phần AI ở máy chủ (mục 4, A5); kiểm soát quyền, giới hạn lượt dùng và chi phí; các nút AI trên từng màn hình.</td></tr>
           <tr><th>Rủi ro, điều kiện</th><td>Chất lượng câu tiếng Việt chuyên ngành chưa chắc chắn, nên câu AI bắt buộc qua duyệt. Chỉ gửi nội dung câu hỏi và tài liệu, không gửi thông tin sinh viên. Nên thí điểm vài học phần trước.</td></tr>
         </tbody>
       </table></div>
@@ -353,8 +343,8 @@
   </section>
 
   <section id="ky-thuat">
-    <h2>5. Việc kỹ thuật nền</h2>
-    <p>Mục này là hệ quả của mục 4: muốn làm các tính năng trên, Dev phải làm trước một số việc nền. Đây cũng là hướng refactor nhóm đề xuất (YC-07): làm xong thì thêm dạng câu, sửa ma trận, bộ đề không còn phải sửa nhiều chỗ như hiện nay. Cột cuối cho biết mỗi việc phục vụ tính năng nào. Làm theo từng bước, giữ nguyên hành vi hiện tại cho tới khi bật tính năng mới.</p>
+    <h2>4. Việc kỹ thuật nền</h2>
+    <p>Mục này là hệ quả của mục 3: muốn làm các tính năng trên, Dev phải làm trước một số việc nền. Đây cũng là hướng refactor nhóm đề xuất (YC-07): làm xong thì thêm dạng câu, sửa ma trận, bộ đề không còn phải sửa nhiều chỗ như hiện nay. Cột cuối cho biết mỗi việc phục vụ tính năng nào. Làm theo từng bước, giữ nguyên hành vi hiện tại cho tới khi bật tính năng mới.</p>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Hiện trạng</th><th>Hướng</th><th>Phục vụ</th></tr></thead>
       <tbody>
@@ -368,7 +358,7 @@
     </table></div>
   </section>
 
-  <footer>KT-DT-01 · Phiên bản 0.6 · 10/11/2026 · Phần "Hệ thống đã có" đối chiếu từ mã nguồn bản đang phát triển. Khi đưa vào phát triển, mỗi tính năng được tách thành user story chi tiết, kèm phác thảo màn hình.</footer>
+  <footer>KT-DT-01 · Phiên bản 0.7 · 10/11/2026 · Phần "Hệ thống đã có" đối chiếu từ mã nguồn bản đang phát triển. Khi đưa vào phát triển, mỗi tính năng được tách thành user story chi tiết, kèm phác thảo màn hình.</footer>
 </main>
 </body>
 </html>
