@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Tổng quan nghiệp vụ phân hệ Khảo thí: thuật ngữ, tác nhân, các quy trình, trạng thái, màn hình.">
+<meta name="description" content="Tổng quan nghiệp vụ phân hệ Khảo thí: thuật ngữ, tác nhân, các quy trình, trạng thái, màn hình, thực hành trên bản demo.">
 <title>Tổng quan nghiệp vụ Khảo thí</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,11 +22,11 @@
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-NV-01</dd>
-      <dt>Phiên bản</dt><dd>1.0 (bản nháp để thống nhất)</dd>
+      <dt>Phiên bản</dt><dd>1.1 (bản nháp để thống nhất)</dd>
       <dt>Ngày</dt><dd>10/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>BA, Tester, Dev</dd>
       <dt>Căn cứ</dt><dd>Hệ thống đang vận hành và môi trường demo</dd>
-      <dt>Tài liệu liên quan</dt><dd><a href="dac-ta-tinh-nang.html">KT-DT-01 Đặc tả tính năng phát triển</a> · <a href="../huong-dan/so-tay-ngan-hang-de.html">Sổ tay Ngân hàng đề</a></dd>
+      <dt>Tài liệu liên quan</dt><dd><a href="dac-ta-tinh-nang.html">KT-DT-01 Đặc tả tính năng phát triển</a></dd>
     </dl>
   </div>
 
@@ -39,6 +39,7 @@
       <li><a href="#quy-trinh">Quy trình nghiệp vụ</a></li>
       <li><a href="#trang-thai">Trạng thái chính</a></li>
       <li><a href="#man-hinh">Danh mục màn hình</a></li>
+      <li><a href="#thuc-hanh">Thực hành trên bản demo</a></li>
     </ol>
   </nav>
 
@@ -364,7 +365,55 @@ flowchart LR
     </table></div>
   </section>
 
-  <footer>KT-NV-01 · Phiên bản 1.0 · 10/11/2026 · Khi phát hiện điểm mô tả chưa khớp hệ thống, báo trong nhóm để cập nhật.</footer>
+  <section id="thuc-hanh">
+    <h2>8. Thực hành trên bản demo</h2>
+    <p>Bản demo chạy cùng mã nguồn với bản đang phát triển, để tự thao tác và đối chiếu các quy trình ở mục 5. Tài khoản dùng thử được gửi riêng trong nhóm.</p>
+    <div class="bang"><table>
+      <tbody>
+        <tr><th style="width:170px">Trang quản trị</th><td><a href="https://khaothi.dangpham.id.vn" target="_blank" rel="noopener">khaothi.dangpham.id.vn</a></td></tr>
+        <tr><th>Trang thi sinh viên</th><td><a href="https://thi-online.dangpham.id.vn" target="_blank" rel="noopener">thi-online.dangpham.id.vn</a></td></tr>
+        <tr><th>Dữ liệu</th><td>Danh mục học kỳ, học phần, đơn vị lấy từ RIPT. Đợt thi, câu hỏi, ca thi là dữ liệu mẫu, có thể được tạo lại.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>8.1 Các bước thực hành</h3>
+    <div class="bang"><table>
+      <thead><tr><th>Bước</th><th>Thao tác</th><th>Kết quả mong đợi</th><th>Quy trình</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Đăng nhập trang quản trị, vào Đề thi › Tổng quan, mở học phần <span class="ma">INT1340_CLC</span>.</td><td>7 tab; 2 khối kiến thức, 15 câu đã duyệt, 1 ma trận, 1 bộ đề 2 mã đề.</td><td>QT-02</td></tr>
+        <tr><td>2</td><td>Tab Ngân hàng câu hỏi: thêm một câu trắc nghiệm, gửi duyệt, rồi duyệt.</td><td>Trạng thái đổi lần lượt: Chưa gửi, Chờ duyệt, Duyệt.</td><td>QT-02</td></tr>
+        <tr><td>3</td><td>Tạo ma trận 2 dòng (3 câu Dễ, 2 câu Trung bình). Tạo bộ đề 2 mã đề, lần lượt theo hai hình thức "Sinh từ đề gốc" và "Sinh toàn bộ đề từ ngân hàng". Sau đó sửa một dòng thành 30 câu Dễ.</td><td>Hình thức thứ nhất: cùng câu, khác thứ tự. Hình thức thứ hai: khác câu. Khi sửa thành 30 câu, hệ thống báo không đủ câu, kèm số tối đa.</td><td>QT-03</td></tr>
+        <tr><td>4</td><td>Tổ chức thi › Lịch thi › Online: chọn một ca đang trong giờ thi, xem mật khẩu phòng. Đăng nhập trang thi bằng tài khoản sinh viên, vào ca, làm vài câu rồi nộp.</td><td>Đề hiện đủ câu, có đồng hồ đếm ngược; nộp được bài. Mỗi tài khoản chỉ nộp được một lần mỗi ca. Không có ca nào đang trong giờ thi thì tự tạo ca theo QT-05.</td><td>QT-05</td></tr>
+        <tr><td>5</td><td>Chấm điểm › Chính thức: chọn <span class="ma">INT1434_CLC</span>, mở túi bài, nhập điểm vài phách. Xem lại ở Kết quả thi › Rà soát điểm.</td><td>Túi có 14 bài; điểm vừa nhập xuất hiện ở trang rà soát.</td><td>QT-06<br>QT-07</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>8.2 Điểm cần kiểm chứng</h3>
+    <p>Rút ra khi đọc mã nguồn, chưa được xác nhận trên giao diện. Kiểm xong thì gửi kết quả trong nhóm.</p>
+    <div class="bang"><table>
+      <thead><tr><th>Mã</th><th>Nội dung</th><th>Theo mã nguồn</th></tr></thead>
+      <tbody>
+        <tr><td><span class="ma">TC-01</span></td><td>Câu chưa duyệt nhưng được bật Kích hoạt có bị rút vào đề không?</td><td>Sinh đề chỉ lấy câu đang kích hoạt; duyệt thì tự bật kích hoạt, nhưng nút Kích hoạt bật được cả câu chưa duyệt.</td></tr>
+        <tr><td><span class="ma">TC-02</span></td><td>Ma trận chưa duyệt có tạo được bộ đề không?</td><td>Form tạo bộ đề chỉ cho chọn ma trận đã duyệt.</td></tr>
+        <tr><td><span class="ma">TC-03</span></td><td>Nhập lại cùng một file Word.</td><td>Câu đã có nằm ở tab Trùng; ngân hàng không bị nhân đôi.</td></tr>
+        <tr><td><span class="ma">TC-04</span></td><td>Học phần chưa cấu hình Mức điểm.</td><td>Điểm thi trực tuyến dùng trọng số mặc định 1, 2, 3, 4 theo độ khó.</td></tr>
+        <tr><td><span class="ma">TC-05</span></td><td>Câu tự luận trong ca thi trực tuyến được tính điểm thế nào?</td><td>Không tự chấm, tính 0 điểm; chưa có màn chấm tay.</td></tr>
+        <tr><td><span class="ma">TC-06</span></td><td>Bấm Kết thúc ca thi khi sinh viên còn đang làm bài.</td><td>Nút chỉ chặn trước giờ bắt đầu ca, không chặn trước giờ kết thúc; ai chưa nộp bị ghi là không có bài.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>8.3 Giới hạn của bản demo</h3>
+    <ul>
+      <li>Điểm thi trực tuyến hiện luôn ra 0, do trang thi gửi sai mã đề khi nộp bài. Đây là lỗi đã biết, đang chờ sửa; TC-04 kiểm sau khi sửa.</li>
+      <li>Bản demo dùng dữ liệu giả lập thay cho QLDT, CSVC. Không dùng nút Khởi tạo học phần thi và Đồng bộ với QLDT; dùng Thêm mới hoặc nhập Excel.</li>
+      <li>Phân công › Theo kỳ thi báo lỗi vì cần dữ liệu đơn vị từ hệ thống nhân sự; Quy trình › Tiếp nhận báo lỗi do dịch vụ bên ngoài.</li>
+      <li>Tài khoản dùng chung cả nhóm: báo nhau trước khi thi thử để không tranh lượt nộp bài.</li>
+      <li>Dữ liệu mẫu có thể được tạo lại (có báo trước trong nhóm); những gì đã tự nhập sẽ mất.</li>
+      <li>Trang thi hiện cảnh báo nếu chạy trong máy ảo; cảnh báo không chặn vào thi.</li>
+    </ul>
+  </section>
+
+  <footer>KT-NV-01 · Phiên bản 1.1 · 10/11/2026 · Khi phát hiện điểm mô tả chưa khớp hệ thống, báo trong nhóm để cập nhật.</footer>
 </main>
 <script type="module" src="../assets/so-do.js"></script>
 </body>
