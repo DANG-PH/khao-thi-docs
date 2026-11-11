@@ -22,7 +22,7 @@
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-NV-01</dd>
-      <dt>Phiên bản</dt><dd>1.1 (bản nháp để thống nhất)</dd>
+      <dt>Phiên bản</dt><dd>1.2 (bản nháp để thống nhất)</dd>
       <dt>Ngày</dt><dd>10/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>BA, Tester, Dev</dd>
       <dt>Căn cứ</dt><dd>Hệ thống đang vận hành và môi trường demo</dd>
@@ -367,7 +367,7 @@ flowchart LR
 
   <section id="thuc-hanh">
     <h2>8. Thực hành trên bản demo</h2>
-    <p>Bản demo chạy cùng mã nguồn với bản đang phát triển, để tự thao tác và đối chiếu các quy trình ở mục 5. Tài khoản dùng thử được gửi riêng trong nhóm.</p>
+    <p>Bản demo chạy cùng mã nguồn với bản đang phát triển, để tự thao tác và đối chiếu các quy trình ở mục 5. Trang quản trị đăng nhập bằng tài khoản RIPT; trang thi đăng nhập bằng 20 tài khoản sinh viên test <span class="ma">svtest01</span> đến <span class="ma">svtest20</span>. Mật khẩu gửi riêng trong nhóm.</p>
     <div class="bang"><table>
       <tbody>
         <tr><th style="width:170px">Trang quản trị</th><td><a href="https://khaothi.dangpham.id.vn" target="_blank" rel="noopener">khaothi.dangpham.id.vn</a></td></tr>
@@ -383,7 +383,7 @@ flowchart LR
         <tr><td>1</td><td>Đăng nhập trang quản trị, vào Đề thi › Tổng quan, mở học phần <span class="ma">INT1340_CLC</span>.</td><td>7 tab; 2 khối kiến thức, 15 câu đã duyệt, 1 ma trận, 1 bộ đề 2 mã đề.</td><td>QT-02</td></tr>
         <tr><td>2</td><td>Tab Ngân hàng câu hỏi: thêm một câu trắc nghiệm, gửi duyệt, rồi duyệt.</td><td>Trạng thái đổi lần lượt: Chưa gửi, Chờ duyệt, Duyệt.</td><td>QT-02</td></tr>
         <tr><td>3</td><td>Tạo ma trận 2 dòng (3 câu Dễ, 2 câu Trung bình). Tạo bộ đề 2 mã đề, lần lượt theo hai hình thức "Sinh từ đề gốc" và "Sinh toàn bộ đề từ ngân hàng". Sau đó sửa một dòng thành 30 câu Dễ.</td><td>Hình thức thứ nhất: cùng câu, khác thứ tự. Hình thức thứ hai: khác câu. Khi sửa thành 30 câu, hệ thống báo không đủ câu, kèm số tối đa.</td><td>QT-03</td></tr>
-        <tr><td>4</td><td>Tổ chức thi › Lịch thi › Online: chọn một ca đang trong giờ thi, xem mật khẩu phòng. Đăng nhập trang thi bằng tài khoản sinh viên, vào ca, làm vài câu rồi nộp.</td><td>Đề hiện đủ câu, có đồng hồ đếm ngược; nộp được bài. Mỗi tài khoản chỉ nộp được một lần mỗi ca. Không có ca nào đang trong giờ thi thì tự tạo ca theo QT-05.</td><td>QT-05</td></tr>
+        <tr><td>4</td><td>Tổ chức thi › Lịch thi › Online: chọn một ca đang trong giờ thi, xem mật khẩu phòng. Đăng nhập trang thi bằng một tài khoản <span class="ma">svtest</span> có trong ca, vào ca, làm vài câu rồi nộp.</td><td>Đề hiện đủ câu, có đồng hồ đếm ngược; nộp được bài. Mỗi tài khoản chỉ nộp được một lần mỗi ca. Không có ca nào đang trong giờ thi thì tự tạo ca theo QT-05 (học phần <span class="ma">INT1340_CLC</span> hoặc <span class="ma">TEL1343</span>, chọn thí sinh <span class="ma">SVTEST..</span>).</td><td>QT-05</td></tr>
         <tr><td>5</td><td>Chấm điểm › Chính thức: chọn <span class="ma">INT1434_CLC</span>, mở túi bài, nhập điểm vài phách. Xem lại ở Kết quả thi › Rà soát điểm.</td><td>Túi có 14 bài; điểm vừa nhập xuất hiện ở trang rà soát.</td><td>QT-06<br>QT-07</td></tr>
       </tbody>
     </table></div>
@@ -407,13 +407,13 @@ flowchart LR
       <li>Điểm thi trực tuyến hiện luôn ra 0, do trang thi gửi sai mã đề khi nộp bài. Đây là lỗi đã biết, đang chờ sửa; TC-04 kiểm sau khi sửa.</li>
       <li>Bản demo dùng dữ liệu giả lập thay cho QLDT, CSVC. Không dùng nút Khởi tạo học phần thi và Đồng bộ với QLDT; dùng Thêm mới hoặc nhập Excel.</li>
       <li>Phân công › Theo kỳ thi báo lỗi vì cần dữ liệu đơn vị từ hệ thống nhân sự; Quy trình › Tiếp nhận báo lỗi do dịch vụ bên ngoài.</li>
-      <li>Tài khoản dùng chung cả nhóm: báo nhau trước khi thi thử để không tranh lượt nộp bài.</li>
+      <li>20 sinh viên test (mã <span class="ma">SVTEST01</span> đến <span class="ma">SVTEST20</span>) đã có tư cách dự thi ở <span class="ma">INT1340_CLC</span> và <span class="ma">TEL1343</span> của đợt thi mẫu: tạo ca online mới cho hai học phần này là chọn được họ làm thí sinh. Mỗi người test nên dùng tài khoản riêng để không tranh lượt nộp bài.</li>
       <li>Dữ liệu mẫu có thể được tạo lại (có báo trước trong nhóm); những gì đã tự nhập sẽ mất.</li>
       <li>Trang thi hiện cảnh báo nếu chạy trong máy ảo; cảnh báo không chặn vào thi.</li>
     </ul>
   </section>
 
-  <footer>KT-NV-01 · Phiên bản 1.1 · 10/11/2026 · Khi phát hiện điểm mô tả chưa khớp hệ thống, báo trong nhóm để cập nhật.</footer>
+  <footer>KT-NV-01 · Phiên bản 1.2 · 10/11/2026 · Khi phát hiện điểm mô tả chưa khớp hệ thống, báo trong nhóm để cập nhật.</footer>
 </main>
 <script type="module" src="../assets/so-do.js"></script>
 </body>
