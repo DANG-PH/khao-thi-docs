@@ -22,11 +22,11 @@
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-DT-01</dd>
-      <dt>Phiên bản</dt><dd>0.7 (bản nháp)</dd>
-      <dt>Ngày</dt><dd>10/11/2026</dd>
+      <dt>Phiên bản</dt><dd>0.8 (bản nháp)</dd>
+      <dt>Ngày</dt><dd>11/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>PO, BA, Tester, Dev</dd>
       <dt>Phạm vi</dt><dd>Menu Ngân hàng câu hỏi: Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề</dd>
-      <dt>Căn cứ</dt><dd>Ghi chú các buổi họp với PO và buổi họp nhóm ngày 10/11/2026; đối chiếu mã nguồn bản đang phát triển (máy chủ, trang quản trị, trang thi); tham khảo các hệ thống ngân hàng đề khác</dd>
+      <dt>Căn cứ</dt><dd>Ghi chú các buổi họp với PO và buổi họp nhóm ngày 10/11/2026; phản hồi của BA ngày 11/11/2026; đối chiếu mã nguồn bản đang phát triển (máy chủ, trang quản trị, trang thi); tham khảo các hệ thống ngân hàng đề khác</dd>
       <dt>Tài liệu liên quan</dt><dd><a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a> (QT-02, QT-03)</dd>
     </dl>
   </div>
@@ -155,11 +155,13 @@
           <tr><td>Trắc nghiệm một đáp án</td><td>Có</td><td>Có</td><td>Có</td><td>Có</td></tr>
           <tr><td>Tự luận</td><td>Có, nhưng ô đáp án bị khóa</td><td>Có</td><td>Có</td><td>Không; tính 0 điểm</td></tr>
           <tr><td>Câu nối (ghép cặp)</td><td>Có</td><td>Có, kèm thang điểm theo số cặp đúng</td><td>Có</td><td>Có, điểm theo số cặp đúng</td></tr>
-          <tr><td>Câu nhóm (đoạn dẫn và các câu con)</td><td>Có</td><td>Có</td><td>Chưa xác minh</td><td>Chưa xác minh</td></tr>
+          <tr><td>Câu nhóm (đoạn dẫn và các câu con)</td><td>Có</td><td>Có, bọc giữa dòng <code>##</code> và dòng <code>/#</code></td><td>Chưa xác minh</td><td>Chưa xác minh</td></tr>
           <tr><td>Trắc nghiệm nhiều đáp án</td><td>Có sẵn, đang ẩn</td><td>Không (chỉ nhận một đáp án đúng)</td><td>Có</td><td>Có; chọn đúng đủ mới có điểm</td></tr>
+          <tr><td>Đúng/Sai, đáp án số</td><td>Không có dạng riêng; Đúng/Sai đang nhập tạm như trắc nghiệm 2 phương án (thứ tự bị xáo trộn)</td><td>Không có quy ước riêng</td><td>Không</td><td>Chưa</td></tr>
           <tr><td>Trả lời ngắn, điền ô trống, câu nghe, nộp file, kéo thả</td><td>Không</td><td>Không</td><td>Có giao diện, nhưng đánh số dạng khác máy chủ (ví dụ trang thi coi số 9 là kéo thả, máy chủ coi là nộp file)</td><td>Chưa</td></tr>
         </tbody>
       </table></div>
+      <p><b>Câu nhóm hiện nay.</b> Một đoạn dẫn chung (đoạn văn, lược đồ, tình huống, có thể kèm ảnh) và các câu con cùng hỏi về đoạn đó, giống bài đọc hiểu tiếng Anh. Trong kho, cả nhóm là một câu; câu con có thể là trắc nghiệm, tự luận hoặc câu nối, mỗi câu con có độ khó riêng, đoạn dẫn không có độ khó. Ma trận rút câu nhóm theo số nhóm, không lọc theo độ khó; trong đề, các câu con của một nhóm luôn đi liền nhau.</p>
       <div class="bang"><table>
         <tbody>
           <tr><th style="width:150px">Cần làm thêm</th><td>Dạng nhiều đáp án: mở trên form soạn và ma trận, thêm quy ước nhiều đáp án đúng vào file Word mẫu. Các dạng sau: thống nhất mã dạng câu (mục 4, A1), rồi làm đủ các bước cho từng dạng.</td></tr>
@@ -168,16 +170,36 @@
       </table></div>
       <div class="muc"><h4>Giải pháp</h4><ul>
         <li><b>Dạng đầu tiên: trắc nghiệm nhiều đáp án.</b> Hệ thống đã hiển thị và chấm được; chỉ cần mở trên form soạn, file nhập và ma trận.</li>
-        <li><b>Các dạng sau</b>, thứ tự do BA chốt khi phân tích dạng câu, đề xuất: kéo thả sắp xếp và ghép (trang thi đã có giao diện kéo thả), trả lời ngắn và điền ô trống (chấm tự động bằng cách so với đáp án), câu nghe, nộp file (chấm tay).</li>
-        <li><b>Mỗi dạng mới cần đặc tả đủ 6 điểm:</b> cách soạn; quy ước trong file Word; cách hiển thị khi thi; quy tắc chấm (đúng đủ hay từng phần); cách đưa vào ma trận, bộ đề; cách xuất ra đề Word.</li>
+        <li><b>Các dạng sau</b>, theo đề xuất của BA ngày 11/11: Đúng/Sai, Đáp án số, Điền khuyết, Sắp xếp, làm theo thứ tự này (dạng rẻ trước). Câu nghe và nộp file để sau; nộp file cần màn chấm tay, nằm ngoài phạm vi menu này.</li>
+        <li><b>Mỗi dạng mới cần đặc tả đủ 6 điểm:</b> cách soạn; quy ước trong file Word; cách hiển thị khi thi; quy tắc chấm (đúng đủ hay từng phần); cách đưa vào ma trận, bộ đề; cách xuất ra đề Word. Bảng dưới là bản nháp 6 điểm cho 4 dạng trên.</li>
+      </ul></div>
+      <h4>Đặc tả 4 dạng mới (bản nháp)</h4>
+      <div class="bang"><table>
+        <thead><tr><th style="width:110px">Điểm</th><th>Đúng/Sai</th><th>Đáp án số</th><th>Điền khuyết</th><th>Sắp xếp</th></tr></thead>
+        <tbody>
+          <tr><th>1. Soạn</th><td>Nhập khẳng định, chọn Đúng hoặc Sai; giải thích đáp án (không bắt buộc).</td><td>Nhập câu hỏi, giá trị đúng, sai số cho phép (mặc định 0), đơn vị (không bắt buộc).</td><td>Nhập câu hỏi, đánh dấu chỗ trống <code>[1]</code>, <code>[2]</code>…; mỗi chỗ trống nhập một hoặc nhiều đáp án chấp nhận.</td><td>Nhập yêu cầu và các mục theo đúng thứ tự (2–10 mục).</td></tr>
+          <tr><th>2. File Word</th><td>Hàng <code>D</code> ghi <code>Đúng sai</code>; hàng <code>Đ</code> ghi Đúng hoặc Sai; không có T1–T3.</td><td>Hàng <code>D</code> ghi <code>Số</code>; hàng <code>Đ</code> ghi giá trị; hàng <code>S</code> ghi sai số (bỏ trống là 0).</td><td>Hàng <code>D</code> ghi <code>Điền khuyết</code>; câu hỏi có <code>[1]</code>, <code>[2]</code>; hàng <code>Đ1</code>, <code>Đ2</code>… ghi đáp án từng chỗ trống, nhiều đáp án cách nhau bằng dấu <code>|</code>.</td><td>Hàng <code>D</code> ghi <code>Sắp xếp</code>; các hàng <code>1</code>, <code>2</code>, <code>3</code>… ghi các mục theo đúng thứ tự.</td></tr>
+          <tr><th>3. Hiển thị khi thi</th><td>Hai lựa chọn Đúng, Sai; không xáo trộn thứ tự.</td><td>Một ô chỉ nhận số, nhận cả dấu phẩy và dấu chấm; đơn vị hiện cạnh ô.</td><td>Ô nhập ngay tại từng chỗ trống.</td><td>Các mục bị xáo trộn; sinh viên kéo thả để sắp lại.</td></tr>
+          <tr><th>4. Chấm</th><td>Đúng mới có điểm.</td><td>Đúng khi nằm trong khoảng giá trị ± sai số.</td><td>Mỗi chỗ trống đúng được phần điểm bằng nhau (đúng 2/3 chỗ được 2/3 điểm câu). So khớp không phân biệt hoa thường, bỏ khoảng trắng thừa, vẫn phân biệt dấu tiếng Việt.</td><td>Đúng toàn bộ thứ tự mới có điểm. Điểm từng phần là tùy chọn sau, tính theo số cặp liền nhau đúng thứ tự.</td></tr>
+          <tr><th>5. Ma trận, bộ đề</th><td colspan="4">Mỗi dạng là một dạng riêng trong ma trận, rút theo chương và độ khó như trắc nghiệm; điểm câu theo Mức điểm của ma trận. Bộ đề trộn câu như hiện nay.</td></tr>
+          <tr><th>6. Xuất Word</th><td>Đề: khẳng định kèm "Đúng / Sai". Đáp án: Đúng hoặc Sai.</td><td>Đề: câu hỏi kèm dòng trống. Đáp án: giá trị ± sai số.</td><td>Đề: chỗ trống in thành "……(1)……". Đáp án: các đáp án chấp nhận của từng chỗ.</td><td>Đề: các mục đã xáo trộn, đánh A, B, C… Đáp án: thứ tự đúng, ví dụ B – D – A – C.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="muc"><h4>Quy ước chung cho dạng mới</h4><ul>
+        <li><b>Điểm:</b> form soạn không nhập điểm. Điểm câu do Mức điểm theo độ khó trong ma trận quyết định; dạng mới chỉ quy định đúng một phần được bao nhiêu phần trăm điểm câu.</li>
+        <li><b>File Word:</b> hàng <code>D</code> ghi tên dạng câu. Không có hàng <code>D</code> thì hệ thống hiểu như hiện nay, nên file Word cũ vẫn nhập được.</li>
+        <li><b>Trắc nghiệm nhiều đáp án</b> là một ô tích "Cho phép nhiều đáp án đúng" trong dạng Trắc nghiệm, không thành nút riêng trên form.</li>
+        <li><b>Câu nối</b> giữ ghép cặp 1–1 như hiện nay. Dạng phân loại (xếp nhiều lựa chọn vào từng nhóm) là dạng khác, chưa nằm trong đợt này.</li>
+        <li><b>Câu nhóm:</b> câu con vẫn gồm trắc nghiệm, tự luận, câu nối; dạng mới được dùng làm câu con sau khi đã nghiệm thu ở dạng câu đơn.</li>
       </ul></div>
       <p><b>Ví dụ.</b> Môn Cơ sở dữ liệu ra câu "Chọn các phát biểu đúng về khóa chính", có 2 đáp án đúng. Sinh viên chọn đúng cả 2 mới được điểm, như máy chủ đang chấm; điểm từng phần là tùy chọn thêm sau.</p>
       <div class="muc"><h4>Tiêu chí nghiệm thu</h4><ol class="ac">
         <li>Dạng mới soạn được, nhập được từ file Word, đưa được vào ma trận và bộ đề.</li>
         <li>Khi thi trực tuyến, dạng mới hiển thị đúng và được chấm đúng quy tắc đã đặc tả.</li>
         <li>Đề xuất ra Word hiển thị đúng dạng mới.</li>
+        <li>File Word cũ, không có hàng <code>D</code>, vẫn nhập được như trước.</li>
       </ol></div>
-      <p class="muted">Mặc định: làm dạng nhiều đáp án trước, chấm "đúng đủ mới có điểm". Thứ tự và quy tắc chấm các dạng sau do BA chốt.</p>
+      <p class="muted">Mặc định: làm dạng nhiều đáp án trước, chấm "đúng đủ mới có điểm"; 4 dạng sau theo bảng nháp ở trên. Bảng nháp do Dev đề xuất từ code hiện có; BA xem và sửa ô nào khác ý.</p>
     </div>
 
     <div class="khoi" id="f-04">
@@ -358,7 +380,7 @@
     </table></div>
   </section>
 
-  <footer>KT-DT-01 · Phiên bản 0.7 · 10/11/2026 · Phần "Hệ thống đã có" đối chiếu từ mã nguồn bản đang phát triển. Khi đưa vào phát triển, mỗi tính năng được tách thành user story chi tiết, kèm phác thảo màn hình.</footer>
+  <footer>KT-DT-01 · Phiên bản 0.8 · 11/11/2026 · Phần "Hệ thống đã có" đối chiếu từ mã nguồn bản đang phát triển. Khi đưa vào phát triển, mỗi tính năng được tách thành user story chi tiết, kèm phác thảo màn hình.</footer>
 </main>
 </body>
 </html>
