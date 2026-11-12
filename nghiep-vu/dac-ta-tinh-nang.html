@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 18 tính năng mới theo 4 nhóm ưu tiên và 5 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
+<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 18 tính năng mới theo 4 nhóm ưu tiên và 4 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
 <title>Đặc tả tính năng phát triển</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
       <dt>Ngày</dt><dd>12/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>PO, BA, Tester, Dev</dd>
       <dt>Phạm vi</dt><dd>Menu Ngân hàng câu hỏi: Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi khi làm bài các dạng câu mới</dd>
-      <dt>Căn cứ</dt><dd>Buổi họp ngày 12/11/2026; phản hồi của BA ngày 11/11/2026; đối chiếu mã nguồn bản đang chạy (máy chủ nhánh develop, trang quản trị, trang thi); thử trên bản demo ngày 12/11/2026</dd>
+      <dt>Căn cứ</dt><dd>Buổi họp ngày 12/11/2026; phản hồi của BA ngày 11/11/2026; đối chiếu mã nguồn: máy chủ nhánh develop (bản lấy về ngày 06/11/2026), trang quản trị và trang thi trong <code>all_thi_online</code> (bản 02/11/2026), trang thi GitLab nhánh <code>feature/thi-online</code>; thử trên bản demo ngày 12/11/2026</dd>
       <dt>Tài liệu liên quan</dt><dd><a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a> · <a href="../huong-dan/nhap-cau-hoi-tu-word.html">KT-HD-01 Nhập câu hỏi từ Word</a></dd>
     </dl>
   </div>
@@ -80,11 +80,10 @@
         <tr><td><span class="ma">TM-5</span></td><td><a href="#tm-5">Phát hiện câu cùng ý</a></td><td>Kho không phình bởi câu trùng ý; đề không có hai câu cùng một ý.</td></tr>
         <tr><td><span class="ma">TM-6</span></td><td><a href="#tm-6">AI hỗ trợ soạn câu</a></td><td>Kho dày nhanh hơn; giảng viên rà và sửa thay vì viết từ đầu.</td></tr>
         <tr><th colspan="3">Ngoài đề xuất: hoàn thiện phần đã có trong code nhưng chưa dùng được</th></tr>
-        <tr><td><span class="ma">HT-1</span></td><td><a href="#ht-1">Sửa lỗi điểm thi trực tuyến ra 0</a></td><td>Điểm thi trực tuyến đúng; là điều kiện cho CĐR-3 và TM-1 đến TM-3.</td></tr>
-        <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">Mở dạng trắc nghiệm nhiều đáp án</a></td><td>Phần chấm đã có; thêm phần soạn là giảng viên dùng được.</td></tr>
-        <tr><td><span class="ma">HT-3</span></td><td><a href="#ht-3">Câu nối cho phép nhiều nội dung cùng một mục</a></td><td>Câu phân loại trong file mẫu nhập vào chạy đúng khi thi.</td></tr>
-        <tr><td><span class="ma">HT-4</span></td><td><a href="#ht-4">Sửa câu lỗi ngay khi nhập file</a></td><td>File có 1–2 câu lỗi vẫn nhập xong trong một lần.</td></tr>
-        <tr><td><span class="ma">HT-5</span></td><td><a href="#ht-5">File mẫu nhập Word có hướng dẫn</a></td><td>Giảng viên lần đầu tự nhập được, ít câu lỗi.</td></tr>
+        <tr><td><span class="ma">HT-1</span></td><td><a href="#ht-1">Mở dạng trắc nghiệm nhiều đáp án</a></td><td>Phần chấm đã có; thêm phần soạn là giảng viên dùng được.</td></tr>
+        <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">Câu nối cho phép nhiều nội dung cùng một mục</a></td><td>Câu phân loại trong file mẫu nhập vào chạy đúng khi thi.</td></tr>
+        <tr><td><span class="ma">HT-3</span></td><td><a href="#ht-3">Sửa câu lỗi ngay khi nhập file</a></td><td>File có 1–2 câu lỗi vẫn nhập xong trong một lần.</td></tr>
+        <tr><td><span class="ma">HT-4</span></td><td><a href="#ht-4">File mẫu nhập Word có hướng dẫn</a></td><td>Giảng viên lần đầu tự nhập được, ít câu lỗi.</td></tr>
       </tbody>
     </table></div>
     <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được, mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không đổi. Hệ thống chỉ gợi ý; người có thẩm quyền quyết định. Mọi tính năng theo phân quyền ngân hàng hiện có.</div>
@@ -165,7 +164,7 @@
           </tbody>
         </table></div>
       </div>
-      <p class="loi-ich"><b>Lợi ích:</b> ngay sau khi chấm, màn thống kê tỉ lệ đạt CLO đang có hiện được số liệu của học phần thi trực tuyến. Không nhập tay, không phải làm báo cáo mới. Cần sửa HT-1 trước.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> ngay sau khi chấm, màn thống kê tỉ lệ đạt CLO đang có hiện được số liệu của học phần thi trực tuyến. Không nhập tay, không phải làm báo cáo mới. Cần điểm thi trực tuyến chạy đúng trước (xem Ghi chú cho Dev).</p>
     </div>
 
     <div class="muc"><h4>Cần BA khảo sát</h4><ul>
@@ -179,7 +178,7 @@
   <section id="trai-nghiem">
     <h2>3. Tăng trải nghiệm người dùng</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> cả 5 màn hình</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
-    <p><b>Hệ thống đã có, không đề xuất lại:</b> tải file mẫu nhập; màn kết quả nhập chia Hợp lệ, Thất bại, Trùng; thêm nhiều câu một lần, sao chép câu trong cùng học phần; nút Xem trước khi sửa câu; bấm vào một dòng để xem chi tiết câu; lọc theo khối, độ khó, dạng; thẻ đếm theo trạng thái duyệt; mã câu tự sinh; thống kê câu theo chương và độ khó. Ma trận gắn theo học phần nên dùng lại được qua các đợt, báo số câu tối đa còn trong kho, cảnh báo khi tổng điểm câu Dễ và Trung bình ngoài 60–70%. Bộ đề trộn câu và phương án, xem từng mã đề, bật/tắt từng câu, chỉnh bản in, tải đề và đáp án.</p>
+    <p><b>Hệ thống đã có, không đề xuất lại:</b> tải file mẫu nhập; màn kết quả nhập chia Hợp lệ, Thất bại, Trùng; thêm nhiều câu một lần, sao chép câu trong cùng học phần; nút Xem trước khi sửa câu; bấm vào một dòng để xem chi tiết câu; lọc theo khối, độ khó, dạng; thẻ đếm theo trạng thái duyệt; mã câu tự sinh; thống kê câu theo chương và độ khó. Ma trận gắn theo học phần nên dùng lại được qua các đợt, báo số câu tối đa còn trong kho, cảnh báo khi tổng điểm câu Dễ và Trung bình ngoài 60–70%. Bộ đề trộn câu và phương án, xem từng mã đề, bật/tắt từng câu, sinh lại cả bộ đề, chỉnh bản in, tải đề và đáp án.</p>
 
     <div class="khoi" id="ux-1">
       <div class="khoi-dau"><span class="ma">UX-1</span><h3>Thiết kế lại giao diện theo phác thảo được duyệt</h3></div>
@@ -239,7 +238,7 @@
 
     <div class="khoi" id="ux-3">
       <div class="khoi-dau"><span class="ma">UX-3</span><h3>Đổi câu trong bộ đề</h3></div>
-      <p><b>Vấn đề.</b> Xem mã đề 102 thấy câu 15 hỏi gần giống câu 3. Màn bộ đề chỉ có công tắc bật/tắt từng câu, nên chỉ tắt được câu 15; mã đề còn 39 câu, thiếu một câu so với ma trận.</p>
+      <p><b>Vấn đề.</b> Xem mã đề 102 thấy câu 15 hỏi gần giống câu 3. Màn bộ đề chỉ có công tắc bật/tắt từng câu, hoặc sinh lại cả bộ đề (mọi mã đề đổi hết, các câu đã kiểm cũng mất). Tắt câu 15 thì mã đề còn 39 câu, thiếu một câu so với ma trận.</p>
       <p><b>Cách làm:</b> nút "Đổi" cạnh câu; hệ thống đưa ra 3–5 câu cùng chương, cùng độ khó, cùng dạng, chưa có trong mã đề; chọn một câu để thay.</p>
       <div class="minh-hoa">
         <span class="nhan-mh">Phác thảo: đổi câu 15 của mã đề 102</span>
@@ -280,7 +279,7 @@
     <h2>4. Câu hỏi đa dạng hơn</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 3</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi</span><span><b>Tình trạng:</b> BA chốt danh sách và thứ tự</span></div>
     <p><b>Hệ thống đã có:</b> giảng viên soạn được 4 dạng: trắc nghiệm một đáp án, tự luận, câu nối (ghép cặp 1–1), câu nhóm; câu đính kèm được hình, âm thanh, video. <b>Câu chọn tranh</b> (phương án là hình) đã làm được: chèn hình vào từng phương án khi soạn trên web hoặc trong file Word; đã thử trên demo ngày 12/11/2026, hình hiển thị đủ và câu được chấm đúng.</p>
-    <p>Đề xuất 6 dạng: 4 dạng mới dưới đây, và 2 dạng đã có một phần trong code cần làm nốt (trắc nghiệm nhiều đáp án, phân loại; xem HT-2, HT-3). Không đề xuất: đáp án số (đã bỏ theo buổi họp 12/11), chỉ vị trí trên hình (giá trị thấp, không nhập được từ Word), ghi âm và nộp file (cần chấm tay, thi trực tuyến chưa có chấm tay).</p>
+    <p>Đề xuất 6 dạng: 4 dạng mới dưới đây, và 2 dạng đã có một phần trong code cần làm nốt (trắc nghiệm nhiều đáp án, phân loại; xem HT-1, HT-2). Không đề xuất: đáp án số (đã bỏ theo buổi họp 12/11), chỉ vị trí trên hình (giá trị thấp, không nhập được từ Word), ghi âm và nộp file (cần chấm tay, thi trực tuyến chưa có chấm tay).</p>
 
     <div class="khoi" id="dc-1">
       <div class="khoi-dau"><span class="ma">DC-1</span><h3>Đúng/Sai, một ý hoặc nhiều ý</h3></div>
@@ -297,8 +296,8 @@
         </table></div>
       </div>
       <p><b>Hiện nay:</b> chỉ làm được dạng một ý, bằng cách nhập tạm thành trắc nghiệm 2 phương án "Đúng", "Sai".</p>
-      <p><b>Cách làm:</b> làm trên nền câu nối sau khi hoàn thiện HT-3: mỗi ý là một nội dung, hai mục là Đúng và Sai; có form soạn và giao diện riêng (hai nút Đúng/Sai cạnh mỗi ý). Chấm theo số ý đúng, ví dụ đúng 1 ý 10%, 2 ý 25%, 3 ý 50%, 4 ý 100% điểm câu (giống đề thi tốt nghiệp THPT mới).</p>
-      <p class="loi-ich"><b>Lợi ích:</b> dạng sinh viên đã quen từ THPT; chấm đúng từng phần nên phân loại sinh viên tốt hơn câu một đáp án. Rẻ vì dùng lại HT-3.</p>
+      <p><b>Cách làm:</b> làm trên nền câu nối sau khi hoàn thiện HT-2: mỗi ý là một nội dung, hai mục là Đúng và Sai; có form soạn và giao diện riêng (hai nút Đúng/Sai cạnh mỗi ý). Chấm theo số ý đúng, ví dụ đúng 1 ý 10%, 2 ý 25%, 3 ý 50%, 4 ý 100% điểm câu (giống đề thi tốt nghiệp THPT mới).</p>
+      <p class="loi-ich"><b>Lợi ích:</b> dạng sinh viên đã quen từ THPT; chấm đúng từng phần nên phân loại sinh viên tốt hơn câu một đáp án. Rẻ vì dùng lại HT-2.</p>
     </div>
 
     <div class="khoi" id="dc-2">
@@ -349,7 +348,7 @@
     <h2>5. Tính năng thông minh</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 4</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề</span><span><b>Tình trạng:</b> đề xuất</span></div>
     <p><b>Hệ thống đã có:</b> bốc câu ngẫu nhiên đều theo ma trận; trộn câu và phương án; chặn câu giống hệt từng chữ; khi soạn chỉ kiểm thiếu đáp án, phương án trùng, mã độ khó; máy chủ đã lưu đúng/sai từng câu của mỗi bài thi trực tuyến nhưng chưa tổng hợp. Chưa có thống kê theo câu, gợi ý hay AI.</p>
-    <p><b>Ba loại.</b> TM-1 đến TM-3 dựa trên kết quả thi: cần điểm thi trực tuyến chạy đúng (HT-1) và mỗi câu đủ số lượt làm (mặc định 30). TM-4 là quy tắc, làm được ngay, không cần dữ liệu thi. TM-5, TM-6 dùng dịch vụ AI: cần nhà trường cho phép; chỉ gửi nội dung câu hỏi, tài liệu, không gửi thông tin sinh viên.</p>
+    <p><b>Ba loại.</b> TM-1 đến TM-3 dựa trên kết quả thi: cần điểm thi trực tuyến chạy đúng (xem Ghi chú cho Dev) và mỗi câu đủ số lượt làm (mặc định 30). TM-4 là quy tắc, làm được ngay, không cần dữ liệu thi. TM-5, TM-6 dùng dịch vụ AI: cần nhà trường cho phép; chỉ gửi nội dung câu hỏi, tài liệu, không gửi thông tin sinh viên.</p>
 
     <div class="khoi" id="tm-1">
       <div class="khoi-dau"><span class="ma">TM-1</span><h3>Bốc câu thông minh</h3></div>
@@ -452,14 +451,7 @@
     <p>Các việc dưới đây <b>không phải tính năng mới</b>: trong code đã có một phần, nhưng người dùng chưa dùng được, hoặc dùng thì lỗi. Tách riêng để không lẫn với đề xuất ở các mục trên.</p>
 
     <div class="khoi" id="ht-1">
-      <div class="khoi-dau"><span class="ma">HT-1</span><h3>Sửa lỗi điểm thi trực tuyến ra 0</h3></div>
-      <p><b>Vấn đề, đã thử trên demo ngày 12/11/2026.</b> Thí sinh làm đúng 1/1 câu, màn kết quả báo "Số câu đúng 1" nhưng "Điểm thi 0". Nguyên nhân: khi nộp bài, trang thi (nhánh <code>feature/thi-online</code>) gửi mã ca thi vào chỗ mã đề; máy chủ tìm đề theo mã đề nên không thấy, không đếm được câu theo độ khó, và điểm ra 0. Mọi bài thi trực tuyến trên demo đều bị.</p>
-      <p><b>Cách làm:</b> trang thi gửi đúng mã đề (máy chủ đã trả mã đề khi phát đề). Sửa một dòng, cần test lại cả luồng chấm.</p>
-      <p class="loi-ich"><b>Lợi ích:</b> điểm thi trực tuyến đúng. Là điều kiện cho CĐR-3 và TM-1 đến TM-3, vì các tính năng đó đọc kết quả chấm.</p>
-    </div>
-
-    <div class="khoi" id="ht-2">
-      <div class="khoi-dau"><span class="ma">HT-2</span><h3>Mở dạng trắc nghiệm nhiều đáp án</h3></div>
+      <div class="khoi-dau"><span class="ma">HT-1</span><h3>Mở dạng trắc nghiệm nhiều đáp án</h3></div>
       <div class="minh-hoa">
         <span class="nhan-mh">Sinh viên thấy khi thi</span>
         <p>Những câu lệnh nào thuộc nhóm DDL? <i>(chọn tất cả đáp án đúng)</i><br>☐ CREATE &nbsp; ☐ INSERT &nbsp; ☐ ALTER &nbsp; ☐ UPDATE</p>
@@ -474,8 +466,8 @@
       <p class="loi-ich"><b>Lợi ích:</b> hỏi được "chọn tất cả ý đúng", đoán mò đúng cả tổ hợp khó hơn nhiều so với chọn 1 trong 4. Rẻ vì phần chấm và hiển thị đã có.</p>
     </div>
 
-    <div class="khoi" id="ht-3">
-      <div class="khoi-dau"><span class="ma">HT-3</span><h3>Câu nối cho phép nhiều nội dung cùng một mục (phân loại)</h3></div>
+    <div class="khoi" id="ht-2">
+      <div class="khoi-dau"><span class="ma">HT-2</span><h3>Câu nối cho phép nhiều nội dung cùng một mục (phân loại)</h3></div>
       <div class="minh-hoa">
         <span class="nhan-mh">Sinh viên thấy khi thi: mỗi câu lệnh chọn một nhóm, nhiều câu lệnh cùng một nhóm</span>
         <div class="bang"><table>
@@ -492,15 +484,15 @@
       <p class="loi-ich"><b>Lợi ích:</b> câu phân loại soạn theo mẫu nhập vào chạy đúng; là nền cho DC-1 (Đúng/Sai).</p>
     </div>
 
-    <div class="khoi" id="ht-4">
-      <div class="khoi-dau"><span class="ma">HT-4</span><h3>Sửa câu lỗi ngay khi nhập file</h3></div>
+    <div class="khoi" id="ht-3">
+      <div class="khoi-dau"><span class="ma">HT-3</span><h3>Sửa câu lỗi ngay khi nhập file</h3></div>
       <p><b>Vấn đề.</b> Giảng viên nhập file 100 câu, trong đó câu 37 ghi độ khó là 5. Màn kết quả báo 99 câu Hợp lệ, 1 câu Thất bại, nhưng <b>không có nút lưu</b>: nút lưu chỉ hiện khi không còn câu lỗi nào. Phải mở Word sửa câu 37 rồi nhập lại cả 100 câu. Nút sửa từng câu có trong code nhưng đang bị tắt.</p>
       <p><b>Cách làm:</b> bật lại nút "Sửa" ở tab Thất bại (mở form với nội dung đọc được từ file, sửa xong câu chuyển sang Hợp lệ), và cho lưu trước các câu hợp lệ.</p>
       <p class="loi-ich"><b>Lợi ích:</b> file có 1–2 câu lỗi vẫn nhập xong trong một lần, mất một phút thay vì sửa file và nhập lại.</p>
     </div>
 
-    <div class="khoi" id="ht-5">
-      <div class="khoi-dau"><span class="ma">HT-5</span><h3>File mẫu nhập Word có hướng dẫn</h3></div>
+    <div class="khoi" id="ht-4">
+      <div class="khoi-dau"><span class="ma">HT-4</span><h3>File mẫu nhập Word có hướng dẫn</h3></div>
       <p><b>Vấn đề.</b> File mẫu ("Tải mẫu ITest") không có dòng hướng dẫn nào; các hàng chỉ ghi một chữ H, Đ, T1, K, M; hàng M máy chủ bỏ qua nhưng giảng viên dễ tưởng là ô nhập điểm. BA phản hồi khó hiểu. File nằm trên Google Drive của tài khoản khác, nhóm không sửa được.</p>
       <p><b>Cách làm:</b> ngay bây giờ đã có trang <a href="../huong-dan/nhap-cau-hoi-tu-word.html">KT-HD-01 Nhập câu hỏi từ Word</a> giải thích đủ. Bước sau: người có quyền thay file mẫu bằng bản có một trang hướng dẫn ở đầu, bỏ hàng M, mỗi dạng một ví dụ cùng một môn; nút đổi tên thành "Tải file mẫu nhập câu hỏi".</p>
       <p class="loi-ich"><b>Lợi ích:</b> giảng viên lần đầu tự nhập được mà không phải hỏi bộ phận khảo thí; ít câu lỗi hơn.</p>
@@ -510,13 +502,13 @@
   <section id="ghi-chu-dev">
     <h2>7. Ghi chú cho Dev</h2>
     <ul>
-      <li><b>Làm trước:</b> HT-1 (điểm thi trực tuyến) vì CĐR-3 và TM-1 đến TM-3 đọc kết quả chấm.</li>
-      <li><b>Mã dạng câu:</b> đang khai báo lặp ở ba mô-đun máy chủ, trang quản trị, trang thi, và đánh số lệch nhau. Làm trước nhóm 3 và HT-2: một danh mục dùng chung, máy chủ là nguồn duy nhất; mỗi dạng gom đủ đọc Word, kiểm tra, chấm, xuất Word.</li>
+      <li><b>Làm trước, gộp bản sửa điểm thi trực tuyến:</b> trang thi trên GitLab (nhánh <code>feature/thi-online</code>, bản đang chạy trên demo) gửi mã ca thi vào chỗ mã đề khi nộp bài, nên máy chủ không tìm được đề và điểm ra 0 (đã thử trên demo ngày 12/11/2026: đúng 1/1 câu, điểm 0). Bản sửa đã có (trang thi trong <code>all_thi_online</code>, và đợt sửa bảo mật đang chờ gộp gửi đúng <code>maDe</code>); cần đưa lên nhánh chạy thật và kiểm lại luồng chấm. CĐR-3 và TM-1 đến TM-3 đọc kết quả chấm nên phụ thuộc việc này.</li>
+      <li><b>Mã dạng câu:</b> đang khai báo lặp ở ba mô-đun máy chủ, trang quản trị, trang thi, và đánh số lệch nhau. Làm trước nhóm 3 và HT-1: một danh mục dùng chung, máy chủ là nguồn duy nhất; mỗi dạng gom đủ đọc Word, kiểm tra, chấm, xuất Word.</li>
       <li><b>Chọn câu:</b> logic rút câu đang lặp giữa ma trận (kiểm tra khi lưu) và bộ đề (sinh đề). Gom về một chỗ, nhận thêm trọng số và loại câu ca trước (TM-1), ràng buộc CLO (CĐR-2) và đổi câu (UX-3).</li>
       <li><b>Thống kê theo câu:</b> bảng tổng hợp theo câu, tính bằng tác vụ nền sau mỗi ca thi, lưu theo đợt và theo ca; dùng chung cho TM-1 đến TM-3.</li>
-      <li><b>Dữ liệu:</b> thêm CLO cho khối kiến thức và câu hỏi (câu không ghi riêng thì lấy theo chương); số lần sử dụng của câu; người soạn câu (hiện câu chỉ lưu người duyệt, UX-5 cần biết người soạn). Điểm CLO của thi trực tuyến (CĐR-3) lưu cùng dạng với điểm thi viết để thống kê tỉ lệ đạt CLO đang có đọc được.</li>
+      <li><b>Dữ liệu:</b> thêm CLO cho khối kiến thức và câu hỏi (câu không ghi riêng thì lấy theo chương); số lần sử dụng của câu (trường <code>soLuongSuDung</code> đã khai báo nhưng chưa được cập nhật ở đâu, dùng lại cho TM-1); người soạn câu (hiện câu chỉ lưu người duyệt, UX-5 cần biết người soạn). Điểm CLO của thi trực tuyến (CĐR-3) lưu cùng dạng với điểm thi viết để thống kê tỉ lệ đạt CLO đang có đọc được.</li>
       <li><b>Tận dụng:</b> trang thi có sẵn một khung ô trống chưa dùng, dùng được cho DC-2; dịch vụ thông báo đang dùng để nhắc lịch thi, dùng lại cho UX-5.</li>
-      <li><b>Nhập Word:</b> khi đổi file mẫu (HT-5), giữ đúng cách máy chủ đang đọc (nhãn hàng, chương in đậm, <code>##</code>, <code>/#</code>) để file cũ vẫn nhập được.</li>
+      <li><b>Nhập Word:</b> khi đổi file mẫu (HT-4), giữ đúng cách máy chủ đang đọc (nhãn hàng, chương in đậm, <code>##</code>, <code>/#</code>) để file cũ vẫn nhập được.</li>
     </ul>
   </section>
 
