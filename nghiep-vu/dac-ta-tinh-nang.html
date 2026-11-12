@@ -82,7 +82,7 @@
         <tr><td><span class="ma">TM-7</span></td><td><a href="#tm-7">AI gợi ý chuẩn đầu ra cho câu hỏi</a></td><td>Gắn CLO cho từng câu mà không phải đọc lại cả kho.</td></tr>
         <tr><th colspan="3">Ngoài đề xuất: hoàn thiện phần đã có trong code nhưng chưa dùng được</th></tr>
         <tr><td><span class="ma">HT-1</span></td><td><a href="#ht-1">Mở dạng trắc nghiệm nhiều đáp án</a></td><td>Phần chấm đã có; thêm phần soạn là giảng viên dùng được.</td></tr>
-        <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">Câu nối cho phép nhiều nội dung cùng một mục</a></td><td>Câu phân loại trong file mẫu nhập vào chạy đúng khi thi.</td></tr>
+        <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">Câu phân loại: nhiều ý xếp vào cùng một nhóm</a></td><td>Câu phân loại soạn theo file mẫu chạy đúng khi thi; làm nền cho Đúng/Sai nhiều ý.</td></tr>
         <tr><td><span class="ma">HT-3</span></td><td><a href="#ht-3">File mẫu nhập Word có hướng dẫn</a></td><td>Giảng viên lần đầu tự nhập được, ít câu lỗi.</td></tr>
       </tbody>
     </table></div>
@@ -473,9 +473,10 @@
     </div>
 
     <div class="khoi" id="ht-2">
-      <div class="khoi-dau"><span class="ma">HT-2</span><h3>Câu nối cho phép nhiều nội dung cùng một mục (phân loại)</h3></div>
+      <div class="khoi-dau"><span class="ma">HT-2</span><h3>Câu phân loại: nhiều ý xếp vào cùng một nhóm</h3></div>
+      <p><b>Câu phân loại là gì.</b> Câu nối hiện có là ghép cặp 1–1: mỗi ý bên trái ghép với đúng một ý bên phải, không ý nào dùng chung. Câu phân loại thì nhiều ý được xếp vào cùng một nhóm, ví dụ:</p>
       <div class="minh-hoa">
-        <span class="nhan-mh">Sinh viên thấy khi thi: mỗi câu lệnh chọn một nhóm, nhiều câu lệnh cùng một nhóm</span>
+        <span class="nhan-mh">Sinh viên thấy khi thi: xếp mỗi câu lệnh vào đúng nhóm</span>
         <div class="bang"><table>
           <tbody>
             <tr><td>CREATE TABLE</td><td>[ DDL ▾ ]</td></tr>
@@ -484,10 +485,12 @@
             <tr><td>GRANT</td><td>[ DCL ▾ ]</td></tr>
           </tbody>
         </table></div>
+        <p>CREATE TABLE và ALTER TABLE cùng thuộc nhóm DDL.</p>
       </div>
-      <p><b>Hiện nay, đã đối chiếu code:</b> file mẫu Word (lấy theo iTest) có sẵn bảng phân loại: cột "Thuộc mục" cho phép nhiều nội dung cùng thuộc một mục, kèm thang điểm. Nhưng hệ thống dùng chính số ở cột này làm mã của nội dung, nên các nội dung cùng mục bị trùng mã; khi thi, chọn nhóm cho "ALTER TABLE" sẽ đè lên lựa chọn của "CREATE TABLE". Câu nối hiện chỉ chạy đúng khi mỗi mục có đúng một nội dung.</p>
-      <p><b>Cách làm:</b> mỗi nội dung có mã riêng, mục đúng lưu riêng; trang thi cho nhiều nội dung chọn cùng một mục; dùng lại thang điểm "số lựa chọn đúng – điểm" đang có. File Word giữ nguyên bảng hiện tại.</p>
-      <p class="loi-ich"><b>Lợi ích:</b> câu phân loại soạn theo mẫu nhập vào chạy đúng; là nền cho DC-1 (Đúng/Sai).</p>
+      <p><b>Hiện nay.</b> File mẫu Word đã cho soạn câu kiểu này và nhập vào hệ thống được. Nhưng khi thi bị lỗi: sinh viên chọn DDL cho CREATE TABLE, rồi chọn DDL cho ALTER TABLE thì lựa chọn của CREATE TABLE bị mất, nên câu bị chấm sai. Câu nối chỉ chạy đúng khi ghép từng cặp 1–1.</p>
+      <p><b>Vì sao ghi ở mục hoàn thiện:</b> soạn và nhập đã có, chỉ sai khi thi, nên đây là sửa lỗi chứ không phải tính năng mới.</p>
+      <p><b>Cách làm:</b> sửa để nhiều ý chọn cùng một nhóm mà không đè nhau; chấm theo số ý xếp đúng bằng thang điểm câu nối đang có. File Word giữ nguyên. Nguyên nhân (cho Dev): hệ thống dùng số ở cột "Thuộc mục" làm mã của từng ý, nên các ý cùng nhóm bị trùng mã.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> hỏi được dạng phân loại. Đúng/Sai nhiều ý (DC-1) chính là phân loại với hai nhóm "Đúng" và "Sai", nên sửa xong lỗi này thì làm DC-1 rất nhanh.</p>
     </div>
 
     <div class="khoi" id="ht-3">
