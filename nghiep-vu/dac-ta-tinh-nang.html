@@ -63,9 +63,12 @@
         <tr><td><span class="ma">CĐR-3</span></td><td><a href="#cdr-3">Ma trận kiểm tra tỉ lệ chuẩn đầu ra</a></td><td>Đề đúng tỉ lệ đề cương ngay lúc lập; có bảng làm minh chứng khi kiểm định.</td></tr>
         <tr><td><span class="ma">CĐR-4</span></td><td><a href="#cdr-4">Điểm theo chuẩn đầu ra cho bài thi trực tuyến</a></td><td>Học phần thi trực tuyến tự có tỉ lệ đạt chuẩn đầu ra, không ai phải nhập tay.</td></tr>
         <tr><th colspan="3">2. Tăng trải nghiệm người dùng</th></tr>
-        <tr><td><span class="ma">UX-1</span></td><td><a href="#ux-1">Ma trận tự chia số câu, hiện điểm từng câu</a></td><td>Lập ma trận nhanh, không phải tự nhẩm; biết trước mỗi câu đáng bao nhiêu điểm.</td></tr>
-        <tr><td><span class="ma">UX-2</span></td><td><a href="#ux-2">Sao chép ma trận</a></td><td>Đợt thi sau không phải lập ma trận lại từ đầu.</td></tr>
-        <tr><td><span class="ma">UX-3</span></td><td><a href="#ux-3">Đổi câu trong bộ đề</a></td><td>Thay câu không ưng mà đề vẫn đủ câu, đúng ma trận.</td></tr>
+        <tr><td><span class="ma">UX-1</span></td><td><a href="#ux-1">Làm lại giao diện 5 màn hình theo phác thảo được duyệt</a></td><td>Giao diện gọn, thống nhất; thầy và giảng viên duyệt trên phác thảo trước khi code.</td></tr>
+        <tr><td><span class="ma">UX-2</span></td><td><a href="#ux-2">Form soạn câu rõ ràng, xem trước ngay khi soạn</a></td><td>Người mới không nhầm 3 ô cùng tên; thấy câu như sinh viên thấy trước khi lưu.</td></tr>
+        <tr><td><span class="ma">UX-3</span></td><td><a href="#ux-3">Danh sách câu hỏi gọn</a></td><td>Từ 13 cột còn khoảng 8; nhìn ra ngay câu nào cần làm gì.</td></tr>
+        <tr><td><span class="ma">UX-4</span></td><td><a href="#ux-4">Ma trận tự chia số câu, hiện điểm từng câu</a></td><td>Lập ma trận nhanh, không phải tự nhẩm; biết trước mỗi câu đáng bao nhiêu điểm.</td></tr>
+        <tr><td><span class="ma">UX-5</span></td><td><a href="#ux-5">Sao chép ma trận</a></td><td>Đợt thi sau không phải lập ma trận lại từ đầu.</td></tr>
+        <tr><td><span class="ma">UX-6</span></td><td><a href="#ux-6">Đổi câu trong bộ đề</a></td><td>Thay câu không ưng mà đề vẫn đủ câu, đúng ma trận.</td></tr>
         <tr><th colspan="3">3. Câu hỏi đa dạng hơn</th></tr>
         <tr><td><span class="ma">DC-1</span></td><td><a href="#dc-1">Đúng/Sai, một ý hoặc nhiều ý</a></td><td>Ra nhanh câu kiểm tra khái niệm; dạng nhiều ý chấm đúng từng phần.</td></tr>
         <tr><td><span class="ma">DC-2</span></td><td><a href="#dc-2">Điền khuyết</a></td><td>Sinh viên phải nhớ, không dựa vào phương án để đoán.</td></tr>
@@ -186,11 +189,59 @@
 
   <section id="trai-nghiem">
     <h2>3. Tăng trải nghiệm người dùng</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> Ma trận đề, Bộ đề</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
-    <p><b>Hệ thống đã có, không đề xuất lại:</b> tải file mẫu nhập; màn kết quả nhập chia Hợp lệ, Thất bại, Trùng; thêm nhiều câu một lần, sao chép câu; nút Xem trước; lọc theo khối, độ khó, dạng; thẻ đếm theo trạng thái duyệt; mã câu tự sinh; thống kê câu theo chương và độ khó. Ma trận: lập theo từng dòng (khối kiến thức, dạng câu, độ khó, số câu), xem lại dưới dạng bảng khối × độ khó, báo số câu tối đa còn trong kho, cảnh báo khi tổng điểm câu Dễ và Trung bình ngoài 60–70%. Bộ đề: trộn câu và phương án, xem từng mã đề, tắt câu, chỉnh sửa đề trước khi in, tải đề và đáp án.</p>
+    <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> cả 5 màn hình</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
+    <p><b>Hệ thống đã có, không đề xuất lại:</b> tải file mẫu nhập; màn kết quả nhập chia Hợp lệ, Thất bại, Trùng; thêm nhiều câu một lần, sao chép câu; nút Xem trước (khi sửa câu); bấm vào một dòng để xem chi tiết câu; lọc theo khối, độ khó, dạng; thẻ đếm theo trạng thái duyệt; mã câu tự sinh; thống kê câu theo chương và độ khó. Ma trận: lập theo từng dòng (khối kiến thức, dạng câu, độ khó, số câu), xem lại dưới dạng bảng khối × độ khó, báo số câu tối đa còn trong kho, cảnh báo khi tổng điểm câu Dễ và Trung bình ngoài 60–70%. Bộ đề: trộn câu và phương án, xem từng mã đề, tắt câu, chỉnh sửa đề trước khi in, tải đề và đáp án.</p>
 
     <div class="khoi" id="ux-1">
-      <div class="khoi-dau"><span class="ma">UX-1</span><h3>Ma trận tự chia số câu, hiện điểm từng câu</h3></div>
+      <div class="khoi-dau"><span class="ma">UX-1</span><h3>Làm lại giao diện 5 màn hình theo phác thảo được duyệt</h3></div>
+      <p><b>Vấn đề.</b> Thầy nhận xét giao diện xấu. Đối chiếu code: mọi thao tác thêm, sửa đều mở cửa sổ hoặc khung trượt; ở Ma trận đề, form ma trận mở trong một khung trượt, trong đó thêm từng dòng lại mở thêm một lớp nữa. Mỗi màn hình bày bảng, nút, nhãn trạng thái một kiểu.</p>
+      <p><b>Cách làm:</b></p>
+      <ol>
+        <li>Làm phác thảo cho 5 màn hình (Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề) theo một kiểu chung: bảng, nút, màu trạng thái, khoảng cách giống nhau.</li>
+        <li>Thao tác lớn (lập ma trận, soạn câu, xem mã đề) mở thành trang riêng thay cho cửa sổ chồng cửa sổ.</li>
+        <li>Đưa phác thảo cho thầy và 2–3 giảng viên duyệt trước khi code; UX-2, UX-3 và các màn hình của tính năng mới làm theo phác thảo này.</li>
+      </ol>
+      <p class="loi-ich"><b>Lợi ích:</b> giao diện gọn, thống nhất; sửa trên phác thảo rẻ hơn sửa sau khi đã code.</p>
+    </div>
+
+    <div class="khoi" id="ux-2">
+      <div class="khoi-dau"><span class="ma">UX-2</span><h3>Form soạn câu rõ ràng, xem trước ngay khi soạn</h3></div>
+      <p><b>Vấn đề.</b> Màn thêm câu có 3 ô cùng tên "Loại câu hỏi": ô "Thi" không sửa được, ô chọn "Câu hỏi dạng text / Câu hỏi phức tạp", và ô chọn dạng câu (trắc nghiệm, tự luận…) nằm ở cuối form, sau phần nội dung. Nút Xem trước chỉ có khi sửa câu, khi thêm mới thì không có.</p>
+      <p><b>Cách làm:</b></p>
+      <ol>
+        <li>Đặt "Dạng câu" lên đầu form; form chỉ hiện các ô của dạng đó.</li>
+        <li>Bỏ ô "Thi" cố định; bỏ lựa chọn "dạng text / phức tạp", luôn dùng trình soạn có định dạng (ai không cần định dạng thì gõ chữ thường như bình thường).</li>
+        <li>Khung xem trước nằm cạnh form, cập nhật trong lúc gõ, cả khi thêm mới.</li>
+      </ol>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Phác thảo: form thêm câu</span>
+        <div class="bang"><table>
+          <tbody>
+            <tr><td style="width:55%">Dạng câu: <b>[ Trắc nghiệm ▾ ]</b><br>Chương: [ Chương 3 ▾ ] · Độ khó: [ Dễ ▾ ]<br>Câu hỏi: [ trình soạn ]<br>Phương án: ◉ INSERT ○ UPDATE ○ DELETE ○ SELECT</td><td><span class="muted">Xem trước như sinh viên thấy:</span><br>Câu lệnh nào dùng để thêm dữ liệu?<br>A. INSERT · B. UPDATE · C. DELETE · D. SELECT</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <p class="loi-ich"><b>Lợi ích:</b> người mới không nhầm ô; thấy câu như sinh viên thấy trước khi lưu, bớt câu lỗi định dạng.</p>
+    </div>
+
+    <div class="khoi" id="ux-3">
+      <div class="khoi-dau"><span class="ma">UX-3</span><h3>Danh sách câu hỏi gọn</h3></div>
+      <p><b>Vấn đề.</b> Danh sách câu hỏi có 13 cột. Tên học phần và Mã học phần lặp lại ở mọi dòng dù đang xem một học phần; có hai cột trạng thái riêng (kích hoạt và duyệt) cạnh nhau; cột Câu hỏi bị hẹp nên nội dung câu bị cắt.</p>
+      <p><b>Cách làm:</b> bỏ hai cột học phần lặp; gộp hai cột trạng thái thành một nhãn (ví dụ "Chờ duyệt", "Cần sửa", "Đang dùng", "Ngừng dùng"); Ghi chú và Người duyệt chuyển vào phần xem chi tiết câu (bấm vào dòng, đã có); cột Câu hỏi rộng hơn.</p>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Phác thảo: danh sách sau khi gọn (khoảng 8 cột)</span>
+        <div class="bang"><table>
+          <thead><tr><th>Mã câu</th><th>Câu hỏi</th><th>Chương</th><th>Dạng</th><th>Độ khó</th><th>Điểm</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+          <tbody>
+            <tr><td>A1B2C3</td><td>Câu lệnh nào dùng để thêm dữ liệu vào bảng?</td><td>Chương 3</td><td>Trắc nghiệm</td><td>Dễ</td><td>1</td><td>Chờ duyệt</td><td>Sửa · Gửi duyệt</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <p class="loi-ich"><b>Lợi ích:</b> nhìn ra ngay câu nào cần làm gì, đọc được nội dung câu mà không phải mở từng câu.</p>
+    </div>
+
+    <div class="khoi" id="ux-4">
+      <div class="khoi-dau"><span class="ma">UX-4</span><h3>Ma trận tự chia số câu, hiện điểm từng câu</h3></div>
       <p><b>Vấn đề.</b> Muốn đề 40 câu, tỉ lệ độ khó 40/30/20/10, chia cho 3 chương, người ra đề phải tự nhẩm mỗi chương mỗi độ khó bao nhiêu câu, rồi thêm từng dòng. Ma trận chỉ cảnh báo tỉ lệ điểm câu Dễ và Trung bình, không cho biết mỗi câu đáng bao nhiêu điểm: Mức điểm chỉ là điểm tương đối (Dễ 1, Khó 3), điểm thật trên thang 10 mới tính lúc chấm.</p>
       <p><b>Cách làm:</b></p>
       <ol>
@@ -212,15 +263,15 @@
       <p class="loi-ich"><b>Lợi ích:</b> lập ma trận nhanh, không phải tự nhẩm; biết trước điểm từng câu để cân đề.</p>
     </div>
 
-    <div class="khoi" id="ux-2">
-      <div class="khoi-dau"><span class="ma">UX-2</span><h3>Sao chép ma trận</h3></div>
+    <div class="khoi" id="ux-5">
+      <div class="khoi-dau"><span class="ma">UX-5</span><h3>Sao chép ma trận</h3></div>
       <p><b>Vấn đề.</b> Mỗi đợt thi lập ma trận lại từ đầu, dù cấu trúc đề gần như giữ nguyên.</p>
       <p><b>Cách làm:</b> nút "Sao chép" trên một ma trận cũ (đợt trước, hoặc học phần khác cùng cấu trúc) tạo ma trận mới y hệt; sửa vài dòng rồi lưu.</p>
       <p class="loi-ich"><b>Lợi ích:</b> đợt thi sau không phải lập lại; cấu trúc đề ổn định giữa các đợt.</p>
     </div>
 
-    <div class="khoi" id="ux-3">
-      <div class="khoi-dau"><span class="ma">UX-3</span><h3>Đổi câu trong bộ đề</h3></div>
+    <div class="khoi" id="ux-6">
+      <div class="khoi-dau"><span class="ma">UX-6</span><h3>Đổi câu trong bộ đề</h3></div>
       <p><b>Vấn đề.</b> Xem mã đề 102 thấy câu 15 hỏi gần giống câu 3. Hiện chỉ tắt được câu 15, nên mã đề còn 39 câu, thiếu một câu so với ma trận.</p>
       <p><b>Cách làm:</b> nút "Đổi" cạnh câu; hệ thống đưa ra 3–5 câu cùng chương, cùng độ khó, cùng dạng, chưa có trong mã đề; chọn một câu để thay.</p>
       <div class="minh-hoa">
@@ -475,7 +526,7 @@
     <h2>7. Ghi chú cho Dev</h2>
     <ul>
       <li><b>Mã dạng câu:</b> đang khai báo lặp ở ba mô-đun máy chủ, trang quản trị, trang thi, và đánh số lệch nhau. Làm trước nhóm 3 và HT-1: một danh mục dùng chung, máy chủ là nguồn duy nhất; mỗi dạng gom đủ đọc Word, kiểm tra, chấm, xuất Word.</li>
-      <li><b>Chọn câu:</b> logic rút câu đang lặp giữa ma trận (kiểm tra khi lưu) và bộ đề (sinh đề). Gom về một chỗ, nhận thêm trọng số (TM-1), cân mã đề (TM-4), ràng buộc CLO (CĐR-3), đổi câu (UX-3) và tự chia số câu (UX-1).</li>
+      <li><b>Chọn câu:</b> logic rút câu đang lặp giữa ma trận (kiểm tra khi lưu) và bộ đề (sinh đề). Gom về một chỗ, nhận thêm trọng số (TM-1), cân mã đề (TM-4), ràng buộc CLO (CĐR-3), đổi câu (UX-6) và tự chia số câu (UX-4).</li>
       <li><b>Thống kê theo câu:</b> bảng tổng hợp theo câu, tính bằng tác vụ nền sau mỗi ca thi, không tính lúc người dùng mở trang. Dùng chung cho TM-1 đến TM-4.</li>
       <li><b>Tận dụng:</b> trang thi có sẵn một khung giao diện ô trống chưa dùng tới, tận dụng được cho DC-2.</li>
       <li><b>Dữ liệu:</b> thêm CLO cho khối kiến thức và câu hỏi (câu không ghi riêng thì lấy theo chương), số lần sử dụng của câu. Điểm CLO của thi trực tuyến (CĐR-4) lưu cùng dạng với điểm thi viết để thống kê tỉ lệ đạt CLO đang có đọc được.</li>
