@@ -25,11 +25,11 @@
       <dt>Phiên bản</dt><dd>1.0</dd>
       <dt>Ngày</dt><dd>12/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>BA, giảng viên soạn đề, Tester</dd>
-      <dt>Căn cứ</dt><dd>File mẫu tải từ nút "Biểu mẫu nhập" &gt; "Tải mẫu ITest", đối chiếu với cách máy chủ đọc file (nhánh develop)</dd>
+      <dt>Căn cứ</dt><dd>File mẫu tải từ nút "Biểu mẫu nhập" &gt; "Tải mẫu ITest", đối chiếu với cách máy chủ đọc file (nhánh develop); tài liệu <a href="https://ktdbcl.actvn.edu.vn/files/quy-dinh/hdkt-gv-001-ky-thuat-bien-soan-ngan-hang-cau-hoi-trac-nghiem.pdf">Kỹ thuật biên soạn ngân hàng câu hỏi trắc nghiệm (iTest)</a> của Học viện Kỹ thuật mật mã</dd>
     </dl>
   </div>
 
-  <div class="chu-y"><b>Vì sao có trang này.</b> File mẫu hiện tại không có dòng hướng dẫn nào, và nằm trên Google Drive của một tài khoản khác nên nhóm không sửa được. Trang này giải thích thay cho phần hướng dẫn còn thiếu. Mọi quy tắc dưới đây lấy từ cách máy chủ đang đọc file, không phải quy ước mới.</div>
+  <div class="chu-y"><b>Vì sao có trang này.</b> File mẫu hiện tại lấy theo định dạng của phần mềm thi iTest, không có dòng hướng dẫn nào, và nằm trên Google Drive của một tài khoản khác nên nhóm không sửa được. Hệ thống mình chỉ đọc được một phần định dạng iTest (xem mục 8). Trang này giải thích thay cho phần hướng dẫn còn thiếu. Mọi quy tắc dưới đây lấy từ cách máy chủ đang đọc file, không phải quy ước mới.</div>
 
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
@@ -40,6 +40,7 @@
       <li><a href="#cau-noi">Câu nối</a></li>
       <li><a href="#cau-nhom">Câu nhóm</a></li>
       <li><a href="#dac-biet">Phương án đặc biệt</a></li>
+      <li><a href="#itest">Cách ghi của iTest không dùng được</a></li>
       <li><a href="#sau-khi-nhap">Sau khi nhập</a></li>
       <li><a href="#loi">Lỗi thường gặp</a></li>
     </ol>
@@ -71,7 +72,7 @@
         <tr><td><code>Đ</code></td><td>Đáp án đúng</td><td>Chữ Đ có gạch ngang. Gõ nhầm thành chữ D thì hàng bị bỏ qua và câu báo thiếu đáp án.</td></tr>
         <tr><td><code>T1</code>, <code>T2</code>, <code>T3</code></td><td>Các phương án sai</td><td>Tối đa 3, nên một câu trắc nghiệm có tối đa 4 phương án. Hàng để trống thì bỏ qua.</td></tr>
         <tr><td><code>K</code></td><td>Độ khó</td><td>Chỉ nhận <code>1</code> Dễ, <code>2</code> Trung bình, <code>3</code> Khó, <code>4</code> Rất khó. Ghi khác là câu báo lỗi.</td></tr>
-        <tr><td><code>M</code></td><td>Không dùng</td><td>Có trong file mẫu nhưng máy chủ bỏ qua. Điểm câu lấy theo Mức điểm của học phần, không lấy ở đây.</td></tr>
+        <tr><td><code>M</code></td><td>Không dùng</td><td>Trong iTest là điểm của câu. Hệ thống mình bỏ qua hàng này; điểm câu lấy theo Mức điểm của học phần.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -130,6 +131,7 @@
       <li><b>Cột 4–5, bên phải:</b> danh sách mục, mỗi hàng một mục kèm số thứ tự. Mục không xếp theo lựa chọn; hàng a ghi mục số 1 không có nghĩa là a nối với mục 1.</li>
       <li><b>Cột 6–7, thang điểm (bắt buộc):</b> mỗi hàng một mức "nối đúng bao nhiêu lựa chọn thì được bao nhiêu điểm". Sinh viên được mức cao nhất mà mình đạt, tính theo tỉ lệ với điểm cao nhất của thang. Ví dụ trên: đúng 3 được 2/2 = 100% điểm câu, đúng 2 được 1/2 = 50%, đúng 1 được 0.</li>
       <li>Nội dung lựa chọn không được trùng nhau; tên mục không được trùng nhau. "Số lựa chọn đúng" là số nguyên, "Điểm" là số.</li>
+      <li><b>Chỉ nối 1–1:</b> mỗi nội dung thuộc một mục khác nhau, cột "Thuộc mục" ghi các số khác nhau. Hai nội dung cùng ghi một số mục thì nhập vẫn thành công, nhưng khi thi chọn cho nội dung này sẽ đè lên nội dung kia.</li>
     </ul>
   </section>
 
@@ -156,8 +158,25 @@
     </ul>
   </section>
 
+  <section id="itest">
+    <h2>8. Cách ghi của iTest không dùng được</h2>
+    <p>Tài liệu biên soạn câu hỏi cho iTest (ví dụ của Học viện Kỹ thuật mật mã) có những cách ghi sau. Hệ thống mình không đọc đúng; không dùng khi nhập vào đây.</p>
+    <div class="bang"><table>
+      <thead><tr><th>Cách ghi của iTest</th><th>Hệ thống mình</th></tr></thead>
+      <tbody>
+        <tr><td>Câu trắc nghiệm viết thành đoạn văn "Câu 1. … A. … B. … C. … D. …", không dùng bảng</td><td>Không đọc; chỉ đọc câu nằm trong bảng có hàng H, Đ, T1–T3, K.</td></tr>
+        <tr><td>Câu phân loại: nhiều nội dung cùng thuộc một mục</td><td>Nhập được nhưng hỏng khi thi; chỉ dùng nối 1–1.</td></tr>
+        <tr><td>Câu ghép cặp: ghi 0 ở cột "Thuộc mục", cặp đúng nằm cùng hàng</td><td>Hỏng, vì mọi nội dung cùng mã 0. Phải ghi số thứ tự mục đúng.</td></tr>
+        <tr><td>Câu nhiều đáp án: bảng phân loại, cột "Thuộc mục" ghi 1 (đúng) hoặc 0 (sai), tên mục để trống</td><td>Đọc sai (tên mục trống bị bỏ, các nội dung cùng mã); hệ thống chưa có dạng nhiều đáp án.</td></tr>
+        <tr><td>Câu điền giá trị: đáp án trong ngoặc nhọn, ví dụ <code>{0,5; 0.5}</code></td><td>Chưa có dạng này.</td></tr>
+        <tr><td>Giữ nguyên thứ tự phương án: ghi (A), (B), (C), (D) và dòng <code>/D</code> chỉ đáp án đúng</td><td>Không đọc; dùng cách ở mục 7 (phương án "tất cả", <code>##T1</code>).</td></tr>
+        <tr><td>Hàng M ghi điểm của câu</td><td>Bỏ qua; điểm theo Mức điểm của học phần.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
   <section id="sau-khi-nhap">
-    <h2>8. Sau khi nhập</h2>
+    <h2>9. Sau khi nhập</h2>
     <ul>
       <li>Màn kết quả có ba tab: <b>Hợp lệ</b>, <b>Thất bại</b> (kèm lý do từng câu), <b>Trùng</b> (đã có câu cùng nội dung và cùng phương án trong học phần; không nhập lại).</li>
       <li><b>Nút lưu chỉ hiện khi không còn câu nào ở tab Thất bại.</b> Có một câu lỗi thì phải sửa trong file Word rồi nhập lại cả file; màn kết quả chưa cho sửa từng câu.</li>
@@ -166,7 +185,7 @@
   </section>
 
   <section id="loi">
-    <h2>9. Lỗi thường gặp</h2>
+    <h2>10. Lỗi thường gặp</h2>
     <div class="bang"><table>
       <thead><tr><th>Hệ thống báo, hoặc hiện tượng</th><th>Nguyên nhân thường gặp</th></tr></thead>
       <tbody>
