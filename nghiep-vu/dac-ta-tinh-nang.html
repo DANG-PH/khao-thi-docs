@@ -42,7 +42,6 @@
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
       <li><a href="#tom-tat">Tóm tắt: 20 đề xuất và lợi ích</a></li>
-      <li><a href="#doi-chieu">Đối chiếu với các hệ thống khác</a></li>
       <li><a href="#chuan-dau-ra">Chuẩn đầu ra</a></li>
       <li><a href="#trai-nghiem">Tăng trải nghiệm người dùng</a></li>
       <li><a href="#dang-cau">Câu hỏi đa dạng hơn</a></li>
@@ -86,41 +85,8 @@
     <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được, mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không đổi. Hệ thống chỉ gợi ý; người có thẩm quyền quyết định. Mọi tính năng theo phân quyền ngân hàng hiện có.</div>
   </section>
 
-  <section id="doi-chieu">
-    <h2>2. Đối chiếu với các hệ thống khác</h2>
-    <p>Đối chiếu với iTest (phần mềm thi mà file mẫu nhập của mình lấy định dạng), Moodle và Canvas (hai hệ thống học trực tuyến dùng rộng rãi ở đại học). Cột iTest lấy theo tài liệu biên soạn câu hỏi của Học viện Kỹ thuật mật mã; "Không nêu" là tài liệu không nhắc tới. Cột "Hệ thống mình" đã đối chiếu code trang quản trị, máy chủ và trang thi.</p>
-    <h4>Dạng câu hỏi</h4>
-    <div class="bang"><table>
-      <thead><tr><th>Dạng câu</th><th>iTest</th><th>Moodle</th><th>Canvas</th><th>Hệ thống mình</th></tr></thead>
-      <tbody>
-        <tr><td>Trắc nghiệm một đáp án</td><td>Có</td><td>Có</td><td>Có</td><td>Có</td></tr>
-        <tr><td>Trắc nghiệm nhiều đáp án</td><td>Có</td><td>Có</td><td>Có</td><td>Có phần chấm và hiển thị; chưa soạn được (DC-1)</td></tr>
-        <tr><td>Ghép cặp 1–1</td><td>Có</td><td>Có</td><td>Có</td><td>Có (câu nối)</td></tr>
-        <tr><td>Phân loại (nhiều nội dung vào cùng một nhóm)</td><td>Có</td><td>Có, qua ghép cặp</td><td>Có</td><td>Chưa: câu nối chỉ đúng khi 1–1 (DC-2)</td></tr>
-        <tr><td>Đúng/Sai</td><td>Có, qua phân loại</td><td>Có</td><td>Có</td><td>Chưa; nhập tạm thành trắc nghiệm 2 phương án (DC-3)</td></tr>
-        <tr><td>Điền khuyết, điền giá trị</td><td>Có</td><td>Có</td><td>Có</td><td>Chưa (DC-4)</td></tr>
-        <tr><td>Sắp xếp thứ tự</td><td>Không nêu</td><td>Có</td><td>Có</td><td>Chưa (DC-5)</td></tr>
-        <tr><td>Tự luận</td><td>Không nêu</td><td>Có</td><td>Có</td><td>Có</td></tr>
-        <tr><td>Câu nhóm (đoạn dẫn và câu con)</td><td>Có</td><td>Có, bằng đoạn mô tả đặt trước các câu</td><td>Có</td><td>Có</td></tr>
-        <tr><td>Đáp án số có sai số</td><td>Không (điền giá trị phải đúng tuyệt đối)</td><td>Có</td><td>Có</td><td>Chưa; đã bỏ theo buổi họp 12/11</td></tr>
-        <tr><td>Chọn vùng trên hình</td><td>Không nêu</td><td>Có</td><td>Có</td><td>Chưa; không đề xuất vì khó làm, khó dùng với người khiếm thị, ít môn cần</td></tr>
-      </tbody>
-    </table></div>
-    <h4>Chức năng ngân hàng câu hỏi</h4>
-    <div class="bang"><table>
-      <thead><tr><th>Chức năng</th><th>Ở hệ thống khác</th><th>Hệ thống mình</th></tr></thead>
-      <tbody>
-        <tr><td>Gắn câu hỏi với chuẩn đầu ra, phân tích theo chuẩn đầu ra</td><td>Canvas có (gắn chuẩn đầu ra cho từng câu, báo cáo theo chuẩn đầu ra)</td><td>Chưa (CĐR-1 đến CĐR-4)</td></tr>
-        <tr><td>Thống kê từng câu sau thi: độ khó thực tế, độ phân biệt</td><td>Moodle có (Facility index, Discrimination index); Canvas có (Item Analysis)</td><td>Chưa (TM-2, TM-3)</td></tr>
-        <tr><td>Bốc câu có tính tới kết quả thi và lần dùng trước</td><td>Moodle, Canvas không có sẵn; đây là đề xuất riêng</td><td>Chưa (TM-1)</td></tr>
-        <tr><td>Chấm đúng từng phần theo thang điểm</td><td>iTest có (thang "số lựa chọn đúng – điểm")</td><td>Có với câu nối; dùng lại cho DC-2, DC-3</td></tr>
-      </tbody>
-    </table></div>
-    <p class="muted">Nguồn: <a href="https://ktdbcl.actvn.edu.vn/files/quy-dinh/hdkt-gv-001-ky-thuat-bien-soan-ngan-hang-cau-hoi-trac-nghiem.pdf">Học viện Kỹ thuật mật mã, Kỹ thuật biên soạn ngân hàng câu hỏi trắc nghiệm (iTest), 2021</a>; <a href="https://docs.moodle.org/en/Question_types">Moodle Docs, Question types</a>; <a href="https://docs.moodle.org/402/en/Quiz_statistics_report">Moodle Docs, Quiz statistics report</a>; <a href="https://sites.usask.ca/edtech/2023/06/01/8-reasons-to-be-excited-about-canvas-new-quizzes/">University of Saskatchewan, Canvas New Quizzes</a>; <a href="https://community.canvaslms.com/t5/New-Quizzes-Resources/FAQ-New-Quizzes/ta-p/243540">Canvas Community, New Quizzes FAQ</a>.</p>
-  </section>
-
   <section id="chuan-dau-ra">
-    <h2>3. Chuẩn đầu ra</h2>
+    <h2>2. Chuẩn đầu ra</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 1</span><span><b>Màn hình:</b> Khối kiến thức, Ngân hàng câu hỏi, Tổng quan, Ma trận đề; chấm thi trực tuyến</span><span><b>Tình trạng:</b> đề xuất, chờ BA khảo sát</span></div>
     <p><b>Chuẩn đầu ra là gì.</b> Mỗi học phần có vài chuẩn đầu ra (viết tắt CLO) ghi trong đề cương: những việc sinh viên phải làm được sau khi học, và mỗi việc chiếm bao nhiêu phần trăm điểm. Ví dụ môn Cơ sở dữ liệu:</p>
     <div class="bang"><table>
@@ -217,7 +183,7 @@
   </section>
 
   <section id="trai-nghiem">
-    <h2>4. Tăng trải nghiệm người dùng</h2>
+    <h2>3. Tăng trải nghiệm người dùng</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
     <p><b>Hệ thống đã có, không đề xuất lại:</b> tải file mẫu nhập; màn kết quả nhập chia Hợp lệ, Thất bại, Trùng; thêm nhiều câu một lần, sao chép câu; nút Xem trước; lọc theo khối, độ khó, dạng; thẻ đếm theo trạng thái duyệt; mã câu tự sinh; thống kê câu theo chương và độ khó; ma trận báo số câu tối đa; bộ đề trộn câu, phương án, tắt câu, in, tải đáp án.</p>
 
@@ -309,7 +275,7 @@
   </section>
 
   <section id="dang-cau">
-    <h2>5. Câu hỏi đa dạng hơn</h2>
+    <h2>4. Câu hỏi đa dạng hơn</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 3</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi</span><span><b>Tình trạng:</b> BA chốt danh sách và thứ tự</span></div>
     <p><b>Hệ thống đã có:</b> giảng viên soạn được 4 dạng: trắc nghiệm một đáp án, tự luận, câu nối (ghép cặp 1–1), câu nhóm; câu đính kèm được hình, âm thanh, video. Đã bỏ dạng "Đáp án số" theo buổi họp 12/11. Thứ tự dưới đây là thứ tự đề xuất làm: dạng rẻ trước.</p>
 
@@ -363,7 +329,7 @@
           </tbody>
         </table></div>
       </div>
-      <p><b>Hiện nay:</b> chỉ làm được dạng một ý, bằng cách nhập tạm thành trắc nghiệm 2 phương án "Đúng", "Sai". iTest làm dạng này bằng câu phân loại với hai mục Đúng, Sai.</p>
+      <p><b>Hiện nay:</b> chỉ làm được dạng một ý, bằng cách nhập tạm thành trắc nghiệm 2 phương án "Đúng", "Sai".</p>
       <p><b>Cách làm:</b> làm trên nền DC-2: mỗi ý là một nội dung, hai mục là Đúng và Sai; có form soạn và giao diện riêng (hai nút Đúng/Sai cạnh mỗi ý) cho dễ dùng. Chấm theo thang điểm, ví dụ đúng 1 ý 10%, 2 ý 25%, 3 ý 50%, 4 ý 100% điểm câu (giống đề thi tốt nghiệp THPT mới).</p>
       <p class="loi-ich"><b>Lợi ích:</b> ra nhanh nhiều câu kiểm tra khái niệm; dạng nhiều ý sinh viên đã quen từ THPT, chấm đúng từng phần nên phân loại sinh viên tốt hơn. Rẻ vì dùng lại DC-2.</p>
     </div>
@@ -386,8 +352,8 @@
         <p>Kéo thả các mệnh đề theo đúng thứ tự viết trong câu lệnh SELECT:</p>
         <p>[ WHERE ] [ ORDER BY ] [ FROM ] [ GROUP BY ] → đáp án: FROM, WHERE, GROUP BY, ORDER BY</p>
       </div>
-      <p><b>Hiện nay:</b> không có ở cả trang quản trị, máy chủ, trang thi. Tài liệu iTest không nêu dạng này; Moodle, Canvas có.</p>
-      <p><b>Chấm:</b> đúng toàn bộ thứ tự mới có điểm (Canvas cũng chấm như vậy).</p>
+      <p><b>Hiện nay:</b> không có ở cả trang quản trị, máy chủ, trang thi.</p>
+      <p><b>Chấm:</b> đúng toàn bộ thứ tự mới có điểm.</p>
       <p class="loi-ich"><b>Lợi ích:</b> đo được hiểu quy trình, thứ tự các bước, điều câu trắc nghiệm khó hỏi trực tiếp.</p>
     </div>
 
@@ -402,7 +368,7 @@
   </section>
 
   <section id="thong-minh">
-    <h2>6. Tính năng thông minh</h2>
+    <h2>5. Tính năng thông minh</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 4</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề</span><span><b>Tình trạng:</b> đề xuất</span></div>
     <p><b>Hệ thống đã có:</b> bốc câu ngẫu nhiên đều theo ma trận; trộn câu và phương án; chặn câu giống hệt từng chữ; máy chủ đã lưu đúng/sai từng câu của mỗi bài thi trực tuyến nhưng chưa tổng hợp. Chưa có thống kê theo câu, gợi ý hay AI.</p>
     <p><b>Điều kiện:</b> TM-1 đến TM-4 dùng kết quả thi trực tuyến, nên cần phần chấm tự động chạy đúng, và mỗi câu đủ số lượt làm (mặc định 30) mới tính. TM-5, TM-6 dùng dịch vụ AI: cần nhà trường cho phép; chỉ gửi nội dung câu hỏi, tài liệu, không gửi thông tin sinh viên.</p>
@@ -449,7 +415,7 @@
           </tbody>
         </table></div>
       </div>
-      <p class="loi-ich"><b>Lợi ích:</b> độ khó trong kho đúng dần với thực tế, nên ma trận ra đề đúng mức khó mong muốn. Moodle và Canvas đều có thống kê này (Moodle gọi là Facility index).</p>
+      <p class="loi-ich"><b>Lợi ích:</b> độ khó trong kho đúng dần với thực tế, nên ma trận ra đề đúng mức khó mong muốn.</p>
     </div>
 
     <div class="khoi" id="tm-4">
@@ -500,7 +466,7 @@
   </section>
 
   <section id="ghi-chu-dev">
-    <h2>7. Ghi chú cho Dev</h2>
+    <h2>6. Ghi chú cho Dev</h2>
     <ul>
       <li><b>Mã dạng câu:</b> đang khai báo lặp ở ba mô-đun máy chủ, trang quản trị, trang thi, và đánh số lệch nhau. Làm trước nhóm 3: một danh mục dùng chung, máy chủ là nguồn duy nhất; mỗi dạng gom đủ đọc Word, kiểm tra, chấm, xuất Word.</li>
       <li><b>Chọn câu:</b> logic rút câu đang lặp giữa ma trận (kiểm tra khi lưu) và bộ đề (sinh đề). Gom về một chỗ, nhận thêm trọng số (TM-1), cân mã đề (TM-4), ràng buộc CLO (CĐR-3) và đổi câu (UX-5).</li>
