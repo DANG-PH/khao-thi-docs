@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 15 tính năng mới theo 4 nhóm ưu tiên và 3 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
+<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 15 tính năng mới theo 4 nhóm ưu tiên, 3 ý dùng AI nếu nhà trường cho phép, và 3 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
 <title>Đặc tả tính năng phát triển</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +53,7 @@
 
   <section id="tom-tat">
     <h2>1. Tóm tắt</h2>
-    <p>15 tính năng mới, chia 4 nhóm, xếp theo thứ tự ưu tiên từ cao xuống thấp. Mỗi ý đã đối chiếu code trang quản trị, máy chủ và trang thi: hệ thống chưa có. Những việc đã có một phần trong code nhưng người dùng chưa dùng được thì tách sang mục 6, không tính là tính năng mới. Mỗi ý gồm: vấn đề hiện nay, cách làm, phác thảo màn hình (chỉ để hình dung), lợi ích. Ví dụ lấy môn Cơ sở dữ liệu.</p>
+    <p>15 tính năng mới, chia 4 nhóm, xếp theo thứ tự ưu tiên từ cao xuống thấp; nhóm Thông minh có thêm 3 ý dùng AI, chỉ làm nếu nhà trường cho phép, không tính vào 15 ý. Mỗi ý đã đối chiếu code trang quản trị, máy chủ và trang thi: hệ thống chưa có. Những việc đã có một phần trong code nhưng người dùng chưa dùng được thì tách sang mục 6, không tính là tính năng mới. Mỗi ý gồm: vấn đề hiện nay, cách làm, phác thảo màn hình (chỉ để hình dung), lợi ích. Ví dụ lấy môn Cơ sở dữ liệu.</p>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Đề xuất</th><th>Lợi ích</th></tr></thead>
       <tbody>
@@ -62,7 +62,7 @@
         <tr><td><span class="ma">CĐR-2</span></td><td><a href="#cdr-2">Ma trận theo chuẩn đầu ra: bốc câu theo chuẩn đầu ra, kiểm tra tỉ lệ</a></td><td>Mỗi mã đề đúng tỉ lệ đề cương, không phụ thuộc may rủi khi bốc; có bảng làm minh chứng khi kiểm định.</td></tr>
         <tr><td><span class="ma">CĐR-3</span></td><td><a href="#cdr-3">Điểm theo chuẩn đầu ra cho bài thi trực tuyến</a></td><td>Học phần thi trực tuyến tự có tỉ lệ đạt chuẩn đầu ra, không ai phải nhập tay.</td></tr>
         <tr><th colspan="3">2. Tăng trải nghiệm người dùng</th></tr>
-        <tr><td><span class="ma">UX-1</span></td><td><a href="#ux-1">Làm lại giao diện màn Ngân hàng câu hỏi</a></td><td>Màn chính gọn, dễ nhìn; đọc câu và đáp án ngay trên danh sách.</td></tr>
+        <tr><td><span class="ma">UX-1</span></td><td><a href="#ux-1">Làm lại giao diện menu Ngân hàng câu hỏi</a></td><td>Các màn gọn, dễ nhìn, cùng một kiểu; đọc câu và đáp án ngay trên danh sách.</td></tr>
         <tr><td><span class="ma">UX-2</span></td><td><a href="#ux-2">Nhập file có câu lỗi vẫn lưu được câu đúng</a></td><td>File 100 câu có 1 câu lỗi vẫn lưu được 99 câu, sửa câu lỗi ngay trên màn hình.</td></tr>
         <tr><td><span class="ma">UX-3</span></td><td><a href="#ux-3">Đổi câu trong mã đề</a></td><td>Không ưng một câu thì đổi riêng câu đó, khỏi sinh lại cả bộ đề.</td></tr>
         <tr><td><span class="ma">UX-4</span></td><td><a href="#ux-4">Báo khi có câu chờ duyệt hoặc bị trả về</a></td><td>Việc duyệt không bị tồn; giảng viên biết ngay câu cần sửa.</td></tr>
@@ -71,11 +71,15 @@
         <tr><td><span class="ma">DC-2</span></td><td><a href="#dc-2">Điền khuyết</a></td><td>Sinh viên phải nhớ, không dựa vào phương án để đoán; máy tự chấm.</td></tr>
         <tr><td><span class="ma">DC-3</span></td><td><a href="#dc-3">Sắp xếp thứ tự</a></td><td>Đo hiểu quy trình; soạn và làm bài tự nhiên, không phải mượn câu nối.</td></tr>
         <tr><td><span class="ma">DC-4</span></td><td><a href="#dc-4">Câu nghe giới hạn số lần nghe</a></td><td>Học phần tiếng Anh thi phần nghe trực tuyến đúng quy chế.</td></tr>
-        <tr><th colspan="3">4. Tính năng thông minh (không cần AI)</th></tr>
+        <tr><th colspan="3">4. Tính năng thông minh</th></tr>
         <tr><td><span class="ma">TM-1</span></td><td><a href="#tm-1">Bốc câu theo tỉ lệ làm đúng</a></td><td>Câu quá dễ, quá khó tự động ít vào đề (ý của thầy).</td></tr>
         <tr><td><span class="ma">TM-2</span></td><td><a href="#tm-2">Không lặp câu đã ra</a></td><td>Ca sau không gặp lại câu ca trước; đợt sau ít gặp lại câu đợt trước.</td></tr>
         <tr><td><span class="ma">TM-3</span></td><td><a href="#tm-3">Dự báo điểm của đề trước khi thi</a></td><td>Biết trước đề khó hay dễ, chỉnh ngay trước khi thi.</td></tr>
         <tr><td><span class="ma">TM-4</span></td><td><a href="#tm-4">Báo câu cần xem lại sau mỗi đợt thi</a></td><td>Biết câu nào gán sai độ khó, câu nào nghi bị lộ, phương án nào vô dụng.</td></tr>
+        <tr><th colspan="3">Chỉ làm nếu nhà trường cho phép dùng AI (không tính vào 15 ý)</th></tr>
+        <tr><td><span class="ma">TM-5</span></td><td><a href="#tm-5">AI soạn câu nháp từ bài giảng</a></td><td>Tải slide lên là có câu nháp; giảng viên sửa thay vì viết từ đầu.</td></tr>
+        <tr><td><span class="ma">TM-6</span></td><td><a href="#tm-6">AI nhân bản câu hỏi</a></td><td>Một câu bài tập thành nhiều câu khác số liệu; sinh viên không học thuộc được.</td></tr>
+        <tr><td><span class="ma">TM-7</span></td><td><a href="#tm-7">AI gợi ý chuẩn đầu ra cho câu hỏi</a></td><td>Gắn CLO cho từng câu mà không phải đọc lại cả kho.</td></tr>
         <tr><th colspan="3">Ngoài đề xuất: hoàn thiện phần đã có trong code nhưng chưa dùng được</th></tr>
         <tr><td><span class="ma">HT-1</span></td><td><a href="#ht-1">Mở dạng trắc nghiệm nhiều đáp án</a></td><td>Phần chấm đã có; thêm phần soạn là giảng viên dùng được.</td></tr>
         <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">Câu nối cho phép nhiều nội dung cùng một mục</a></td><td>Câu phân loại trong file mẫu nhập vào chạy đúng khi thi.</td></tr>
@@ -185,21 +189,23 @@
 
   <section id="trai-nghiem">
     <h2>3. Tăng trải nghiệm người dùng</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Bộ đề</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
+    <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> cả 5 màn trong menu</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
     <p><b>Hệ thống đã có, không đề xuất lại:</b> bộ đề bật/tắt từng câu, sinh lại cả bộ đề, xem từng mã đề, chỉnh bản in; nút Kiểm tra xem toàn bộ câu của học phần kèm đáp án; nút Xem trước khi sửa câu; duyệt, gửi duyệt hàng loạt; lọc theo khối, độ khó, dạng, tìm theo nội dung câu; tải file mẫu nhập, màn kết quả nhập chia Hợp lệ, Thất bại, Trùng.</p>
 
     <div class="khoi" id="ux-1">
-      <div class="khoi-dau"><span class="ma">UX-1</span><h3>Làm lại giao diện màn Ngân hàng câu hỏi</h3></div>
-      <p><b>Vấn đề.</b> Thầy nhận xét giao diện xấu. Màn Ngân hàng câu hỏi là màn giảng viên và người duyệt mở nhiều nhất:</p>
+      <div class="khoi-dau"><span class="ma">UX-1</span><h3>Làm lại giao diện menu Ngân hàng câu hỏi</h3></div>
+      <p><b>Vấn đề.</b> Thầy nhận xét giao diện xấu. Một số chỗ đã đối chiếu code:</p>
       <ul>
         <li><b>Danh sách:</b> 11 cột; cột Câu hỏi hẹp nên câu bị cắt, phải bấm "xem thêm" từng câu; không thấy đáp án; trạng thái tách hai cột; nút Sửa, Duyệt ẩn sau biểu tượng menu.</li>
         <li><b>Form soạn câu:</b> 3 ô cùng tên "Loại câu hỏi"; ô chọn dạng câu nằm cuối form; khi thêm câu mới không có Xem trước (chỉ có khi sửa câu).</li>
+        <li><b>Ma trận đề:</b> form lập ma trận mở trong khung trượt, thêm từng dòng lại mở thêm một lớp cửa sổ.</li>
+        <li><b>v.v.:</b> FE rà lại cả 5 màn (Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề) và ghi thêm các chỗ chưa tiện vào phác thảo.</li>
       </ul>
       <p><b>Cách làm:</b></p>
       <ol>
         <li>Danh sách còn 7 cột: câu hỏi hiện đủ, kèm đáp án đúng; một nhãn trạng thái (Chưa gửi, Chờ duyệt, Cần sửa, Đang dùng, Tạm ngừng); nút Sửa, Duyệt hiện ngay trên dòng.</li>
         <li>Form soạn: "Dạng câu" lên đầu, bỏ các ô thừa; khung Xem trước đang có đặt cạnh form, vừa gõ vừa thấy câu như sinh viên sẽ thấy, cả khi thêm mới.</li>
-        <li>Các màn khác trong menu làm theo cùng một mẫu; thao tác lớn mở trang riêng thay cho cửa sổ chồng cửa sổ. Làm phác thảo cho thầy và 2–3 giảng viên duyệt trước khi code.</li>
+        <li>Cả 5 màn làm theo cùng một mẫu: bảng, nút, nhãn trạng thái cùng một kiểu; thao tác lớn như lập ma trận mở trang riêng thay cho cửa sổ chồng cửa sổ; v.v. Làm phác thảo cho thầy và 2–3 giảng viên duyệt trước khi code.</li>
       </ol>
       <div class="minh-hoa">
         <span class="nhan-mh">Phác thảo: danh sách câu hỏi sau khi gọn (7 cột)</span>
@@ -216,7 +222,7 @@
           </tbody>
         </table></div>
       </div>
-      <p class="loi-ich"><b>Lợi ích:</b> màn chính gọn, dễ nhìn, đúng nhận xét của thầy; đọc và duyệt câu ngay trên danh sách; người mới soạn câu không nhầm ô.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> các màn gọn, dễ nhìn, cùng một kiểu, đúng nhận xét của thầy; đọc và duyệt câu ngay trên danh sách; người mới soạn câu không nhầm ô.</p>
     </div>
 
     <div class="khoi" id="ux-2">
@@ -335,10 +341,10 @@
   </section>
 
   <section id="thong-minh">
-    <h2>5. Tính năng thông minh (không cần AI)</h2>
+    <h2>5. Tính năng thông minh</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 4</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Bộ đề</span><span><b>Tình trạng:</b> đề xuất</span></div>
-    <p><b>Hệ thống đã có:</b> bốc câu ngẫu nhiên đều theo ma trận; trộn câu và phương án; chặn câu giống hệt từng ký tự; máy chủ đã lưu từng câu trả lời của bài thi trực tuyến (chọn phương án nào, đúng hay sai) nhưng chưa tổng hợp. Chưa có thống kê theo câu hay gợi ý nào.</p>
-    <p><b>Hướng của nhóm này</b> theo gợi ý của thầy ở buổi họp 12/11: ngân hàng câu hỏi tự tốt lên sau mỗi đợt thi, không cần AI. Hệ thống học từ kết quả thi để bốc câu hợp lý hơn (TM-1), không lặp câu (TM-2), báo trước đề khó hay dễ (TM-3), chỉ ra câu cần sửa (TM-4). TM-1, TM-2 quyết định câu nào được bốc; nút Đổi câu (UX-3) chọn câu theo đúng cách này nên không vênh. TM-1, TM-3, TM-4 cần điểm thi trực tuyến chạy đúng (xem Ghi chú cho Dev).</p>
+    <p><b>Hệ thống đã có:</b> bốc câu ngẫu nhiên đều theo ma trận; trộn câu và phương án; chặn câu giống hệt từng ký tự; máy chủ đã lưu từng câu trả lời của bài thi trực tuyến (chọn phương án nào, đúng hay sai) nhưng chưa tổng hợp. Chưa có thống kê theo câu, gợi ý hay AI.</p>
+    <p><b>Hướng của nhóm này</b> theo gợi ý của thầy ở buổi họp 12/11: ngân hàng câu hỏi tự tốt lên sau mỗi đợt thi. Bốn ý đầu không cần AI, làm được ngay: hệ thống học từ kết quả thi để bốc câu hợp lý hơn (TM-1), không lặp câu (TM-2), báo trước đề khó hay dễ (TM-3), chỉ ra câu cần sửa (TM-4). TM-1, TM-2 quyết định câu nào được bốc; nút Đổi câu (UX-3) chọn câu theo đúng cách này nên không vênh. TM-1, TM-3, TM-4 cần điểm thi trực tuyến chạy đúng (xem Ghi chú cho Dev). Ba ý sau (TM-5 đến TM-7) dùng AI, chỉ làm nếu nhà trường cho phép.</p>
 
     <div class="khoi" id="tm-1">
       <div class="khoi-dau"><span class="ma">TM-1</span><h3>Bốc câu theo tỉ lệ làm đúng</h3></div>
@@ -404,6 +410,46 @@
       </div>
       <p class="loi-ich"><b>Lợi ích:</b> kho tốt dần sau mỗi đợt mà không ai phải soát tay: độ khó đúng thực tế; câu lộ được ngừng sớm; phương án sai nào cũng có tác dụng.</p>
     </div>
+
+    <div class="chu-y"><b>Ba ý dưới đây dùng AI, chỉ làm nếu nhà trường cho phép.</b> Chỉ gửi nội dung câu hỏi, tài liệu, đề cương, không gửi thông tin sinh viên; mọi thứ AI tạo đều là nháp hoặc gợi ý, phải qua người duyệt mới vào kho.</div>
+
+    <div class="khoi" id="tm-5">
+      <div class="khoi-dau"><span class="ma">TM-5</span><h3>AI soạn câu nháp từ bài giảng</h3></div>
+      <p><b>Vấn đề.</b> Soạn câu mất thời gian, nhất là nghĩ ra phương án sai hợp lý. Môn mới, hoặc chương ít câu, thì kho mỏng và đề lặp lại.</p>
+      <p><b>Cách làm:</b> tải slide hoặc giáo trình một chương lên, nhận 5–10 câu nháp, mỗi câu kèm đáp án, độ khó đề nghị và đoạn trích làm căn cứ. Trong form soạn có nút "Gợi ý phương án sai" cho câu giảng viên tự viết. Câu AI tạo lưu ở trạng thái "Chưa gửi", gắn nhãn AI, phải qua duyệt như câu thường.</p>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Phác thảo: tạo câu nháp từ slide</span>
+        <p>Tải lên: Chuong3-TruyVanSQL.pdf → 8 câu nháp<br>Câu 1 (đề nghị: Dễ). Câu lệnh nào dùng để xóa toàn bộ bảng khỏi cơ sở dữ liệu? *DROP TABLE · DELETE FROM · TRUNCATE TABLE · REMOVE TABLE<br><span class="muted">Căn cứ: slide 14, "DROP TABLE xóa cả cấu trúc và dữ liệu của bảng"</span> <b>[ Sửa ]</b> <b>[ Lưu nháp ]</b> <b>[ Bỏ ]</b></p>
+      </div>
+      <p class="loi-ich"><b>Lợi ích:</b> chương còn thiếu câu có câu nhanh; giảng viên rà và sửa thay vì viết từ đầu.</p>
+    </div>
+
+    <div class="khoi" id="tm-6">
+      <div class="khoi-dau"><span class="ma">TM-6</span><h3>AI nhân bản câu hỏi</h3></div>
+      <p><b>Vấn đề.</b> Câu dạng bài tập (tìm khóa, chuẩn hóa lược đồ, tính toán) mà chỉ có vài câu thì sinh viên học thuộc đáp án là qua; kho cũng không đủ câu cho nhiều ca không lặp (TM-2).</p>
+      <p><b>Cách làm:</b> trên câu đã duyệt có nút "Nhân bản": AI tạo 3–5 câu cùng dạng, cùng độ khó nhưng khác số liệu, nên đáp án khác, kèm đáp án tính lại. Câu chỉ viết lại cách hỏi mà giữ nguyên đáp án thì không tính là câu mới. Câu nhân bản ở trạng thái "Chưa gửi", gắn nhãn AI; người soạn kiểm đáp án rồi gửi duyệt như câu thường.</p>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Phác thảo: nhân bản một câu tìm khóa</span>
+        <p>Câu gốc (đã duyệt): Cho R(A, B, C, D), F = {A→B, B→C}. Khóa của R là? *AD · A · AB · ABD <b>[ Nhân bản ]</b><br>→ Cho R(A, B, C, D, E), F = {A→B, C→D}. Khóa của R là? *ACE · AC · ACD · E<br>→ Cho R(M, N, P, Q), F = {M→N, N→P, P→Q}. Khóa của R là? *M · MN · MQ · NP</p>
+      </div>
+      <p class="loi-ich"><b>Lợi ích:</b> nhiều câu cùng dạng mà khác đáp án: sinh viên phải biết cách làm chứ không thuộc đáp án; đủ câu cho nhiều ca không lặp.</p>
+    </div>
+
+    <div class="khoi" id="tm-7">
+      <div class="khoi-dau"><span class="ma">TM-7</span><h3>AI gợi ý chuẩn đầu ra cho câu hỏi</h3></div>
+      <p><b>Vấn đề.</b> CĐR-1 gắn CLO theo chương. Câu nào đo CLO khác chương (như câu "Viết lệnh CREATE TABLE…" nằm trong chương Thiết kế CSDL) thì phải đọc từng câu mới thấy; kho vài trăm câu thì không ai đọc hết.</p>
+      <p><b>Cách làm:</b> AI đọc nội dung từng câu và mô tả các CLO trong đề cương, liệt kê câu nên đổi CLO kèm lý do. Người phụ trách bấm Đồng ý hoặc Bỏ qua từng câu, hoặc đồng ý cả danh sách.</p>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Phác thảo: AI gợi ý đổi CLO</span>
+        <div class="bang"><table>
+          <thead><tr><th>Câu</th><th>Đang gắn (theo chương)</th><th>AI gợi ý</th><th>Lý do</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Viết lệnh CREATE TABLE cho lược đồ SINHVIEN</td><td>CLO1 (Chương 2)</td><td>CLO2</td><td>Kiểm tra viết câu lệnh SQL</td><td>[ Đồng ý ] [ Bỏ qua ]</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <p class="loi-ich"><b>Lợi ích:</b> CLO đúng tới từng câu mà không ai phải đọc lại cả kho; số liệu chuẩn đầu ra khi kiểm định chính xác hơn.</p>
+    </div>
   </section>
 
   <section id="hoan-thien">
@@ -461,6 +507,7 @@
       <li><b>Thống kê theo câu:</b> bảng tổng hợp theo câu (lượt làm, tỉ lệ đúng, số lượt chọn từng phương án, đợt và ca đã ra), tính bằng tác vụ nền sau mỗi ca thi; dùng chung cho TM-1, TM-2 (đợt đã ra), TM-3 và TM-4.</li>
       <li><b>Dữ liệu:</b> thêm CLO cho khối kiến thức và câu hỏi (câu không ghi riêng thì lấy theo chương); mã nhóm câu trùng gần giống (TM-2); số lần sử dụng của câu (trường <code>soLuongSuDung</code> đã khai báo nhưng chưa được cập nhật ở đâu, dùng lại cho TM-2); người soạn câu (hiện câu chỉ lưu người duyệt; UX-4 cần biết người soạn để báo câu bị trả về). Điểm CLO của thi trực tuyến (CĐR-3) lưu cùng dạng với điểm thi viết để thống kê tỉ lệ đạt CLO đang có đọc được.</li>
       <li><b>So khớp gần đúng (TM-2):</b> mã chống trùng hiện tại (<code>maHash</code>) ghép nguyên HTML câu hỏi và phương án, nên khác một ký tự là khác mã. Bản không cần AI: bỏ thẻ HTML, đưa về chữ thường, gộp khoảng trắng, bỏ dấu câu, rồi so độ trùng từ với các câu cùng học phần; ngưỡng chốt bằng cách thử trên kho thật.</li>
+      <li><b>AI (TM-5 đến TM-7, chỉ khi được phép):</b> một dịch vụ dùng chung ở máy chủ, bật/tắt bằng cấu hình, mặc định tắt; lưu nhật ký đã gửi nội dung gì; kết quả AI luôn là nháp hoặc gợi ý, gắn nhãn AI, không tự ghi vào kho.</li>
       <li><b>Tận dụng:</b> trang thi có sẵn một khung ô trống chưa dùng, dùng được cho DC-2; dịch vụ thông báo đang dùng để nhắc lịch thi, dùng lại cho UX-4.</li>
       <li><b>Nhập Word:</b> khi đổi file mẫu (HT-3), giữ đúng cách máy chủ đang đọc (nhãn hàng, chương in đậm, <code>##</code>, <code>/#</code>) để file cũ vẫn nhập được.</li>
     </ul>
