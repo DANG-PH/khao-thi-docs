@@ -53,7 +53,7 @@
 
   <section id="tom-tat">
     <h2>1. Tóm tắt</h2>
-    <p>Bốn nhóm đề xuất tính năng mới (19 ý), xếp theo thứ tự ưu tiên từ cao xuống thấp; mọi ý đã đối chiếu code trang quản trị, máy chủ và trang thi: hệ thống chưa có. Riêng những việc đã có một phần trong code nhưng người dùng chưa dùng được thì tách sang mục 6, không tính là tính năng mới. Mỗi ý gồm: vấn đề hiện nay kèm tình huống cụ thể, cách làm, phác thảo màn hình, lợi ích. Ví dụ lấy môn Cơ sở dữ liệu; phác thảo chỉ để hình dung, chưa phải thiết kế.</p>
+    <p>Bốn nhóm đề xuất tính năng mới (21 ý), xếp theo thứ tự ưu tiên từ cao xuống thấp; mọi ý đã đối chiếu code trang quản trị, máy chủ và trang thi: hệ thống chưa có. Riêng những việc đã có một phần trong code nhưng người dùng chưa dùng được thì tách sang mục 6, không tính là tính năng mới. Mỗi ý gồm: vấn đề hiện nay kèm tình huống cụ thể, cách làm, phác thảo màn hình, lợi ích. Ví dụ lấy môn Cơ sở dữ liệu; phác thảo chỉ để hình dung, chưa phải thiết kế.</p>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Đề xuất</th><th>Lợi ích</th></tr></thead>
       <tbody>
@@ -72,6 +72,8 @@
         <tr><td><span class="ma">DC-1</span></td><td><a href="#dc-1">Đúng/Sai, một ý hoặc nhiều ý</a></td><td>Ra nhanh câu kiểm tra khái niệm; dạng nhiều ý chấm đúng từng phần.</td></tr>
         <tr><td><span class="ma">DC-2</span></td><td><a href="#dc-2">Điền khuyết</a></td><td>Sinh viên phải nhớ, không dựa vào phương án để đoán.</td></tr>
         <tr><td><span class="ma">DC-3</span></td><td><a href="#dc-3">Sắp xếp thứ tự</a></td><td>Đo được hiểu quy trình, thứ tự, điều trắc nghiệm khó hỏi.</td></tr>
+        <tr><td><span class="ma">DC-4</span></td><td><a href="#dc-4">Câu nghe giới hạn số lần nghe</a></td><td>Thi nghe đúng quy chế (nghe 1–2 lần), không nghe lại vô hạn.</td></tr>
+        <tr><td><span class="ma">DC-5</span></td><td><a href="#dc-5">Chỉ vị trí trên hình</a></td><td>Hỏi được "thành phần nào ở đâu" trên sơ đồ, hình vẽ.</td></tr>
         <tr><th colspan="3">4. Tính năng thông minh</th></tr>
         <tr><td><span class="ma">TM-1</span></td><td><a href="#tm-1">Bốc câu thông minh</a></td><td>Đề ít lặp, ít câu quá dễ hoặc quá khó; ca sau không trùng câu ca trước.</td></tr>
         <tr><td><span class="ma">TM-2</span></td><td><a href="#tm-2">Cảnh báo câu nghi sai đáp án</a></td><td>Sửa đáp án sai trước khi công bố điểm, tránh khiếu nại hàng loạt.</td></tr>
@@ -284,7 +286,7 @@
   <section id="dang-cau">
     <h2>4. Câu hỏi đa dạng hơn</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 3</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi</span><span><b>Tình trạng:</b> BA chốt danh sách và thứ tự</span></div>
-    <p><b>Hệ thống đã có:</b> giảng viên soạn được 4 dạng: trắc nghiệm một đáp án, tự luận, câu nối (ghép cặp 1–1), câu nhóm; câu đính kèm được hình, âm thanh, video. <b>Câu chọn tranh</b> (phương án là hình) đã làm được: chọn "Câu hỏi phức tạp" rồi chèn hình vào từng phương án, hoặc chèn hình vào ô Đ, T1–T3 trong file Word; trang thi hiển thị hình. Đã thử trên demo ngày 12/11/2026: nhập file Word có hình trong các ô phương án, thi bằng tài khoản sinh viên test, hình hiển thị đủ và câu được chấm đúng. Trắc nghiệm nhiều đáp án và câu phân loại đã có một phần trong code nên không đưa vào đây, xem mục 6 (HT-1, HT-2). Đã bỏ dạng "Đáp án số" theo buổi họp 12/11. Ba dạng dưới đây hệ thống chưa soạn, chưa chấm được; riêng điền khuyết, trang thi có sẵn một khung ô trống chưa dùng tới.</p>
+    <p><b>Hệ thống đã có:</b> giảng viên soạn được 4 dạng: trắc nghiệm một đáp án, tự luận, câu nối (ghép cặp 1–1), câu nhóm; câu đính kèm được hình, âm thanh, video. <b>Câu chọn tranh</b> (phương án là hình) đã làm được: chọn "Câu hỏi phức tạp" rồi chèn hình vào từng phương án, hoặc chèn hình vào ô Đ, T1–T3 trong file Word; trang thi hiển thị hình. Đã thử trên demo ngày 12/11/2026: nhập file Word có hình trong các ô phương án, thi bằng tài khoản sinh viên test, hình hiển thị đủ và câu được chấm đúng. Trắc nghiệm nhiều đáp án và câu phân loại đã có một phần trong code nên không đưa vào đây, xem mục 6 (HT-1, HT-2). Đã bỏ dạng "Đáp án số" theo buổi họp 12/11. Tổng cộng đề xuất 7 dạng: 5 dạng mới dưới đây (DC-1 đến DC-5), và 2 dạng đã có một phần trong code cần làm nốt: trắc nghiệm nhiều đáp án, phân loại (xem mục 6, HT-1, HT-2). Riêng điền khuyết, trang thi có sẵn một khung ô trống chưa dùng tới.</p>
 
     <div class="khoi" id="dc-1">
       <div class="khoi-dau"><span class="ma">DC-1</span><h3>Đúng/Sai, một ý hoặc nhiều ý</h3></div>
@@ -312,6 +314,7 @@
         <p>Câu lệnh [__________] dùng để thêm dữ liệu, câu lệnh [__________] dùng để xóa dữ liệu.</p>
       </div>
       <p><b>Hiện nay, đã đối chiếu code:</b> trang thi có sẵn một giao diện ô trống, nhưng máy chủ không chấm và trang quản trị không soạn được dạng này, nên không dùng được.</p>
+      <p><b>Trả lời ngắn</b> (gõ một từ, một cụm từ) là điền khuyết có một ô ở cuối câu, nên không cần dạng riêng.</p>
       <p><b>Cách làm:</b> giảng viên ghi các đáp án chấp nhận trong ngoặc nhọn, cách nhau bằng dấu chấm phẩy, giống iTest, ví dụ <code>{INSERT; INSERT INTO}</code>, nên file soạn cho iTest nhập thẳng được. Chấm theo từng ô; không phân biệt hoa thường, bỏ khoảng trắng thừa.</p>
       <p class="loi-ich"><b>Lợi ích:</b> sinh viên phải nhớ, không dựa vào phương án để đoán. Hợp với ngoại ngữ, lập trình, thuật ngữ chuyên ngành.</p>
     </div>
@@ -326,6 +329,29 @@
       <p><b>Hiện nay:</b> không có ở cả trang quản trị, máy chủ, trang thi.</p>
       <p><b>Chấm:</b> đúng toàn bộ thứ tự mới có điểm.</p>
       <p class="loi-ich"><b>Lợi ích:</b> đo được hiểu quy trình, thứ tự các bước, điều câu trắc nghiệm khó hỏi trực tiếp.</p>
+    </div>
+
+    <div class="khoi" id="dc-4">
+      <div class="khoi-dau"><span class="ma">DC-4</span><h3>Câu nghe giới hạn số lần nghe</h3></div>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Sinh viên thấy khi thi</span>
+        <p>🔊 Đoạn hội thoại 1 <b>[ ▶ Nghe ]</b> <span class="muted">(còn 1/2 lượt nghe, không tua được)</span><br>What time does the meeting start? ○ 8:00 ○ 8:30 ○ 9:00 ○ 9:30</p>
+      </div>
+      <p><b>Hiện nay, đã đối chiếu code:</b> câu đính kèm được âm thanh, nhưng trang thi dùng trình phát mặc định: nghe bao nhiêu lần cũng được, tua tự do. Thi nghe theo quy chế (ví dụ chỉ nghe 1–2 lần) thì không làm được.</p>
+      <p><b>Cách làm:</b> người soạn đặt số lần nghe cho câu (mặc định không giới hạn, như hiện nay). Khi thi, nút nghe đếm lượt, không cho tua; số lượt đã nghe được lưu lại, nên tải lại trang không được nghe lại từ đầu. Câu hỏi đi kèm là trắc nghiệm, điền khuyết… và chấm như dạng đó.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> các học phần tiếng Anh thi phần nghe trực tuyến đúng quy chế, công bằng giữa các sinh viên.</p>
+    </div>
+
+    <div class="khoi" id="dc-5">
+      <div class="khoi-dau"><span class="ma">DC-5</span><h3>Chỉ vị trí trên hình</h3></div>
+      <div class="minh-hoa">
+        <span class="nhan-mh">Sinh viên thấy khi thi</span>
+        <p>Bấm vào thiết bị định tuyến (router) trong sơ đồ mạng dưới đây:</p>
+        <p>[ hình: Máy tính — Switch — <b>Router</b> — Internet ] &nbsp; <span class="muted">sinh viên bấm vào một điểm trên hình, điểm bấm hiện dấu ✕</span></p>
+      </div>
+      <p><b>Hiện nay:</b> không có ở trang quản trị, máy chủ lẫn trang thi. Câu chọn tranh (phương án là hình) thì đã làm được, nhưng đó là chọn một trong mấy hình, không phải chỉ một chỗ trên cùng một hình.</p>
+      <p><b>Cách làm:</b> người soạn tải hình lên rồi kéo khung quanh vùng đúng (một hoặc vài vùng). Khi thi, sinh viên bấm vào hình; bấm trong vùng đúng mới có điểm.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> hỏi được "thành phần nào nằm ở đâu" trên sơ đồ mạng, sơ đồ khối, hình vẽ kỹ thuật, điều trắc nghiệm chữ khó hỏi. Làm sau cùng vì tốn công nhất trong các dạng.</p>
     </div>
 
     <div class="muc"><h4>Mỗi dạng cần chốt đủ 6 điểm trước khi làm</h4><ol>
