@@ -59,7 +59,7 @@
       <tbody>
         <tr><th colspan="3">1. Chuẩn đầu ra (đề xuất, chờ BA khảo sát)</th></tr>
         <tr><td><span class="ma">CĐR-1</span></td><td><a href="#cdr-1">Gắn chuẩn đầu ra cho câu hỏi</a></td><td>Cả kho câu có chuẩn đầu ra trong vài phút; thấy ngay chuẩn đầu ra nào thiếu câu.</td></tr>
-        <tr><td><span class="ma">CĐR-2</span></td><td><a href="#cdr-2">Ma trận kiểm tra tỉ lệ chuẩn đầu ra</a></td><td>Đề đúng tỉ lệ đề cương ngay lúc lập; có bảng làm minh chứng khi kiểm định.</td></tr>
+        <tr><td><span class="ma">CĐR-2</span></td><td><a href="#cdr-2">Ma trận theo chuẩn đầu ra: bốc câu theo chuẩn đầu ra, kiểm tra tỉ lệ</a></td><td>Mỗi mã đề đúng tỉ lệ đề cương, không phụ thuộc may rủi khi bốc; có bảng làm minh chứng khi kiểm định.</td></tr>
         <tr><td><span class="ma">CĐR-3</span></td><td><a href="#cdr-3">Điểm theo chuẩn đầu ra cho bài thi trực tuyến</a></td><td>Học phần thi trực tuyến tự có tỉ lệ đạt chuẩn đầu ra, không ai phải nhập tay.</td></tr>
         <tr><th colspan="3">2. Tăng trải nghiệm người dùng</th></tr>
         <tr><td><span class="ma">UX-1</span></td><td><a href="#ux-1">Thiết kế lại giao diện theo phác thảo được duyệt</a></td><td>Giao diện gọn, dễ nhìn; thầy và giảng viên duyệt trên phác thảo trước khi code.</td></tr>
@@ -135,20 +135,32 @@
     </div>
 
     <div class="khoi" id="cdr-2">
-      <div class="khoi-dau"><span class="ma">CĐR-2</span><h3>Ma trận kiểm tra tỉ lệ chuẩn đầu ra</h3></div>
-      <p><b>Vấn đề.</b> Tỉ lệ của mỗi CLO đã có trong hệ thống (ví dụ CLO2 60%), nhưng khi lập ma trận, người ra đề không biết đề đang dành bao nhiêu điểm cho CLO2.</p>
-      <p><b>Cách làm:</b> màn lập ma trận hiện thêm một bảng tự tính từ các câu đã chọn, cập nhật mỗi khi đổi số câu. Khi sinh bộ đề, mã đề nào không có câu nào của một CLO thì bị cảnh báo.</p>
+      <div class="khoi-dau"><span class="ma">CĐR-2</span><h3>Ma trận theo chuẩn đầu ra: bốc câu theo chuẩn đầu ra, kiểm tra tỉ lệ</h3></div>
+      <p><b>Vấn đề.</b> Tỉ lệ của mỗi CLO đã có trong hệ thống (ví dụ CLO2 60%), nhưng mỗi dòng ma trận chỉ gồm chương, độ khó, dạng câu, số câu, và máy chủ bốc câu theo đúng ba điều kiện đó. Một chương có thể phục vụ nhiều CLO (và CĐR-1 cho đổi CLO từng câu), nên bốc theo chương thì mỗi mã đề có thể lệch tỉ lệ CLO tùy may rủi; người ra đề cũng không biết đề đang dành bao nhiêu điểm cho CLO2.</p>
+      <p><b>Cách làm:</b></p>
+      <ol>
+        <li><b>Bốc theo CLO:</b> mỗi dòng ma trận chọn thêm CLO (bên cạnh chương, độ khó); máy chủ chỉ bốc câu thuộc CLO đó. Mỗi mã đề vì vậy có đúng số câu của từng CLO như ma trận.</li>
+        <li><b>Kiểm tra tỉ lệ:</b> màn lập ma trận có bảng tự tính mỗi CLO chiếm bao nhiêu điểm so với tỉ lệ đề cương, cập nhật mỗi khi đổi số câu; lệch thì báo trước khi lưu.</li>
+      </ol>
       <div class="minh-hoa">
-        <span class="nhan-mh">Phác thảo: bảng kiểm tra trong màn lập ma trận</span>
+        <span class="nhan-mh">Phác thảo: dòng ma trận có thêm cột CLO, và bảng kiểm tra</span>
+        <div class="bang"><table>
+          <thead><tr><th>Chương</th><th>CLO</th><th>Độ khó</th><th>Số câu</th></tr></thead>
+          <tbody>
+            <tr><td>Chương 2. Thiết kế CSDL</td><td>CLO1</td><td>Trung bình</td><td>8</td></tr>
+            <tr><td>Chương 2. Thiết kế CSDL</td><td>CLO2</td><td>Khó</td><td>2</td></tr>
+            <tr><td>Chương 3. Truy vấn SQL</td><td>CLO2</td><td>Khó</td><td>6</td></tr>
+          </tbody>
+        </table></div>
         <div class="bang"><table>
           <thead><tr><th>CLO</th><th>Đề cương</th><th>Đề này</th><th>Kết luận</th></tr></thead>
           <tbody>
-            <tr><td>CLO1</td><td>40%</td><td>4,5 điểm (45%)</td><td>Đạt</td></tr>
-            <tr><td>CLO2</td><td>60%</td><td>5,5 điểm (55%)</td><td><b>Thiếu 0,5 điểm</b></td></tr>
+            <tr><td>CLO1</td><td>40%</td><td>4,0 điểm (40%)</td><td>Đạt</td></tr>
+            <tr><td>CLO2</td><td>60%</td><td>5,5 điểm (55%)</td><td><b>Thiếu 0,5 điểm: thêm câu CLO2</b></td></tr>
           </tbody>
         </table></div>
       </div>
-      <p class="loi-ich"><b>Lợi ích:</b> đề đúng tỉ lệ đề cương ngay lúc lập ma trận. Khi kiểm định chất lượng, in bảng này làm minh chứng "đề đo đủ chuẩn đầu ra".</p>
+      <p class="loi-ich"><b>Lợi ích:</b> mỗi mã đề đúng tỉ lệ đề cương, không phụ thuộc may rủi khi bốc; khi kiểm định chất lượng, in bảng này làm minh chứng "đề đo đủ chuẩn đầu ra".</p>
     </div>
 
     <div class="khoi" id="cdr-3">
