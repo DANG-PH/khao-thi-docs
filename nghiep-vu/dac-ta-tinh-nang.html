@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 15 tính năng mới theo 4 nhóm ưu tiên, 3 ý dùng AI nếu nhà trường cho phép, và 3 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
+<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 15 tính năng mới theo 4 nhóm ưu tiên, 3 ý dùng AI nếu nhà trường cho phép, và 2 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
 <title>Đặc tả tính năng phát triển</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,8 +82,7 @@
         <tr><td><span class="ma">TM-7</span></td><td><a href="#tm-7">AI gợi ý chuẩn đầu ra cho câu hỏi</a></td><td>Gắn CLO cho từng câu mà không phải đọc lại cả kho.</td></tr>
         <tr><th colspan="3">Ngoài đề xuất: hoàn thiện phần đã có trong code nhưng chưa dùng được</th></tr>
         <tr><td><span class="ma">HT-1</span></td><td><a href="#ht-1">Mở dạng trắc nghiệm nhiều đáp án</a></td><td>Phần chấm đã có; thêm phần soạn là giảng viên dùng được.</td></tr>
-        <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">Sửa lỗi câu phân loại (nhiều ý cùng một nhóm)</a></td><td>Sinh viên làm đúng không bị trừ điểm oan; làm nền cho Đúng/Sai nhiều ý.</td></tr>
-        <tr><td><span class="ma">HT-3</span></td><td><a href="#ht-3">File mẫu nhập Word có hướng dẫn</a></td><td>Giảng viên lần đầu tự nhập được, ít câu lỗi.</td></tr>
+        <tr><td><span class="ma">HT-2</span></td><td><a href="#ht-2">File mẫu nhập Word có hướng dẫn</a></td><td>Giảng viên lần đầu tự nhập được, ít câu lỗi.</td></tr>
       </tbody>
     </table></div>
     <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được, mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không đổi. Hệ thống chỉ gợi ý; người có thẩm quyền quyết định. Mọi tính năng theo phân quyền ngân hàng hiện có.</div>
@@ -275,7 +274,7 @@
     <h2>4. Câu hỏi đa dạng hơn</h2>
     <div class="meta"><span><b>Ưu tiên:</b> 3</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi</span><span><b>Tình trạng:</b> BA chốt danh sách và thứ tự</span></div>
     <p><b>Hệ thống đã có:</b> giảng viên soạn được 4 dạng: trắc nghiệm một đáp án, tự luận, câu nối (ghép cặp 1–1), câu nhóm; câu đính kèm được hình, âm thanh, video; có công thức toán (trình soạn có nút công thức, nhập Word giữ được công thức). <b>Câu chọn tranh</b> (phương án là hình) đã làm được: chèn hình vào từng phương án khi soạn trên web hoặc trong file Word; đã thử trên demo ngày 12/11/2026, hình hiển thị đủ và câu được chấm đúng. <b>Câu Đúng/Sai một ý</b> làm được bằng trắc nghiệm hai phương án "Đúng", "Sai".</p>
-    <p>Đề xuất 6 dạng: 4 dạng mới dưới đây, và 2 dạng đã có một phần trong code cần làm nốt (trắc nghiệm nhiều đáp án, phân loại; xem HT-1, HT-2). Không đề xuất: đáp án số (đã bỏ theo buổi họp 12/11), chỉ vị trí trên hình (giá trị thấp, không nhập được từ Word), ghi âm và nộp file (cần chấm tay, thi trực tuyến chưa có chấm tay).</p>
+    <p>Đề xuất 5 dạng: 4 dạng mới dưới đây, và trắc nghiệm nhiều đáp án đã có một phần trong code cần làm nốt (xem HT-1). Không đề xuất: đáp án số (đã bỏ theo buổi họp 12/11), chỉ vị trí trên hình (giá trị thấp, không nhập được từ Word), ghi âm và nộp file (cần chấm tay, thi trực tuyến chưa có chấm tay).</p>
 
     <div class="khoi" id="dc-1">
       <div class="khoi-dau"><span class="ma">DC-1</span><h3>Đúng/Sai nhiều ý</h3></div>
@@ -292,8 +291,8 @@
         </table></div>
       </div>
       <p><b>Hiện nay:</b> chưa làm được (dạng một ý thì làm được bằng trắc nghiệm hai phương án). <b>Khác trắc nghiệm nhiều đáp án (HT-1):</b> ở đây sinh viên phải chọn Đúng hoặc Sai cho từng ý và được điểm theo số ý đúng; nhiều đáp án chỉ tích các ý đúng, đúng hết mới có điểm.</p>
-      <p><b>Cách làm:</b> làm trên nền câu nối sau khi hoàn thiện HT-2: mỗi ý là một nội dung, hai mục là Đúng và Sai; có form soạn và giao diện riêng (hai nút Đúng/Sai cạnh mỗi ý). Chấm theo số ý đúng, ví dụ đúng 1 ý 10%, 2 ý 25%, 3 ý 50%, 4 ý 100% điểm câu (giống đề thi tốt nghiệp THPT mới).</p>
-      <p class="loi-ich"><b>Lợi ích:</b> dạng sinh viên đã quen từ THPT; chấm đúng từng phần nên phân loại sinh viên tốt hơn câu một đáp án. Rẻ vì dùng lại HT-2.</p>
+      <p><b>Cách làm:</b> làm trên nền câu nối: mỗi ý là một nội dung, hai nhóm là Đúng và Sai, nhiều ý chọn được cùng một nhóm; có form soạn và giao diện riêng (hai nút Đúng/Sai cạnh mỗi ý). Chấm theo số ý đúng, ví dụ đúng 1 ý 10%, 2 ý 25%, 3 ý 50%, 4 ý 100% điểm câu (giống đề thi tốt nghiệp THPT mới).</p>
+      <p class="loi-ich"><b>Lợi ích:</b> dạng sinh viên đã quen từ THPT; chấm đúng từng phần nên phân loại sinh viên tốt hơn câu một đáp án. Rẻ vì dùng lại câu nối.</p>
     </div>
 
     <div class="khoi" id="dc-2">
@@ -473,34 +472,7 @@
     </div>
 
     <div class="khoi" id="ht-2">
-      <div class="khoi-dau"><span class="ma">HT-2</span><h3>Sửa lỗi câu phân loại (nhiều ý cùng một nhóm)</h3></div>
-      <p><b>Câu phân loại là gì.</b> Dạng "xếp mỗi ý vào đúng nhóm", trong đó nhiều ý có thể cùng một nhóm:</p>
-      <div class="minh-hoa">
-        <span class="nhan-mh">Ví dụ: xếp mỗi thành phố vào đúng miền</span>
-        <div class="bang"><table>
-          <tbody>
-            <tr><td>Hà Nội</td><td>[ Miền Bắc ▾ ]</td></tr>
-            <tr><td>Hải Phòng</td><td>[ Miền Bắc ▾ ]</td></tr>
-            <tr><td>Đà Nẵng</td><td>[ Miền Trung ▾ ]</td></tr>
-            <tr><td>Cần Thơ</td><td>[ Miền Nam ▾ ]</td></tr>
-          </tbody>
-        </table></div>
-        <p>Hà Nội và Hải Phòng cùng là Miền Bắc.</p>
-      </div>
-      <p><b>Lỗi hiện nay.</b> File mẫu Word đã cho soạn câu kiểu này và nhập vào được. Nhưng khi thi, hệ thống coi các ý cùng nhóm là một ý:</p>
-      <ol>
-        <li>Sinh viên chọn "Miền Bắc" cho Hà Nội.</li>
-        <li>Sinh viên chọn tiếp "Miền Bắc" cho Hải Phòng: lựa chọn của Hà Nội bị ghi đè.</li>
-        <li>Nộp bài: sinh viên làm đúng cả hai nhưng chỉ được tính một, bị trừ điểm oan.</li>
-      </ol>
-      <p>Câu nối hiện chỉ chạy đúng khi mỗi nhóm có đúng một ý (ghép cặp 1–1).</p>
-      <p><b>Vì sao ghi ở mục hoàn thiện:</b> soạn và nhập đã có, chỉ sai khi thi, nên đây là sửa lỗi chứ không phải tính năng mới.</p>
-      <p><b>Cách làm:</b> mỗi ý có mã riêng, nhiều ý chọn cùng một nhóm mà không đè nhau; chấm theo số ý xếp đúng bằng thang điểm câu nối đang có. File Word giữ nguyên. Nguyên nhân (cho Dev): hệ thống dùng số ở cột "Thuộc mục" làm mã của từng ý, nên các ý cùng nhóm bị trùng mã.</p>
-      <p class="loi-ich"><b>Lợi ích:</b> câu phân loại chấm đúng, không trừ điểm oan. Đúng/Sai nhiều ý (DC-1) chính là xếp mỗi ý vào nhóm "Đúng" hoặc "Sai", nên sửa xong lỗi này thì làm DC-1 rất nhanh.</p>
-    </div>
-
-    <div class="khoi" id="ht-3">
-      <div class="khoi-dau"><span class="ma">HT-3</span><h3>File mẫu nhập Word có hướng dẫn</h3></div>
+      <div class="khoi-dau"><span class="ma">HT-2</span><h3>File mẫu nhập Word có hướng dẫn</h3></div>
       <p><b>Vấn đề.</b> File mẫu ("Tải mẫu ITest") không có dòng hướng dẫn nào; các hàng chỉ ghi một chữ H, Đ, T1, K, M; hàng M máy chủ bỏ qua nhưng giảng viên dễ tưởng là ô nhập điểm. BA phản hồi khó hiểu. File nằm trên Google Drive của tài khoản khác, nhóm không sửa được.</p>
       <p><b>Cách làm:</b> ngay bây giờ đã có trang <a href="../huong-dan/nhap-cau-hoi-tu-word.html">KT-HD-01 Nhập câu hỏi từ Word</a> giải thích đủ. Bước sau: người có quyền thay file mẫu bằng bản có một trang hướng dẫn ở đầu, bỏ hàng M, mỗi dạng một ví dụ cùng một môn; nút đổi tên thành "Tải file mẫu nhập câu hỏi".</p>
       <p class="loi-ich"><b>Lợi ích:</b> giảng viên lần đầu tự nhập được mà không phải hỏi bộ phận khảo thí; ít câu lỗi hơn.</p>
@@ -518,7 +490,7 @@
       <li><b>So khớp gần đúng (TM-2):</b> mã chống trùng hiện tại (<code>maHash</code>) ghép nguyên HTML câu hỏi và phương án, nên khác một ký tự là khác mã. Bản không cần AI: bỏ thẻ HTML, đưa về chữ thường, gộp khoảng trắng, bỏ dấu câu, rồi so độ trùng từ với các câu cùng học phần; ngưỡng chốt bằng cách thử trên kho thật.</li>
       <li><b>AI (TM-5 đến TM-7, chỉ khi được phép):</b> một dịch vụ dùng chung ở máy chủ, bật/tắt bằng cấu hình, mặc định tắt; lưu nhật ký đã gửi nội dung gì; kết quả AI luôn là nháp hoặc gợi ý, gắn nhãn AI, không tự ghi vào kho.</li>
       <li><b>Tận dụng:</b> trang thi có sẵn một khung ô trống chưa dùng, dùng được cho DC-2; dịch vụ thông báo đang dùng để nhắc lịch thi, dùng lại cho UX-4.</li>
-      <li><b>Nhập Word:</b> khi đổi file mẫu (HT-3), giữ đúng cách máy chủ đang đọc (nhãn hàng, chương in đậm, <code>##</code>, <code>/#</code>) để file cũ vẫn nhập được.</li>
+      <li><b>Nhập Word:</b> khi đổi file mẫu (HT-2), giữ đúng cách máy chủ đang đọc (nhãn hàng, chương in đậm, <code>##</code>, <code>/#</code>) để file cũ vẫn nhập được.</li>
     </ul>
   </section>
 
