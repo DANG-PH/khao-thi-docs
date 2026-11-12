@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Những gì đã sửa để thi trực tuyến chịu được cả trường ULSA thi cùng giờ, nhập ma trận từ Excel, ước tính tải và checklist triển khai.">
+<title>Ổn định thi ULSA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/tai-lieu.css">
+<style>
+code { font-family: var(--font-mono); font-size: 0.8rem; background: var(--soft); padding: 0 4px; word-break: break-word; }
+</style>
+</head>
+<body>
+<main class="doc">
+  <a class="back" href="../">← Tài liệu Khảo thí</a>
+
+  <header class="muc">
+    <span class="nhan">Triển khai</span>
+    <h1>Ổn định thi trực tuyến cho ULSA</h1>
+  </header>
+
+  <div class="thong-tin">
+    <dl>
+      <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
+      <dt>Phiên bản</dt><dd>1.0</dd>
+      <dt>Ngày</dt><dd>12/11/2026</dd>
+      <dt>Đối tượng đọc</dt><dd>Dev, Tester</dd>
+      <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
+    </dl>
+  </div>
+
+  <div class="chu-y"><b>Bối cảnh.</b> ULSA thi trực tuyến tuần sau ngày 12/11/2026. Mỗi phòng một ca (40–60 thí sinh), cả trường thi cùng giờ, hàng chục ca chạy song song: 1000–2000 thí sinh cùng lúc. Hai yêu cầu: tối ưu app thi (bỏ log thừa), và nhập ma trận đề từ Excel có mẫu dễ hiểu. Mọi thay đổi không đổi luồng của giám thị, giảng viên, thí sinh.</div>
+
+  <nav class="muc-luc" aria-label="Mục lục">
+    <ol>
+      <li><a href="#yeu-cau">Hai yêu cầu</a></li>
+      <li><a href="#may-chu">Đã sửa ở máy chủ</a></li>
+      <li><a href="#trang-thi">Đã sửa ở trang thi</a></li>
+      <li><a href="#ma-tran">Nhập ma trận từ Excel</a></li>
+      <li><a href="#chiu-tai">Chịu tải 2000 thí sinh</a></li>
+      <li><a href="#trien-khai">Checklist triển khai</a></li>
+      <li><a href="#con-lai">Chưa kiểm chứng, còn tồn</a></li>
+      <li><a href="#commit">Commit</a></li>
+    </ol>
+  </nav>
+
+  <section id="yeu-cau">
+    <h2>1. Hai yêu cầu</h2>
+    <div class="bang"><table>
+      <tr><th>Yêu cầu</th><th>Trạng thái</th><th>Cách làm</th></tr>
+      <tr><td>Tối ưu app thi, bỏ log thừa</td><td class="nowrap">Đã xong</td><td>"Log cron" là vòng lặp ở trang thi gửi cả mảng log lên máy chủ theo chu kỳ, máy chủ ghi đè cả mảng mỗi lần. Nay: trong SEB không gửi log (SEB đã khóa máy); ngoài SEB chỉ gửi phần mới, 60 giây một lần, máy chủ nối thêm và giữ tối đa 2000 dòng. Vi phạm, đình chỉ, dừng thi vẫn gửi ngay. Kèm theo là giảm tải ở lấy đề, nộp bài, tự lưu, tín hiệu kết nối (mục 2, 3).</td></tr>
+      <tr><td>Nhập ma trận từ Excel</td><td class="nowrap">Đã xong</td><td>Nút <b>Tải mẫu Excel</b> sinh mẫu theo học phần, điền sẵn các chương, chỉ gõ số câu; Excel chặn gõ quá số câu trong kho. Nút <b>Nhập từ Excel</b> báo lỗi từng ô, không lỗi thì mở sẵn form "Thêm ma trận" để xem lại và lưu như cũ (mục 4).</td></tr>
+    </table></div>
+    <p class="muted">Người dùng chỉ thấy 2 thay đổi: hộp thoại "đang tự nộp bài" lúc hết giờ (tối đa 30 giây), và 2 nút Excel ở trang Ma trận đề.</p>
+  </section>
+
+  <section id="may-chu">
+    <h2>2. Đã sửa ở máy chủ</h2>
+    <p>Hầu hết ở <code>src/modules/thi-online/thi.service.ts</code>; hằng số ở <code>thi-online/common/constant.ts</code>.</p>
+    <div class="bang"><table>
+      <tr><th class="so">#</th><th>Vấn đề</th><th>Cách sửa</th><th>Chỗ sửa</th></tr>
+      <tr><td class="so">B1</td><td>Bấm nộp 2 lần, hoặc tự nộp trùng nộp tay, ra 2 bản kết quả</td><td>Khóa Redis <code>SET NX PX 60s</code> theo ca + thí sinh, nhả khóa trong <code>finally</code>; lần nộp thứ 2 nhận "Bài thi đang được nộp"</td><td><code>nopBaiThi</code></td></tr>
+      <tr><td class="so">B2</td><td>Mỗi lần lấy đề, nộp bài đều đọc ca thi kèm cả bộ đề (mọi mã đề, mọi câu); 50 thí sinh vào cùng lúc là 50 lần đọc nặng</td><td>Đọc ca thi không kèm bộ đề; bộ đề nhớ tạm 20 giây, nhiều yêu cầu cùng lúc chỉ đọc cơ sở dữ liệu 1 lần (single-flight); không sửa trực tiếp object trong bộ nhớ tạm</td><td><code>getBoDeDayDu</code>, lấy đề, nộp bài, danh sách giám thị</td></tr>
+      <tr><td class="so">B3</td><td>Tín hiệu kết nối, tự lưu: lần nào cũng đọc lại ca thi</td><td>Nhớ tạm ca thi 5 giây; xóa ngay khi giám thị dừng thi hoặc kết thúc ca</td><td><code>getCaThiNhoTam</code>, <code>dungThi</code>, <code>ketThucCaThi</code></td></tr>
+      <tr><td class="so">B4</td><td>Tín hiệu kết nối ghi cơ sở dữ liệu 2 lần dù không có vi phạm mới</td><td>Vẫn cập nhật giờ kết nối cuối (giám thị cần), chỉ ghi thêm khi có vi phạm mới</td><td><code>guiTinHieu</code></td></tr>
+      <tr><td class="so">B5</td><td>Kiểm tra quyền làm bài đọc lại log vào thi đã đọc; tự lưu đọc tuần tự</td><td>Dùng lại bản đã đọc; tự lưu đọc song song</td><td><code>assertDuocLamBai</code>, <code>autoSave</code></td></tr>
+      <tr><td class="so">B6</td><td>Cài đặt hệ thống đọc cơ sở dữ liệu ở mọi yêu cầu thi</td><td>Nhớ tạm 15 giây, xóa khi lưu cài đặt; trả bản sao để nơi gọi không sửa nhầm</td><td><code>setting.service.ts</code></td></tr>
+      <tr><td class="so">B7</td><td>Log giám sát: mỗi lần gửi ghi đè cả mảng</td><td>Cờ <code>noiTiep</code>: nối thêm, giữ 2000 dòng cuối; không có cờ thì như cũ</td><td><code>log-action.service.ts</code></td></tr>
+      <tr><td class="so">B8</td><td>Thiếu chỉ mục cho truy vấn theo ca + thí sinh</td><td>Chỉ mục ghép <code>{idCaThi, username}</code> ở bài làm, câu trả lời, kết quả, log vào thi; <code>{idCaThi, username, cauHoiId}</code> ở bản lưu câu trả lời; <code>danhSachSinhVien.ssoId</code> ở lịch thi</td><td><code>entities/*.entity.ts</code></td></tr>
+    </table></div>
+  </section>
+
+  <section id="trang-thi">
+    <h2>3. Đã sửa ở trang thi</h2>
+    <p>Hầu hết ở <code>src/pages/ThiOnline/LamBai/index.tsx</code>.</p>
+    <div class="bang"><table>
+      <tr><th class="so">#</th><th>Vấn đề</th><th>Cách sửa</th></tr>
+      <tr><td class="so">F1</td><td>Điểm thi trực tuyến luôn bằng 0: trang thi bản gốc <code>feature/thi-online</code> gửi <code>maDe: deThi._id</code>, máy chủ tìm mã đề theo <code>maDe</code> nên không thấy đề</td><td>Gửi <code>deThi.maDe</code> (máy chủ đã trả về khi lấy đề)</td></tr>
+      <tr><td class="so">F2</td><td>Nộp trùng từ phía trang</td><td>Khóa bằng ref; nộp theo bản chụp câu trả lời lúc bấm</td></tr>
+      <tr><td class="so">F3</td><td>Mạng chậm lúc nộp: máy chủ đã nhận bài nhưng trang không nhận phản hồi, thí sinh kẹt</td><td>Nộp lại nhận lỗi "đã nộp bài thi" thì báo nộp thành công và chuyển về danh sách</td></tr>
+      <tr><td class="so">F4</td><td>Đình chỉ không hiện ngay trên máy thí sinh</td><td>So mã định danh với tài khoản không phân biệt hoa thường</td></tr>
+      <tr><td class="so">F5</td><td>Hết giờ cả ca tự nộp cùng một giây</td><td>Rải ngẫu nhiên 0–30 giây, hiện hộp thoại chờ; máy chủ còn 2 phút gia hạn nên không mất bài. Sau hết giờ không nhận chọn đáp án nữa</td></tr>
+      <tr><td class="so">F6</td><td>Log giám sát gửi cả mảng theo chu kỳ, kể cả log nhiễu</td><td>Trong SEB không gửi; ngoài SEB gửi phần mới mỗi 60 giây; bỏ log nhiễu</td></tr>
+      <tr><td class="so">F7</td><td>Tự lưu gửi toàn bộ bài, vòng tự lưu bị khởi tạo lại liên tục</td><td>Lần đầu gửi đủ, sau đó chỉ câu đã đổi, 25–35 giây (rải ngẫu nhiên)</td></tr>
+      <tr><td class="so">F8</td><td>Tín hiệu kết nối 10 giây</td><td>20 giây. Không lên 30: màn giám thị báo mất kết nối sau 60 giây, 20 giây cho phép rớt 2 lần liên tiếp</td></tr>
+      <tr><td class="so">F9</td><td>Kiểm tra mạng mỗi 3 giây, gọi ra Internet</td><td>Chỉ gọi file tĩnh của máy chủ trường, 10 giây một lần</td></tr>
+    </table></div>
+  </section>
+
+  <section id="ma-tran">
+    <h2>4. Nhập ma trận từ Excel</h2>
+    <div class="bang"><table>
+      <tr><th>Phần</th><th>Nội dung</th></tr>
+      <tr><td class="nowrap">Máy chủ</td><td><code>ma-tran-de/ma-tran-de-excel.service.ts</code> (exceljs).<br>
+        <code>GET ma-tran-de/mau-excel?maHocPhan</code>: sheet "Ma trận" gồm các chương của học phần, cột Trắc nghiệm và Tự luận theo 4 độ khó, cột Câu nhóm; mỗi ô chỉ nhận số nguyên từ 0 đến số câu trong kho, rê chuột thấy "Kho đang có N câu", ô kho trống tô xám, có cột tổng; sheet 2 "Số câu đang có".<br>
+        <code>POST ma-tran-de/doc-excel?maHocPhan</code> (field <code>file</code>): trả dữ liệu đúng dạng form tạo ma trận và danh sách lỗi theo ô. Kiểm tra: số nguyên, không vượt kho, chương còn tồn tại, không để cùng chương + cùng độ khó có 2 loại câu (API tạo ma trận hiện tại không nhận trường hợp này).</td></tr>
+      <tr><td class="nowrap">Trang quản trị</td><td><code>pages/DeThi/MaTranDe/index.tsx</code>: 2 nút cạnh ô chọn học phần, chỉ hiện khi có quyền tạo ma trận và đã chọn học phần. Dịch vụ gọi API ở <code>services/DeThi/MaTranDe/index.ts</code>.</td></tr>
+    </table></div>
+  </section>
+
+  <section id="chiu-tai">
+    <h2>5. Chịu tải 2000 thí sinh (ước tính theo code)</h2>
+    <div class="bang"><table>
+      <tr><th>Lúc</th><th>Yêu cầu</th><th>Tải ước tính</th></tr>
+      <tr><td class="nowrap">Đang làm bài</td><td>Tín hiệu kết nối (20 giây)</td><td>~100 yêu cầu/giây, mỗi lần 1 lần ghi</td></tr>
+      <tr><td></td><td>Tự lưu (25–35 giây, chỉ câu đổi)</td><td>≤ 67 yêu cầu/giây</td></tr>
+      <tr><td></td><td>Log giám sát</td><td>0 trong SEB; ngoài SEB ≤ 33 yêu cầu/giây</td></tr>
+      <tr><td></td><td>Kiểm tra mạng (file tĩnh, 10 giây)</td><td>~200 yêu cầu/giây vào nginx, không chạm API</td></tr>
+      <tr><td class="nowrap">Vào thi</td><td>Lấy đề</td><td>2000 yêu cầu trong 1–3 phút; bộ đề đọc 1 lần mỗi ca mỗi 20 giây</td></tr>
+      <tr><td class="nowrap">Hết giờ</td><td>Tự nộp (rải 30 giây)</td><td>~67 yêu cầu/giây, mỗi lần chấm điểm; lúc nặng nhất</td></tr>
+      <tr><td class="nowrap">Tải trang</td><td>Gói JS trang thi 3,9 MB (1,1 MB nén)</td><td>× 2000 ≈ 2,2 GB: cho thí sinh mở trang sớm, nginx bật nén và cache</td></tr>
+    </table></div>
+    <p>Lúc làm bài khoảng 170 yêu cầu/giây vào API. Đủ nếu có ít nhất 3 bản API, MongoDB replica set chạy SSD, Redis, nginx bật nén. Lúc vào thi và lúc nộp là nặng nhất. Đây là ước tính, chưa đo ở quy mô 2000.</p>
+  </section>
+
+  <section id="trien-khai">
+    <h2>6. Checklist triển khai</h2>
+    <div class="bang"><table>
+      <tr><th>Hạng mục</th><th>Cần làm</th></tr>
+      <tr><td class="nowrap">Nguồn mã</td><td>Trang thi phải lấy từ nhánh <code>feat/ulsa-on-dinh</code> (bản gốc gửi sai mã đề, điểm luôn 0, xem F1). Nhánh máy chủ dựng trên <code>main</code>: chạy image từ main hoặc tag thì khớp; chạy <code>develop</code> hoặc <code>product-*</code> thì phải rebase rồi thử lại.</td></tr>
+      <tr><td class="nowrap">Image</td><td>CI chỉ build <code>develop</code>, <code>product-*</code> và tag. Cần MR vào <code>main</code> rồi gắn tag, hoặc đẩy sang nhánh <code>product-ulsa</code>.</td></tr>
+      <tr><td class="nowrap">API</td><td>Ít nhất 3 bản sau nginx; chỉ 1 bản <code>SERVER_MASTER=1</code>; tắt OTEL.</td></tr>
+      <tr><td class="nowrap">MongoDB</td><td>Replica set, <code>maxPoolSize=200</code>. API tự tạo chỉ mục mới khi khởi động: deploy trước ngày thi ít nhất 1 ngày để tạo xong ngoài giờ thi.</td></tr>
+      <tr><td class="nowrap">nginx</td><td>Bật nén, cache file tĩnh trang thi, websocket (Upgrade, timeout dài), <code>worker_connections</code> đủ cho 2000+ kết nối.</td></tr>
+      <tr><td class="nowrap">Biến môi trường</td><td><code>TRUST_PROXY_HOPS</code> bằng đúng số proxy trước API (để lọc dải IP phòng thi đúng); trang thi: <code>APP_CONFIG_IP_KHAO_THI</code>, <code>APP_CONFIG_SOCKET_URL</code> trỏ máy chủ ULSA.</td></tr>
+      <tr><td class="nowrap">SEB</td><td>Cho phép tên miền trang thi, API, Keycloak, máy chủ file; <code>SEB_ALLOWED_ORIGINS</code>; thử Config Key qua gateway của ULSA.</td></tr>
+      <tr><td class="nowrap">Cài đặt thi</td><td>SEB, dải IP, mã hóa đề mặc định tắt; bật ở Quản trị › Cài đặt › Thi online sau khi thử. Phiên Keycloak dài hơn giờ thi.</td></tr>
+      <tr><td class="nowrap">Triển khai</td><td>Máy chủ, trang thi, trang quản trị lên cùng lúc. Không khởi động lại API, web khi đang có ca thi.</td></tr>
+      <tr><td class="nowrap">Trước ngày thi</td><td>Chạy trọn 1 ca với SEB trên máy phòng thi ULSA; thử tải trên máy chủ ULSA.</td></tr>
+    </table></div>
+  </section>
+
+  <section id="con-lai">
+    <h2>7. Chưa kiểm chứng, còn tồn</h2>
+    <h3>Đã kiểm tra</h3>
+    <ul>
+      <li>Máy chủ build, lint qua; trang thi build qua (Node 22). Không còn code debug trong phần thay đổi.</li>
+      <li>Khóa nộp bài luôn được nhả; tín hiệu vẫn cập nhật giờ kết nối cuối; bộ nhớ tạm ca thi xóa sau khi dừng hoặc kết thúc ca.</li>
+    </ul>
+    <h3>Chưa kiểm chứng</h3>
+    <ul>
+      <li>Luồng SEB thật trên máy phòng thi (cần Windows hoặc macOS cài SEB).</li>
+      <li>Tải ở quy mô 1000–2000 thí sinh trên hạ tầng của ULSA.</li>
+    </ul>
+    <h3>Còn tồn (không chặn đợt thi)</h3>
+    <ul>
+      <li>Bật mã hóa đề thì tốn CPU lúc cả trường vào thi: đo khi thử tải, cao thì để tắt.</li>
+      <li>API tạo ma trận không nhận cùng chương + cùng độ khó có 2 loại câu; cần hỏi lại nghiệp vụ quy tắc này.</li>
+      <li>Hai yêu cầu lấy đề đến cùng lúc có thể tạo 2 bản log vào thi; ảnh hưởng nhỏ.</li>
+    </ul>
+  </section>
+
+  <section id="commit">
+    <h2>8. Commit</h2>
+    <div class="bang"><table>
+      <tr><th>Repo</th><th>Commit</th><th>Nội dung</th></tr>
+      <tr><td class="nowrap">khao-thi</td><td><code>73a7935a</code></td><td>Bảo mật thi, Safe Exam Browser</td></tr>
+      <tr><td></td><td><code>e0a6482e</code></td><td>Chịu tải, chặn nộp trùng</td></tr>
+      <tr><td></td><td><code>5f24a5b8</code></td><td>Mẫu Excel, đọc Excel ma trận</td></tr>
+      <tr><td></td><td><code>712b1699</code></td><td>Nhớ tạm ca thi 5 giây</td></tr>
+      <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser</td></tr>
+      <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
+      <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
+      <tr><td class="nowrap">all_thi_online</td><td><code>9a4c83c</code></td><td>2 nút Excel ở trang Ma trận đề</td></tr>
+    </table></div>
+  </section>
+
+  <footer>Repo công khai: không đưa mật khẩu, khóa bí mật hay dữ liệu cá nhân lên đây.</footer>
+</main>
+</body>
+</html>
