@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cách điền file mẫu Word để nhập câu hỏi vào ngân hàng: từng hàng H, Đ, T1–T3, K nghĩa là gì, cách ghi chương, câu nối, câu nhóm, và các lỗi thường gặp.">
+<title>Nhập câu hỏi từ Word</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../assets/tai-lieu.css">
+</head>
+<body>
+<main class="doc">
+  <a class="back" href="../">← Tài liệu Khảo thí</a>
+
+  <header class="muc">
+    <span class="nhan">Hướng dẫn</span>
+    <h1>Nhập câu hỏi từ file Word</h1>
+  </header>
+
+  <div class="thong-tin">
+    <dl>
+      <dt>Mã tài liệu</dt><dd>KT-HD-01</dd>
+      <dt>Phiên bản</dt><dd>1.0</dd>
+      <dt>Ngày</dt><dd>12/11/2026</dd>
+      <dt>Đối tượng đọc</dt><dd>BA, giảng viên soạn đề, Tester</dd>
+      <dt>Căn cứ</dt><dd>File mẫu tải từ nút "Biểu mẫu nhập" &gt; "Tải mẫu ITest", đối chiếu với cách máy chủ đọc file (nhánh develop)</dd>
+    </dl>
+  </div>
+
+  <div class="chu-y"><b>Vì sao có trang này.</b> File mẫu hiện tại không có dòng hướng dẫn nào, và nằm trên Google Drive của một tài khoản khác nên nhóm không sửa được. Trang này giải thích thay cho phần hướng dẫn còn thiếu. Mọi quy tắc dưới đây lấy từ cách máy chủ đang đọc file, không phải quy ước mới.</div>
+
+  <nav class="muc-luc" aria-label="Mục lục">
+    <ol>
+      <li><a href="#o-dau">Nhập file ở đâu</a></li>
+      <li><a href="#cau-truc">Cấu trúc chung của file</a></li>
+      <li><a href="#trac-nghiem">Câu trắc nghiệm</a></li>
+      <li><a href="#tu-luan">Câu tự luận</a></li>
+      <li><a href="#cau-noi">Câu nối</a></li>
+      <li><a href="#cau-nhom">Câu nhóm</a></li>
+      <li><a href="#dac-biet">Phương án đặc biệt</a></li>
+      <li><a href="#sau-khi-nhap">Sau khi nhập</a></li>
+      <li><a href="#loi">Lỗi thường gặp</a></li>
+    </ol>
+  </nav>
+
+  <section id="o-dau">
+    <h2>1. Nhập file ở đâu</h2>
+    <ol>
+      <li>Vào menu Ngân hàng câu hỏi, chọn học phần. Cần quyền nhập ngân hàng của học phần đó.</li>
+      <li>Tải file mẫu: nút <b>Biểu mẫu nhập</b> &gt; <b>Tải mẫu ITest</b>. Có thể bỏ qua file mẫu và tự soạn theo trang này.</li>
+      <li>Nhập: nút <b>Nhập dữ liệu</b>, chọn file <code>.docx</code> (không nhận <code>.doc</code>), tối đa 50 MB.</li>
+    </ol>
+  </section>
+
+  <section id="cau-truc">
+    <h2>2. Cấu trúc chung của file</h2>
+    <ul>
+      <li><b>Mỗi câu hỏi là một bảng hai cột:</b> cột trái ghi nhãn hàng, cột phải ghi nội dung. Bảng ba cột, thêm cột số thứ tự câu ở đầu, cũng đọc được.</li>
+      <li><b>Tên chương:</b> một dòng chữ <b>in đậm</b>, nằm ngoài bảng, đặt trước các câu của chương. Tên chương áp cho mọi câu phía sau, đến khi gặp tên chương khác. Không có tên chương thì câu vào chương "Chung".</li>
+      <li><b>Tên chương phải khớp Khối kiến thức</b> đã có của học phần (không phân biệt hoa thường). Gõ khác đi một chữ thì hệ thống tạo thêm một khối kiến thức mới, viết hoa toàn bộ.</li>
+      <li><b>Không in đậm chữ nào khác ngoài bảng</b>, kể cả trong đoạn dẫn của câu nhóm: chữ in đậm ngoài bảng bị hiểu là tên chương mới.</li>
+      <li><b>Hình và công thức</b> chèn thẳng vào ô; công thức dùng Equation của Word.</li>
+    </ul>
+    <h4>Ý nghĩa các nhãn hàng</h4>
+    <div class="bang"><table>
+      <thead><tr><th style="width:80px">Nhãn</th><th>Nghĩa</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td><code>H</code></td><td>Nội dung câu hỏi</td><td>Bắt đầu một câu mới.</td></tr>
+        <tr><td><code>Đ</code></td><td>Đáp án đúng</td><td>Chữ Đ có gạch ngang. Gõ nhầm thành chữ D thì hàng bị bỏ qua và câu báo thiếu đáp án.</td></tr>
+        <tr><td><code>T1</code>, <code>T2</code>, <code>T3</code></td><td>Các phương án sai</td><td>Tối đa 3, nên một câu trắc nghiệm có tối đa 4 phương án. Hàng để trống thì bỏ qua.</td></tr>
+        <tr><td><code>K</code></td><td>Độ khó</td><td>Chỉ nhận <code>1</code> Dễ, <code>2</code> Trung bình, <code>3</code> Khó, <code>4</code> Rất khó. Ghi khác là câu báo lỗi.</td></tr>
+        <tr><td><code>M</code></td><td>Không dùng</td><td>Có trong file mẫu nhưng máy chủ bỏ qua. Điểm câu lấy theo Mức điểm của học phần, không lấy ở đây.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="trac-nghiem">
+    <h2>3. Câu trắc nghiệm</h2>
+    <div class="bang"><table>
+      <tbody>
+        <tr><th style="width:60px">H</th><td>Câu lệnh nào dùng để thêm dữ liệu vào bảng?</td></tr>
+        <tr><th>Đ</th><td>INSERT</td></tr>
+        <tr><th>T1</th><td>UPDATE</td></tr>
+        <tr><th>T2</th><td>DELETE</td></tr>
+        <tr><th>T3</th><td>SELECT</td></tr>
+        <tr><th>K</th><td>1</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Bắt buộc: <code>H</code>, <code>Đ</code>, ít nhất <code>T1</code>, <code>K</code>.</li>
+      <li>Các phương án không được trùng nhau.</li>
+      <li>Đáp án đúng luôn ghi ở hàng <code>Đ</code>; khi sinh đề, hệ thống tự trộn thứ tự phương án.</li>
+    </ul>
+  </section>
+
+  <section id="tu-luan">
+    <h2>4. Câu tự luận</h2>
+    <div class="bang"><table>
+      <tbody>
+        <tr><th style="width:60px">H</th><td>Trình bày sự khác nhau giữa khóa chính và khóa ngoại.</td></tr>
+        <tr><th>Đ</th><td>Gợi ý đáp án: khóa chính xác định duy nhất một dòng…; khóa ngoại tham chiếu tới khóa chính của bảng khác…</td></tr>
+        <tr><th>K</th><td>2</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>Câu chỉ có hàng <code>Đ</code>, không có <code>T1</code>–<code>T3</code>, được hiểu là tự luận; hàng <code>Đ</code> là gợi ý đáp án và vẫn bắt buộc.</li>
+      <li><b>Lưu ý:</b> câu trắc nghiệm quên ghi phương án sai cũng thành tự luận mà không báo lỗi. Kiểm tra cột dạng câu ở màn kết quả.</li>
+    </ul>
+  </section>
+
+  <section id="cau-noi">
+    <h2>5. Câu nối</h2>
+    <p>Sinh viên nối mỗi lựa chọn bên trái với một mục bên phải. Bảng có hàng <code>H</code>, <code>K</code>, rồi các hàng <code>a</code>, <code>b</code>, <code>c</code>… mỗi hàng 7 cột. Các hàng tiêu đề như "CÁC LỰA CHỌN", "TT" được bỏ qua, ghi cho dễ đọc.</p>
+    <div class="bang"><table>
+      <thead>
+        <tr><th>Nhãn</th><th>Nội dung lựa chọn</th><th>Thuộc mục</th><th>TT mục</th><th>Tên mục</th><th>Số lựa chọn đúng</th><th>Điểm</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>H</td><td colspan="6">Nối mỗi câu lệnh với nhóm lệnh của nó.</td></tr>
+        <tr><td>K</td><td colspan="6">2</td></tr>
+        <tr><td>a</td><td>INSERT</td><td>2</td><td>1</td><td>DDL</td><td>1</td><td>0</td></tr>
+        <tr><td>b</td><td>CREATE TABLE</td><td>1</td><td>2</td><td>DML</td><td>2</td><td>1</td></tr>
+        <tr><td>c</td><td>GRANT</td><td>3</td><td>3</td><td>DCL</td><td>3</td><td>2</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><b>Cột 2–3, bên trái:</b> nội dung lựa chọn và số thứ tự của mục đúng. Ví dụ hàng a: INSERT nối đúng với mục số 2 (DML).</li>
+      <li><b>Cột 4–5, bên phải:</b> danh sách mục, mỗi hàng một mục kèm số thứ tự. Mục không xếp theo lựa chọn; hàng a ghi mục số 1 không có nghĩa là a nối với mục 1.</li>
+      <li><b>Cột 6–7, thang điểm (bắt buộc):</b> mỗi hàng một mức "nối đúng bao nhiêu lựa chọn thì được bao nhiêu điểm". Sinh viên được mức cao nhất mà mình đạt, tính theo tỉ lệ với điểm cao nhất của thang. Ví dụ trên: đúng 3 được 2/2 = 100% điểm câu, đúng 2 được 1/2 = 50%, đúng 1 được 0.</li>
+      <li>Nội dung lựa chọn không được trùng nhau; tên mục không được trùng nhau. "Số lựa chọn đúng" là số nguyên, "Điểm" là số.</li>
+    </ul>
+  </section>
+
+  <section id="cau-nhom">
+    <h2>6. Câu nhóm</h2>
+    <p>Một đoạn dẫn chung (bài đọc, tình huống, sơ đồ) và các câu con cùng hỏi về đoạn đó.</p>
+    <div class="bang"><table>
+      <tbody>
+        <tr><th style="width:150px">Dòng <code>##</code></th><td>Một dòng riêng, chỉ có hai ký tự <code>##</code>. Bắt đầu câu nhóm.</td></tr>
+        <tr><th>Đoạn dẫn</th><td>Các đoạn văn ngoài bảng, có thể kèm hình. Không có độ khó. Không in đậm chữ nào trong đoạn dẫn.</td></tr>
+        <tr><th>Các câu con</th><td>Mỗi câu con là một bảng như câu thường: trắc nghiệm, tự luận hoặc câu nối, mỗi câu có <code>K</code> riêng.</td></tr>
+        <tr><th>Dòng <code>/#</code></th><td>Một dòng riêng, chỉ có <code>/#</code>. Kết thúc câu nhóm.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Trong ngân hàng, cả nhóm tính là một câu; trong đề, các câu con luôn đi liền nhau.</p>
+  </section>
+
+  <section id="dac-biet">
+    <h2>7. Phương án đặc biệt</h2>
+    <ul>
+      <li><b>Phương án "tất cả" hoặc "không có":</b> viết bắt đầu bằng các cụm như "Tất cả các đáp án trên đều đúng", "Các phương án trên đều sai", "Không có đáp án nào đúng". Khi trộn, hệ thống luôn để phương án này ở cuối.</li>
+      <li><b>Phương án nhắc tới phương án khác:</b> dùng <code>##Đ</code>, <code>##T1</code>, <code>##T2</code>, <code>##T3</code> để chỉ phương án ở hàng tương ứng, ví dụ hàng <code>Đ</code> ghi "Cả ##T1 và ##T2 đều đúng". Khi trộn, hệ thống đổi thành chữ cái theo vị trí mới, ví dụ "Cả B và D đều đúng", và để phương án này ở cuối.</li>
+      <li>Viết thẳng "Cả A và B đều đúng" thì sẽ sai sau khi trộn, vì hệ thống không biết A, B là phương án nào để đổi theo.</li>
+    </ul>
+  </section>
+
+  <section id="sau-khi-nhap">
+    <h2>8. Sau khi nhập</h2>
+    <ul>
+      <li>Màn kết quả có ba tab: <b>Hợp lệ</b>, <b>Thất bại</b> (kèm lý do từng câu), <b>Trùng</b> (đã có câu cùng nội dung và cùng phương án trong học phần; không nhập lại).</li>
+      <li><b>Nút lưu chỉ hiện khi không còn câu nào ở tab Thất bại.</b> Có một câu lỗi thì phải sửa trong file Word rồi nhập lại cả file; màn kết quả chưa cho sửa từng câu.</li>
+      <li>Câu nhập vào ở trạng thái "Chưa gửi"; sau đó gửi duyệt như câu soạn tay.</li>
+    </ul>
+  </section>
+
+  <section id="loi">
+    <h2>9. Lỗi thường gặp</h2>
+    <div class="bang"><table>
+      <thead><tr><th>Hệ thống báo, hoặc hiện tượng</th><th>Nguyên nhân thường gặp</th></tr></thead>
+      <tbody>
+        <tr><td>Đáp án đúng không được để trống</td><td>Thiếu hàng <code>Đ</code>, hoặc gõ chữ D thay cho Đ.</td></tr>
+        <tr><td>Mã độ khó không hợp lệ</td><td>Hàng <code>K</code> ghi chữ, ghi số khác 1–4, hoặc để trống.</td></tr>
+        <tr><td>Có đáp án bị trùng lặp</td><td>Hai phương án giống hệt nhau.</td></tr>
+        <tr><td>Chưa nhập thang điểm</td><td>Câu nối thiếu cột "Số lựa chọn đúng" và "Điểm".</td></tr>
+        <tr><td>Điểm, số câu phải là kiểu số</td><td>Thang điểm câu nối ghi chữ hoặc số lẻ ở cột "Số lựa chọn đúng".</td></tr>
+        <tr><td>Đáp án lựa chọn / đáp án tương ứng đã bị trùng</td><td>Câu nối có hai lựa chọn hoặc hai tên mục giống nhau.</td></tr>
+        <tr><td>Câu vào chương "Chung", hoặc xuất hiện khối kiến thức lạ</td><td>Tên chương không in đậm, gõ khác tên khối đã có, hoặc có chữ in đậm khác ngoài bảng.</td></tr>
+        <tr><td>Câu trắc nghiệm thành tự luận</td><td>Thiếu các hàng <code>T1</code>–<code>T3</code>.</td></tr>
+        <tr><td>Câu không có trong kết quả</td><td>Nhãn hàng <code>H</code> gõ sai, hoặc câu nằm ngoài bảng.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer>KT-HD-01 · Phiên bản 1.0 · 12/11/2026 · Quy tắc đối chiếu từ mã nguồn máy chủ nhánh develop. Đề xuất sửa file mẫu: KT-DT-01, mục UX-1.</footer>
+</main>
+</body>
+</html>
