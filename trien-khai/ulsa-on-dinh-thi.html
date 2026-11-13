@@ -35,7 +35,7 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.0</dd>
+      <dt>Phiên bản</dt><dd>2.1</dd>
       <dt>Ngày</dt><dd>13/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
       <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
@@ -43,7 +43,7 @@ dl.tu dd { margin: 0; }
     </dl>
   </div>
 
-  <div class="chu-y"><b>Đọc nhanh.</b> Tuần sau ngày 12/11/2026, Trường Đại học Lao động – Xã hội (ULSA) thi trực tuyến: mỗi phòng một ca, cả trường thi cùng giờ, tức 1000–2000 thí sinh cùng lúc. Thầy giao hai việc. (1) Làm app thi chịu được lượng đó và bỏ phần log không còn cần: <b>đã xong</b>, gồm 4 lỗi làm sai điểm hoặc kẹt bài và 13 chỗ giảm tải. (2) Cho nhập ma trận đề từ file Excel có mẫu dễ hiểu: <b>đã xong</b>. Trước ngày thi còn phải thử SEB trên máy phòng thi và thử tải trên máy chủ của ULSA. Ai chưa biết thi trực tuyến chạy thế nào thì đọc mục 1 trước.</div>
+  <div class="chu-y"><b>Đọc nhanh.</b> Tuần sau ngày 12/11/2026, Trường Đại học Lao động – Xã hội (ULSA) thi trực tuyến: mỗi phòng một ca, cả trường thi cùng giờ, tức 1000–2000 thí sinh cùng lúc. Thầy giao hai việc. (1) Làm app thi chịu được lượng đó và bỏ phần log không còn cần: <b>đã xong</b>, gồm 5 lỗi làm sai điểm, kẹt bài hoặc không vào thi được, và 13 chỗ giảm tải. Đã chạy thử 200 thí sinh ảo trên bản demo (mục 10). (2) Cho nhập ma trận đề từ file Excel có mẫu dễ hiểu: <b>đã xong</b>. Trước ngày thi còn phải thử SEB trên máy phòng thi và thử tải trên máy chủ của ULSA. Ai chưa biết thi trực tuyến chạy thế nào thì đọc mục 1 trước.</div>
 
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
@@ -117,7 +117,7 @@ flowchart TD
       <tr><td>Trắc nghiệm nhiều đáp án</td><td>Chọn nhiều phương án</td><td>Phải chọn đủ và chỉ chọn các phương án đúng mới có điểm</td></tr>
       <tr><td>Câu nối</td><td>Ghép từng cặp</td><td>Theo số cặp ghép đúng, quy ra điểm theo thang điểm của câu</td></tr>
       <tr><td>Tự luận</td><td>Gõ bài vào ô</td><td>Không tự chấm, tính 0; hiện chưa có màn chấm tay</td></tr>
-      <tr><td>Câu nhóm</td><td colspan="2"><b>Không dùng được trong thi trực tuyến</b>: đề có câu nhóm thì máy chủ báo lỗi khi thí sinh lấy đề, không ai vào thi được (bảng bài làm chưa nhận dạng câu này); trang thi cũng chưa có giao diện câu con</td></tr>
+      <tr><td>Câu nhóm</td><td>Đọc đoạn dẫn, trả lời từng câu con (một hoặc nhiều đáp án)</td><td>Mỗi câu con chọn đủ và đúng mới tính; điểm câu nhóm theo tỷ lệ câu con đúng, như câu nối</td></tr>
     </table></div>
     <p>Mỗi độ khó có một mức điểm cho mỗi câu, cài ở mức điểm của học phần; chưa cài thì mặc định Dễ 1, Trung bình 2, Khó 3, Rất khó 4. <b>Điểm = tổng điểm các câu làm đúng ÷ tổng điểm tối đa của mọi câu × 10.</b> Ví dụ đề 6 câu Dễ, 2 Trung bình, 2 Khó dùng mức mặc định: tối đa là 6×1 + 2×2 + 2×3 = 16; làm đúng 5 câu Dễ và 1 câu Trung bình được 7, tức 7 ÷ 16 × 10 = 4,38. Câu tự luận vẫn tính vào điểm tối đa, nên đề có câu tự luận thì làm đúng hết phần còn lại cũng không đạt 10.</p>
   </section>
@@ -180,6 +180,16 @@ flowchart TD
         <dt>Nguyên nhân</dt><dd>Màn giám thị gửi mã thí sinh viết hoa, còn tài khoản thí sinh viết thường. Trang thi so khớp phân biệt hoa thường nên không nhận ra lệnh đình chỉ là dành cho mình. Trang còn một điều kiện thừa theo id ca thi: nếu máy chủ gửi kèm id ca thì cả ca bị khóa, nên đã bỏ.</dd>
         <dt>Cách sửa</dt><dd>So khớp không phân biệt hoa thường ở cả trang thi và máy chủ. Thêm nữa, tín hiệu kết nối kế tiếp của thí sinh đã bị đình chỉ cũng bị máy chủ từ chối, nên bài vẫn bị khóa kể cả khi rớt socket.</dd>
         <dt>Chỗ sửa</dt><dd>thi_online <code>LamBai/index.tsx</code>; khao-thi <code>thi.service.ts</code> <code>dinhChiThi</code></dd>
+      </dl>
+    </div>
+
+    <div class="sua">
+      <h4><span class="ma">L5</span> Đề có câu nhóm thì cả ca không vào thi được</h4>
+      <dl>
+        <dt>Hiện tượng</dt><dd>Thí sinh nhập mật khẩu phòng xong thì báo lỗi máy chủ, không nhận được đề. Có từ trước ở cả <code>main</code> và <code>develop</code>; phát hiện khi tester thi đề đủ dạng câu hỏi trên demo.</dd>
+        <dt>Nguyên nhân</dt><dd>Câu nhóm gồm đoạn dẫn và các câu con nằm ở trường riêng <code>danhSachNoiDung</code>. Ngân hàng, ma trận, bộ đề, xuất Word đều hiểu câu nhóm, nhưng đường thi trực tuyến chưa từng làm: bảng bài làm không nhận loại câu 11 nên lưu bài làm lỗi; phát đề bỏ mất câu con; trang thi tìm câu con ở trường khác tên; chấm điểm không có nhánh câu nhóm.</dd>
+        <dt>Cách sửa</dt><dd>Bài làm nhận câu nhóm và lưu các câu con (kèm đáp án để chấm); phát đề và vào lại gửi kèm câu con (đã bỏ đáp án như mọi câu); trang thi hiện từng câu con; chấm ở cả nộp bài thường và nộp từ file sao lưu: mỗi câu con chọn đủ và đúng mới tính, điểm câu theo tỷ lệ câu con đúng.</dd>
+        <dt>Chỗ sửa</dt><dd>khao-thi <code>thi-online/entities/noi-dung.entity.ts</code>, <code>thi.service.ts</code> (<code>layDapAnCauNhom</code>, <code>chamCauNhom</code>); thi_online <code>LamBai/index.tsx</code> (<code>layCauCon</code>)</dd>
       </dl>
     </div>
   </section>
@@ -313,7 +323,7 @@ flowchart TD
     <ol>
       <li>Trang quản trị › Ngân hàng câu hỏi › <b>Ma trận đề</b>, chọn học phần. Hai nút hiện cạnh ô chọn học phần, chỉ với người có quyền tạo ma trận.</li>
       <li>Bấm <b>Tải mẫu Excel</b>. File có sẵn tên các chương của học phần, mỗi chương một dòng; các cột là Trắc nghiệm và Tự luận theo 4 độ khó, và Câu nhóm.</li>
-      <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Rê chuột vào ô thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
+      <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Đầu file có dòng cách dùng và dòng lưu ý quy tắc (cùng chương, cùng độ khó chỉ một dạng; cột Trắc nghiệm gồm cả câu nối). Ngay dưới bảng nhập có bảng "Số câu đang có trong kho" cùng cột, nhìn thẳng xuống là biết kho còn bao nhiêu. Rê chuột vào ô cũng thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
       <li>Bấm <b>Nhập từ Excel</b>, chọn file. Có lỗi thì hiện danh sách lỗi theo ô (ví dụ "Chương 2, Trắc nghiệm – Khó: kho chỉ có 3 câu"). Không lỗi thì form "Thêm ma trận" mở sẵn với đủ các dòng; người dùng xem lại rồi bấm Lưu như cũ.</li>
     </ol>
     <h3>6.2 Máy chủ kiểm tra gì khi đọc file</h3>
@@ -384,7 +394,7 @@ flowchart TD
       <tr><td class="nowrap">SEB</td><td>Cho phép tên miền trang thi, API, Keycloak, máy chủ file; đặt <code>SEB_ALLOWED_ORIGINS</code>; thử Config Key khi đi qua gateway của ULSA.</td></tr>
       <tr><td class="nowrap">Cài đặt thi</td><td>SEB, dải IP, mã hóa đề mặc định tắt; bật ở Quản trị › Cài đặt › Thi online sau khi thử. Phiên đăng nhập Keycloak dài hơn giờ thi.</td></tr>
       <tr><td class="nowrap">Triển khai</td><td>Máy chủ, trang thi, trang quản trị lên cùng lúc (trang thi mới gửi cờ <code>noiTiep</code> mà máy chủ cũ không hiểu). Không khởi động lại API, web khi đang có ca thi.</td></tr>
-      <tr><td class="nowrap">Trước ngày thi</td><td>Chạy trọn một ca với SEB trên máy phòng thi ULSA; thử tải trên máy chủ ULSA; hỏi ULSA đề có câu tự luận hay câu nhóm không (mục 10).</td></tr>
+      <tr><td class="nowrap">Trước ngày thi</td><td>Chạy trọn một ca với SEB trên máy phòng thi ULSA; thử tải trên máy chủ ULSA; hỏi ULSA đề có câu tự luận không (mục 10).</td></tr>
     </table></div>
   </section>
 
@@ -392,7 +402,8 @@ flowchart TD
     <h2>10. Giới hạn hiện có, chưa kiểm chứng</h2>
     <h3>Giới hạn của hệ thống (có từ trước, chưa sửa trong đợt này)</h3>
     <ul>
-      <li><b>Câu nhóm không dùng được trong thi trực tuyến</b>: đề có câu nhóm thì thí sinh lấy đề bị lỗi, không vào thi được (bảng bài làm chưa nhận loại câu 11; có từ trước ở cả main và develop). <b>Tự luận tính 0 điểm</b>, chưa có màn chấm tay. Cần hỏi ULSA đề có hai dạng này không; có câu nhóm thì phải bỏ khỏi ma trận trước khi sinh đề.</li>
+      <li><b>Tự luận trong thi trực tuyến tính 0 điểm</b>, chưa có màn chấm tay. Cần hỏi ULSA đề có câu tự luận không.</li>
+      <li>Ma trận đề (form và file Excel) chỉ có 3 dạng: chọn một đáp án (gồm cả câu nối), tự luận, câu nhóm. Câu nhiều đáp án chấm được nhưng chưa đưa vào ma trận được.</li>
       <li>Máy chủ file chỉ nhận ảnh, MP3 và tài liệu. Câu có video dùng link (YouTube hoặc đường dẫn file video), đúng như ô "Đường dẫn video" ở form soạn câu.</li>
       <li>Bật mã hóa đề thì máy chủ tốn CPU lúc cả trường vào thi: đo khi thử tải, cao thì để tắt.</li>
       <li>API tạo ma trận không nhận cùng chương, cùng độ khó có 2 dạng câu (mục 6.2): cần hỏi lại nghiệp vụ quy tắc này.</li>
@@ -401,13 +412,34 @@ flowchart TD
     <h3>Chưa kiểm chứng</h3>
     <ul>
       <li>Luồng SEB thật trên máy phòng thi (cần Windows hoặc macOS cài SEB).</li>
-      <li>Tải ở quy mô 1000–2000 thí sinh trên hạ tầng của ULSA. Bản demo chỉ có 4 GB RAM nên chỉ thử được vài trăm thí sinh ảo.</li>
+      <li>Tải ở quy mô 1000–2000 thí sinh trên hạ tầng của ULSA.</li>
     </ul>
     <h3>Đã kiểm tra</h3>
     <ul>
       <li>Máy chủ build và lint qua; trang thi build qua (Node 22); không còn code debug trong phần thay đổi.</li>
       <li>Bản demo chạy nhánh này từ 13/11/2026; tester đã thi thử trên đó.</li>
     </ul>
+    <h3>Thử 200 thí sinh ảo trên bản demo (13/11/2026)</h3>
+    <p>Bản demo là một VPS 4 GB RAM dùng chung với dịch vụ khác, chỉ một bản API; máy tạo tải chạy ngay trên VPS đó nên con số chỉ để soát lỗi và so tương đối, không phải sức chịu thật. Kịch bản: 200 thí sinh vào thi trong 15 giây, làm bài 2 phút (tín hiệu 20 giây, tự lưu 25–35 giây, giám thị xem danh sách), rồi nộp rải trong 30 giây; đề đủ dạng câu hỏi (5 trắc nghiệm có hình, âm thanh, chọn tranh, công thức; 1 nhiều đáp án; 1 tự luận; 1 câu nối; 1 câu nhóm).</p>
+    <div class="bang"><table>
+      <tr><th>Kiểm tra</th><th>Kết quả</th></tr>
+      <tr><td>Cả ca lấy được đề, không lộ đáp án (cả lần đầu và khi tải lại trang)</td><td>200/200, không lần nào lộ</td></tr>
+      <tr><td>Câu nhóm có câu con khi phát đề; chấm câu nhóm</td><td>Có 2 câu con; đúng hết câu con thì Đúng 100% (98/98), sai hết thì Sai (98/98)</td></tr>
+      <tr><td>Giám thị thấy thí sinh đang kết nối; đình chỉ</td><td>200/200 đang kết nối; thí sinh bị đình chỉ bị chặn ngay ở tín hiệu kế tiếp</td></tr>
+      <tr><td>Bấm nộp 2 lần cùng lúc</td><td>1 kết quả; lần thứ hai nhận "Bài thi đang được nộp"</td></tr>
+      <tr><td>Mọi bài nộp có kết quả, không trùng</td><td>198 bài, 198 kết quả</td></tr>
+      <tr><td>Điểm</td><td>Làm đúng hết: 8,0 (8/9 câu; câu tự luận chưa chấm, khớp công thức mục 1.4: 12/15 × 10). Sai hết: 0. Gửi mã đề kiểu trang thi gốc dù đúng 8 câu: 0 điểm (lỗi L1)</td></tr>
+      <tr><td>Nhập ma trận từ Excel</td><td>Tải mẫu, đọc file đúng, lưu bằng API tạo ma trận, file sai báo lỗi từng ô: đều đạt</td></tr>
+    </table></div>
+    <div class="bang"><table>
+      <tr><th>Yêu cầu</th><th>Số lần</th><th>Trung vị</th><th>95% nhanh hơn</th><th>Chậm nhất</th></tr>
+      <tr><td>Lấy đề (200 người trong 15 giây)</td><td>200</td><td>4,3 giây</td><td>12,4 giây</td><td>12,9 giây</td></tr>
+      <tr><td>Tín hiệu kết nối</td><td>1185</td><td>48 ms</td><td>237 ms</td><td>959 ms</td></tr>
+      <tr><td>Tự lưu</td><td>757</td><td>74 ms</td><td>328 ms</td><td>1,2 giây</td></tr>
+      <tr><td>Giám thị xem danh sách</td><td>32</td><td>144 ms</td><td>357 ms</td><td>953 ms</td></tr>
+      <tr><td>Nộp bài (rải 30 giây)</td><td>199</td><td>123 ms</td><td>558 ms</td><td>785 ms</td></tr>
+    </table></div>
+    <p>API dùng tới 1,5 nhân CPU, MongoDB 0,3 nhân. Lấy đề là bước nặng nhất: 200 người dồn vào 15 giây trên một bản API yếu thì người chậm nhất chờ khoảng 13 giây. Với ULSA: cho thí sinh vào rải trong vài phút, chạy ít nhất 3 bản API, và thử tải trên máy chủ thật trước ngày thi.</p>
   </section>
 
   <section id="commit">
@@ -418,9 +450,12 @@ flowchart TD
       <tr><td></td><td><code>e0a6482e</code></td><td>Chịu tải, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5f24a5b8</code></td><td>Mẫu Excel, đọc Excel ma trận</td></tr>
       <tr><td></td><td><code>712b1699</code></td><td>Nhớ tạm ca thi 5 giây</td></tr>
+      <tr><td></td><td><code>09064dd8</code></td><td>Câu nhóm dùng được trong thi trực tuyến</td></tr>
+      <tr><td></td><td><code>bcd8e234</code></td><td>Mẫu Excel ghi cách dùng, quy tắc, bảng số câu trong kho</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
+      <tr><td></td><td><code>f6f9e4cd</code></td><td>Hiện câu con của câu nhóm</td></tr>
       <tr><td class="nowrap">all_thi_online</td><td><code>9a4c83c</code></td><td>2 nút Excel ở trang Ma trận đề</td></tr>
     </table></div>
   </section>
