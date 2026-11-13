@@ -35,7 +35,7 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.1</dd>
+      <dt>Phiên bản</dt><dd>2.2</dd>
       <dt>Ngày</dt><dd>13/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
       <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
@@ -43,7 +43,7 @@ dl.tu dd { margin: 0; }
     </dl>
   </div>
 
-  <div class="chu-y"><b>Đọc nhanh.</b> Tuần sau ngày 12/11/2026, Trường Đại học Lao động – Xã hội (ULSA) thi trực tuyến: mỗi phòng một ca, cả trường thi cùng giờ, tức 1000–2000 thí sinh cùng lúc. Thầy giao hai việc. (1) Làm app thi chịu được lượng đó và bỏ phần log không còn cần: <b>đã xong</b>, gồm 5 lỗi làm sai điểm, kẹt bài hoặc không vào thi được, và 13 chỗ giảm tải. Đã chạy thử 200 thí sinh ảo trên bản demo (mục 10). (2) Cho nhập ma trận đề từ file Excel có mẫu dễ hiểu: <b>đã xong</b>. Trước ngày thi còn phải thử SEB trên máy phòng thi và thử tải trên máy chủ của ULSA. Ai chưa biết thi trực tuyến chạy thế nào thì đọc mục 1 trước.</div>
+  <div class="chu-y"><b>Đọc nhanh.</b> Tuần sau ngày 12/11/2026, Trường Đại học Lao động – Xã hội (ULSA) thi trực tuyến: mỗi phòng một ca, cả trường thi cùng giờ, tức 1000–2000 thí sinh cùng lúc. Thầy giao hai việc. (1) Làm app thi chịu được lượng đó và bỏ phần log không còn cần: <b>đã xong</b>, gồm 6 lỗi làm sai điểm, kẹt bài, không vào thi được hoặc không ra đề đủ dạng, và 13 chỗ giảm tải. Đã chạy thử 200 thí sinh ảo trên bản demo (mục 10). (2) Cho nhập ma trận đề từ file Excel có mẫu dễ hiểu: <b>đã xong</b>. Trước ngày thi còn phải thử SEB trên máy phòng thi và thử tải trên máy chủ của ULSA. Ai chưa biết thi trực tuyến chạy thế nào thì đọc mục 1 trước.</div>
 
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
@@ -192,6 +192,17 @@ flowchart TD
         <dt>Chỗ sửa</dt><dd>khao-thi <code>thi-online/entities/noi-dung.entity.ts</code>, <code>thi.service.ts</code> (<code>layDapAnCauNhom</code>, <code>chamCauNhom</code>); thi_online <code>LamBai/index.tsx</code> (<code>layCauCon</code>)</dd>
       </dl>
     </div>
+
+    <div class="sua">
+      <h4><span class="ma">L6</span> Câu nối không vào được đề; ma trận không lấy được nhiều dạng ở cùng độ khó</h4>
+      <dl>
+        <dt>Hiện tượng</dt><dd>Ngân hàng soạn được 4 dạng (trắc nghiệm, câu nối, tự luận, câu nhóm) nhưng form ma trận chỉ có 3, thiếu câu nối. Form đếm gộp câu nối vào số câu "trắc nghiệm", còn lúc sinh đề máy chủ chỉ bốc câu trắc nghiệm, nên câu nối không bao giờ vào đề và số câu trong kho hiện ra bị dư. Ngoài ra, lưu ma trận có Chương 1 lấy trắc nghiệm Dễ và tự luận Dễ thì máy chủ báo lỗi. Có từ trước.</dd>
+        <dt>Nguyên nhân</dt><dd>Kiểm tra lúc lưu ma trận chặn hai dòng cùng độ khó và chung chương mà không xét dạng câu. Mục đích là tránh hai dòng bốc trùng câu, nhưng hai dòng khác dạng không thể bốc trùng. Form ở trang quản trị thì đã xét cả dạng câu, nên form và máy chủ lệch nhau.</dd>
+        <dt>Cách sửa</dt><dd>Form ma trận và mẫu Excel có đủ 4 dạng; mỗi dạng đếm kho riêng. Máy chủ chỉ chặn khi trùng cả độ khó, dạng câu và chương, khớp với form. Mẫu Excel nâng lên V2 (thêm cột Câu nối); file mẫu cũ báo tải mẫu mới.</dd>
+        <dt>Chỗ sửa</dt><dd>khao-thi <code>ma-tran-de/ma-tran-de.service.ts</code> (tạo, sửa ma trận), <code>ma-tran-de-excel.service.ts</code>; khao-thi-vwa <code>DeThi/MaTranDe/components/CauHinhMaTran/components/form.tsx</code></dd>
+        <dt>Đã thử</dt><dd>Trên demo: tải mẫu V2, nhập ma trận có trắc nghiệm, câu nối, tự luận (cả nhiều dạng trong một chương), lưu, sinh bộ đề: đề có câu nối.</dd>
+      </dl>
+    </div>
   </section>
 
   <section id="trang-thi">
@@ -322,8 +333,8 @@ flowchart TD
     <h3>6.1 Người dùng làm gì</h3>
     <ol>
       <li>Trang quản trị › Ngân hàng câu hỏi › <b>Ma trận đề</b>, chọn học phần. Hai nút hiện cạnh ô chọn học phần, chỉ với người có quyền tạo ma trận.</li>
-      <li>Bấm <b>Tải mẫu Excel</b>. File có sẵn tên các chương của học phần, mỗi chương một dòng; các cột là Trắc nghiệm và Tự luận theo 4 độ khó, và Câu nhóm.</li>
-      <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Đầu file có dòng cách dùng và dòng lưu ý quy tắc (cùng chương, cùng độ khó chỉ một dạng; cột Trắc nghiệm là câu một đáp án). Ngay dưới bảng nhập có bảng "Số câu đang có trong kho" cùng cột, nhìn thẳng xuống là biết kho còn bao nhiêu. Rê chuột vào ô cũng thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
+      <li>Bấm <b>Tải mẫu Excel</b>. File có sẵn tên các chương của học phần, mỗi chương một dòng; các cột là đủ 4 dạng câu của ngân hàng: Trắc nghiệm, Câu nối, Tự luận (mỗi dạng theo 4 độ khó) và Câu nhóm.</li>
+      <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Đầu file có dòng cách dùng và dòng lưu ý quy tắc (Trắc nghiệm là câu một đáp án, kể cả câu có hình, âm thanh, chọn tranh; một chương được lấy nhiều dạng ở cùng độ khó). Ngay dưới bảng nhập có bảng "Số câu đang có trong kho" cùng cột, nhìn thẳng xuống là biết kho còn bao nhiêu. Rê chuột vào ô cũng thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
       <li>Bấm <b>Nhập từ Excel</b>, chọn file. Có lỗi thì hiện danh sách lỗi theo ô (ví dụ "Chương 2, Trắc nghiệm – Khó: kho chỉ có 3 câu"). Không lỗi thì form "Thêm ma trận" mở sẵn với đủ các dòng; người dùng xem lại rồi bấm Lưu như cũ.</li>
     </ol>
     <h3>6.2 Máy chủ kiểm tra gì khi đọc file</h3>
@@ -331,7 +342,7 @@ flowchart TD
       <li>Đúng file mẫu của hệ thống (có đánh dấu ở ô A1) và đúng học phần.</li>
       <li>Mỗi ô là số nguyên không âm, không vượt số câu đã duyệt trong kho. Kiểm tra lại ở máy chủ vì dán dữ liệu vào Excel có thể vượt qua ràng buộc của ô.</li>
       <li>Chương trong file vẫn còn trong hệ thống.</li>
-      <li>Không để cùng một chương, cùng một độ khó có hai dạng câu (ví dụ vừa Trắc nghiệm Khó vừa Tự luận Khó ở Chương 2): API tạo ma trận hiện tại không nhận trường hợp này, nên báo lỗi ngay từ file thay vì để người dùng tới bước Lưu mới hỏng.</li>
+      <li>Mỗi dạng câu đếm kho riêng, đúng như lúc sinh đề: dòng ma trận dạng nào chỉ bốc câu dạng đó.</li>
     </ul>
     <h3>6.3 Chỗ sửa</h3>
     <ul>
@@ -403,7 +414,7 @@ flowchart TD
     <h3>Giới hạn của hệ thống (có từ trước, chưa sửa trong đợt này)</h3>
     <ul>
       <li><b>Tự luận trong thi trực tuyến tính 0 điểm</b>, chưa có màn chấm tay. Cần hỏi ULSA đề có câu tự luận không.</li>
-      <li>Ma trận đề (form gốc và file Excel) chỉ có 3 dạng: chọn một đáp án, tự luận, câu nhóm. <b>Câu nối soạn được trong ngân hàng nhưng không vào được đề</b>: form gốc đếm gộp câu nối vào số câu "Chọn một đáp án", còn lúc sinh đề máy chủ chỉ bốc câu một đáp án (có từ trước). Mẫu Excel đếm đúng câu một đáp án. Muốn đề có câu nối thì phải thêm dạng "Câu nối" vào form và Excel, để làm chung đợt ngân hàng câu hỏi. Câu nhiều đáp án chấm được nhưng chưa soạn được trên form.</li>
+      <li>Câu nhiều đáp án: máy chủ chấm được, trang thi hiện được, nhưng form soạn câu chưa tạo được loại này nên chưa có trong ngân hàng và ma trận.</li>
       <li>Máy chủ file chỉ nhận ảnh, MP3 và tài liệu. Câu có video dùng link (YouTube hoặc đường dẫn file video), đúng như ô "Đường dẫn video" ở form soạn câu.</li>
       <li>Bật mã hóa đề thì máy chủ tốn CPU lúc cả trường vào thi: đo khi thử tải, cao thì để tắt.</li>
       <li>API tạo ma trận không nhận cùng chương, cùng độ khó có 2 dạng câu (mục 6.2): cần hỏi lại nghiệp vụ quy tắc này.</li>
@@ -453,11 +464,13 @@ flowchart TD
       <tr><td></td><td><code>09064dd8</code></td><td>Câu nhóm dùng được trong thi trực tuyến</td></tr>
       <tr><td></td><td><code>bcd8e234</code></td><td>Mẫu Excel ghi cách dùng, quy tắc, bảng số câu trong kho</td></tr>
       <tr><td></td><td><code>a7e9ab53</code></td><td>Cột Trắc nghiệm trong mẫu Excel chỉ đếm câu một đáp án</td></tr>
+      <tr><td></td><td><code>c9375d77</code></td><td>Ma trận đủ 4 dạng câu (thêm Câu nối), kiểm tra trùng xét cả dạng câu</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
       <tr><td></td><td><code>f6f9e4cd</code></td><td>Hiện câu con của câu nhóm</td></tr>
       <tr><td class="nowrap">all_thi_online</td><td><code>9a4c83c</code></td><td>2 nút Excel ở trang Ma trận đề</td></tr>
+      <tr><td></td><td><code>f386d11</code></td><td>Form ma trận thêm dạng Câu hỏi nối</td></tr>
     </table></div>
   </section>
 
