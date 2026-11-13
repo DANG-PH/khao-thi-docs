@@ -117,9 +117,9 @@ flowchart TD
       <tr><td>Trắc nghiệm nhiều đáp án</td><td>Chọn nhiều phương án</td><td>Phải chọn đủ và chỉ chọn các phương án đúng mới có điểm</td></tr>
       <tr><td>Câu nối</td><td>Ghép từng cặp</td><td>Theo số cặp ghép đúng, quy ra điểm theo thang điểm của câu</td></tr>
       <tr><td>Tự luận</td><td>Gõ bài vào ô</td><td>Không tự chấm, tính 0; hiện chưa có màn chấm tay</td></tr>
-      <tr><td>Câu nhóm</td><td>Hiện đoạn dẫn nhưng chưa hiện các câu con</td><td>Không chấm, tính 0</td></tr>
+      <tr><td>Câu nhóm</td><td colspan="2"><b>Không dùng được trong thi trực tuyến</b>: đề có câu nhóm thì máy chủ báo lỗi khi thí sinh lấy đề, không ai vào thi được (bảng bài làm chưa nhận dạng câu này); trang thi cũng chưa có giao diện câu con</td></tr>
     </table></div>
-    <p>Mỗi độ khó có một mức điểm cho mỗi câu, cài ở mức điểm của học phần; chưa cài thì mặc định Dễ 1, Trung bình 2, Khó 3, Rất khó 4. <b>Điểm = tổng điểm các câu làm đúng ÷ tổng điểm tối đa của mọi câu × 10.</b> Ví dụ đề 6 câu Dễ, 2 Trung bình, 2 Khó dùng mức mặc định: tối đa là 6×1 + 2×2 + 2×3 = 16; làm đúng 5 câu Dễ và 1 câu Trung bình được 7, tức 7 ÷ 16 × 10 = 4,38. Câu tự luận và câu nhóm vẫn tính vào điểm tối đa, nên đề có các câu này thì làm đúng hết phần còn lại cũng không đạt 10.</p>
+    <p>Mỗi độ khó có một mức điểm cho mỗi câu, cài ở mức điểm của học phần; chưa cài thì mặc định Dễ 1, Trung bình 2, Khó 3, Rất khó 4. <b>Điểm = tổng điểm các câu làm đúng ÷ tổng điểm tối đa của mọi câu × 10.</b> Ví dụ đề 6 câu Dễ, 2 Trung bình, 2 Khó dùng mức mặc định: tối đa là 6×1 + 2×2 + 2×3 = 16; làm đúng 5 câu Dễ và 1 câu Trung bình được 7, tức 7 ÷ 16 × 10 = 4,38. Câu tự luận vẫn tính vào điểm tối đa, nên đề có câu tự luận thì làm đúng hết phần còn lại cũng không đạt 10.</p>
   </section>
 
   <section id="tai">
@@ -392,7 +392,7 @@ flowchart TD
     <h2>10. Giới hạn hiện có, chưa kiểm chứng</h2>
     <h3>Giới hạn của hệ thống (có từ trước, chưa sửa trong đợt này)</h3>
     <ul>
-      <li><b>Tự luận trong thi trực tuyến tính 0 điểm</b>, chưa có màn chấm tay. <b>Câu nhóm</b> chưa hiện câu con trên trang thi và không được chấm. Đề thi trực tuyến của ULSA có hai dạng này thì điểm sẽ sai: cần hỏi ULSA trước ngày thi.</li>
+      <li><b>Câu nhóm không dùng được trong thi trực tuyến</b>: đề có câu nhóm thì thí sinh lấy đề bị lỗi, không vào thi được (bảng bài làm chưa nhận loại câu 11; có từ trước ở cả main và develop). <b>Tự luận tính 0 điểm</b>, chưa có màn chấm tay. Cần hỏi ULSA đề có hai dạng này không; có câu nhóm thì phải bỏ khỏi ma trận trước khi sinh đề.</li>
       <li>Máy chủ file chỉ nhận ảnh, MP3 và tài liệu. Câu có video dùng link (YouTube hoặc đường dẫn file video), đúng như ô "Đường dẫn video" ở form soạn câu.</li>
       <li>Bật mã hóa đề thì máy chủ tốn CPU lúc cả trường vào thi: đo khi thử tải, cao thì để tắt.</li>
       <li>API tạo ma trận không nhận cùng chương, cùng độ khó có 2 dạng câu (mục 6.2): cần hỏi lại nghiệp vụ quy tắc này.</li>
