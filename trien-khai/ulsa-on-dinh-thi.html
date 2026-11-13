@@ -323,7 +323,7 @@ flowchart TD
     <ol>
       <li>Trang quản trị › Ngân hàng câu hỏi › <b>Ma trận đề</b>, chọn học phần. Hai nút hiện cạnh ô chọn học phần, chỉ với người có quyền tạo ma trận.</li>
       <li>Bấm <b>Tải mẫu Excel</b>. File có sẵn tên các chương của học phần, mỗi chương một dòng; các cột là Trắc nghiệm và Tự luận theo 4 độ khó, và Câu nhóm.</li>
-      <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Đầu file có dòng cách dùng và dòng lưu ý quy tắc (cùng chương, cùng độ khó chỉ một dạng; cột Trắc nghiệm gồm cả câu nối). Ngay dưới bảng nhập có bảng "Số câu đang có trong kho" cùng cột, nhìn thẳng xuống là biết kho còn bao nhiêu. Rê chuột vào ô cũng thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
+      <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Đầu file có dòng cách dùng và dòng lưu ý quy tắc (cùng chương, cùng độ khó chỉ một dạng; cột Trắc nghiệm là câu một đáp án). Ngay dưới bảng nhập có bảng "Số câu đang có trong kho" cùng cột, nhìn thẳng xuống là biết kho còn bao nhiêu. Rê chuột vào ô cũng thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
       <li>Bấm <b>Nhập từ Excel</b>, chọn file. Có lỗi thì hiện danh sách lỗi theo ô (ví dụ "Chương 2, Trắc nghiệm – Khó: kho chỉ có 3 câu"). Không lỗi thì form "Thêm ma trận" mở sẵn với đủ các dòng; người dùng xem lại rồi bấm Lưu như cũ.</li>
     </ol>
     <h3>6.2 Máy chủ kiểm tra gì khi đọc file</h3>
@@ -403,7 +403,7 @@ flowchart TD
     <h3>Giới hạn của hệ thống (có từ trước, chưa sửa trong đợt này)</h3>
     <ul>
       <li><b>Tự luận trong thi trực tuyến tính 0 điểm</b>, chưa có màn chấm tay. Cần hỏi ULSA đề có câu tự luận không.</li>
-      <li>Ma trận đề (form và file Excel) chỉ có 3 dạng: chọn một đáp án (gồm cả câu nối), tự luận, câu nhóm. Câu nhiều đáp án chấm được nhưng chưa đưa vào ma trận được.</li>
+      <li>Ma trận đề (form gốc và file Excel) chỉ có 3 dạng: chọn một đáp án, tự luận, câu nhóm. <b>Câu nối soạn được trong ngân hàng nhưng không vào được đề</b>: form gốc đếm gộp câu nối vào số câu "Chọn một đáp án", còn lúc sinh đề máy chủ chỉ bốc câu một đáp án (có từ trước). Mẫu Excel đếm đúng câu một đáp án. Muốn đề có câu nối thì phải thêm dạng "Câu nối" vào form và Excel, để làm chung đợt ngân hàng câu hỏi. Câu nhiều đáp án chấm được nhưng chưa soạn được trên form.</li>
       <li>Máy chủ file chỉ nhận ảnh, MP3 và tài liệu. Câu có video dùng link (YouTube hoặc đường dẫn file video), đúng như ô "Đường dẫn video" ở form soạn câu.</li>
       <li>Bật mã hóa đề thì máy chủ tốn CPU lúc cả trường vào thi: đo khi thử tải, cao thì để tắt.</li>
       <li>API tạo ma trận không nhận cùng chương, cùng độ khó có 2 dạng câu (mục 6.2): cần hỏi lại nghiệp vụ quy tắc này.</li>
@@ -452,6 +452,7 @@ flowchart TD
       <tr><td></td><td><code>712b1699</code></td><td>Nhớ tạm ca thi 5 giây</td></tr>
       <tr><td></td><td><code>09064dd8</code></td><td>Câu nhóm dùng được trong thi trực tuyến</td></tr>
       <tr><td></td><td><code>bcd8e234</code></td><td>Mẫu Excel ghi cách dùng, quy tắc, bảng số câu trong kho</td></tr>
+      <tr><td></td><td><code>a7e9ab53</code></td><td>Cột Trắc nghiệm trong mẫu Excel chỉ đếm câu một đáp án</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
