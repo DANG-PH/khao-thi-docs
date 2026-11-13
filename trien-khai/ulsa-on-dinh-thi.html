@@ -35,7 +35,7 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.3</dd>
+      <dt>Phiên bản</dt><dd>2.4</dd>
       <dt>Ngày</dt><dd>13/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
       <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
@@ -43,7 +43,7 @@ dl.tu dd { margin: 0; }
     </dl>
   </div>
 
-  <div class="chu-y"><b>Đọc nhanh.</b> Tuần sau ngày 12/11/2026, Trường Đại học Lao động – Xã hội (ULSA) thi trực tuyến: mỗi phòng một ca, cả trường thi cùng giờ, tức 1000–2000 thí sinh cùng lúc. Thầy giao hai việc. (1) Làm app thi chịu được lượng đó và bỏ phần log không còn cần: <b>đã xong</b>, gồm 6 lỗi làm sai điểm, kẹt bài, không vào thi được hoặc không ra đề đủ dạng, và 13 chỗ giảm tải. Đã chạy thử 200 thí sinh ảo trên bản demo (mục 10). (2) Cho nhập ma trận đề từ file Excel có mẫu dễ hiểu: <b>đã xong</b>. Trước ngày thi còn phải thử SEB trên máy phòng thi và thử tải trên máy chủ của ULSA. Ai chưa biết thi trực tuyến chạy thế nào thì đọc mục 1 trước.</div>
+  <div class="chu-y"><b>Đọc nhanh.</b> Tuần sau ngày 12/11/2026, Trường Đại học Lao động – Xã hội (ULSA) thi trực tuyến: mỗi phòng một ca, cả trường thi cùng giờ, tức 1000–2000 thí sinh cùng lúc. Thầy giao hai việc. (1) Làm app thi chịu được lượng đó và bỏ phần log không còn cần: <b>đã xong</b>, gồm 9 lỗi làm sai điểm, kẹt bài, không vào thi được, sai tư cách dự thi hoặc không ra đề đủ dạng, và 13 chỗ giảm tải. Đã chạy thử 200 thí sinh ảo trên bản demo (mục 10). (2) Cho nhập ma trận đề từ file Excel có mẫu dễ hiểu: <b>đã xong</b>. Trước ngày thi còn phải thử SEB trên máy phòng thi và thử tải trên máy chủ của ULSA. Ai chưa biết thi trực tuyến chạy thế nào thì đọc mục 1 trước.</div>
 
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
@@ -213,6 +213,24 @@ flowchart TD
         <dt>Chỗ sửa</dt><dd>khao-thi <code>thi.service.ts</code> <code>ketThucCaThi</code>, <code>getChiTietBaiThiSinhVien</code></dd>
       </dl>
     </div>
+
+    <div class="sua">
+      <h4><span class="ma">L8</span> Thí sinh không đủ điều kiện hoặc hoãn thi vẫn vào thi được</h4>
+      <dl>
+        <dt>Nguyên nhân</dt><dd>Lấy đề chỉ kiểm tra có tên trong danh sách ca, không xem tư cách dự thi; thí sinh bị chuyển "Không đủ điều kiện" sau khi đã xếp ca vẫn làm và nộp được (QA phát hiện với svtest19). Luồng nộp bài tiểu luận thì đã chặn đúng quy tắc này.</dd>
+        <dt>Cách sửa</dt><dd>Lấy đề chặn hồ sơ "Không đủ điều kiện" và "Hoãn thi", trước bước mật khẩu phòng. "Chưa duyệt" hoặc chưa có hồ sơ vẫn cho vào như cũ, để trường chưa duyệt tư cách không bị chặn nhầm.</dd>
+        <dt>Chỗ sửa</dt><dd>khao-thi <code>thi.service.ts</code> <code>assertDuDieuKienDuThi</code></dd>
+      </dl>
+    </div>
+
+    <div class="sua">
+      <h4><span class="ma">L9</span> Vào lại bài: câu chưa làm bị tính là đã trả lời</h4>
+      <dl>
+        <dt>Nguyên nhân</dt><dd>Câu chưa làm được gửi khi tự lưu dưới dạng mảng có một chuỗi rỗng; khôi phục từ bản lưu máy chủ (vào lại trên trình duyệt, máy khác) thì mảng này không rỗng nên câu nối, câu nhiều đáp án chưa làm bị đếm là đã trả lời (QA: 9/9 câu, 100% dù câu nối còn trống). Kèm theo: khôi phục câu nhóm chỉ lấy phần tử đầu, mất trả lời các câu con.</dd>
+        <dt>Cách sửa</dt><dd>Câu chưa làm gửi mảng rỗng; khôi phục lọc giá trị rỗng, giữ nguyên mảng câu nhóm; đếm câu đã làm theo trả lời thật (cặp nối có đáp án, câu con có chọn).</dd>
+        <dt>Chỗ sửa</dt><dd>thi_online <code>LamBai/index.tsx</code> (<code>daTraLoi</code>)</dd>
+      </dl>
+    </div>
   </section>
 
   <section id="trang-thi">
@@ -241,7 +259,7 @@ flowchart TD
       <h4><span class="ma">T3</span> Tín hiệu kết nối</h4>
       <dl>
         <dt>Trước đây</dt><dd>10 giây một lần: 200 yêu cầu/giây.</dd>
-        <dt>Bây giờ</dt><dd>20 giây một lần: 100 yêu cầu/giây. Không lên 30 giây vì màn giám thị coi thí sinh mất kết nối khi quá 60 giây không có tín hiệu: 20 giây thì rớt 2 tín hiệu liên tiếp vẫn chưa bị báo nhầm, 30 giây thì chỉ cần rớt một lần là sát ngưỡng.</dd>
+        <dt>Bây giờ</dt><dd>20 giây một lần: 100 yêu cầu/giây. Không lên 30 giây vì màn giám thị coi thí sinh mất kết nối khi quá 60 giây không có tín hiệu: 20 giây thì rớt 2 tín hiệu liên tiếp vẫn chưa bị báo nhầm, 30 giây thì chỉ cần rớt một lần là sát ngưỡng. Thêm nữa: vừa tự lưu thành công (tự lưu cũng cập nhật giờ kết nối) và không có vi phạm chờ gửi thì bỏ lượt tín hiệu đó; đo thực tế số tín hiệu giảm một nửa.</dd>
       </dl>
     </div>
 
@@ -417,7 +435,7 @@ flowchart TD
       <tr><th>Hạng mục</th><th>Cần làm</th></tr>
       <tr><td class="nowrap">Nguồn mã</td><td>Trang thi phải lấy từ nhánh <code>feat/ulsa-on-dinh</code> (bản gốc gửi sai mã đề nên điểm luôn 0, xem L1). Nhánh máy chủ dựng trên <code>main</code>: chạy image từ main hoặc tag thì khớp; chạy <code>develop</code> hoặc <code>product-*</code> thì phải rebase rồi thử lại.</td></tr>
       <tr><td class="nowrap">Image</td><td>CI chỉ build <code>develop</code>, <code>product-*</code> và tag. Cần MR vào <code>main</code> rồi gắn tag, hoặc đẩy sang nhánh <code>product-ulsa</code>.</td></tr>
-      <tr><td class="nowrap">API</td><td>Ít nhất 4 bản sau nginx (đo thực tế ở mục 10), mỗi bản một nhân CPU; chỉ 1 bản <code>SERVER_MASTER=1</code> (bản chạy việc định kỳ); tắt OTEL; đặt <code>TRUST_PROXY_HOPS</code>.</td></tr>
+      <tr><td class="nowrap">API</td><td>4–6 tiến trình sau nginx cho 2000 thí sinh (đo thực tế ở mục 10), mỗi tiến trình một nhân CPU; chỉ 1 bản <code>SERVER_MASTER=1</code> (bản chạy việc định kỳ); tắt OTEL; đặt <code>TRUST_PROXY_HOPS</code>.</td></tr>
       <tr><td class="nowrap">MongoDB</td><td>Replica set, <code>maxPoolSize=200</code>. Deploy trước ngày thi ít nhất 1 ngày để chỉ mục mới (M8) tạo xong ngoài giờ thi.</td></tr>
       <tr><td class="nowrap">nginx</td><td>Bật nén, cache file tĩnh trang thi, websocket (Upgrade, timeout dài), <code>worker_connections</code> đủ cho 2000+ kết nối.</td></tr>
       <tr><td class="nowrap">Biến môi trường</td><td><code>TRUST_PROXY_HOPS</code> bằng đúng số proxy đứng trước API, để lấy đúng IP máy thí sinh khi lọc dải IP phòng thi. Trang thi: <code>APP_CONFIG_IP_KHAO_THI</code>, <code>APP_CONFIG_SOCKET_URL</code> trỏ máy chủ ULSA.</td></tr>
@@ -472,7 +490,18 @@ flowchart TD
     <h3>Thử trọn luồng A–Z: 1000 thí sinh, 20 ca song song (13/11/2026, VPS 8 GB, 4 nhân)</h3>
     <p>Ra đề từ Excel (đủ 4 dạng) → ma trận → bộ đề 2 mã đề → 20 ca × 50 thí sinh cùng giờ, mỗi ca 1 giám thị theo dõi → 1000 thí sinh vào thi trong 1 phút → làm bài 3 phút (tín hiệu, tự lưu, tải lại trang, đình chỉ) → nộp rải 30 giây (có bấm nộp 2 lần, có gửi mã đề kiểu cũ) → thí sinh xem kết quả → giám thị kết thúc ca. Nghiệp vụ đạt hết: 1000/1000 vào thi, không lộ đáp án, câu nhóm có câu con, đình chỉ chặn ngay, 979 bài nộp ra đúng 979 kết quả không trùng, điểm đúng công thức (đúng hết 8,24; sai hết 0), kết thúc ca chặn thí sinh chưa nộp.</p>
     <p><b>Tốc độ:</b> chỉ một bản API trên VPS này thì quá tải. Lấy đề trung vị 3,7 giây (chậm nhất 18 giây); trong lúc làm bài, phần lớn yêu cầu dưới 1–1,5 giây nhưng có những đợt mọi yêu cầu chờ tới 60 giây. Đo riêng từng phần trên một bản API: tín hiệu khoảng 95 yêu cầu/giây, tự lưu khoảng 64/giây, lấy đề 14–27/giây là hết sức. MongoDB không phải chỗ nghẽn (không có truy vấn chậm). Chi phí nằm rải đều ở bộ khung (Nest, Express với rất nhiều route, Mongoose), không còn chỗ nghẽn lớn đơn lẻ.</p>
-    <div class="chu-y"><b>Khuyến nghị cho ULSA.</b> 2000 thí sinh làm bài cần khoảng 170 yêu cầu/giây, tức gần 2 bản API chạy hết công suất chỉ để chịu tải thường; thêm lúc vào thi và lúc nộp. Chạy <b>ít nhất 4 bản API</b> (mỗi bản một nhân CPU riêng, sau nginx), MongoDB trên máy khác; cho thí sinh vào rải trong vài phút; thử tải trên máy chủ ULSA trước ngày thi.</div>
+    <h3>Thử nhiều tiến trình API (13/11/2026, cùng kịch bản 1000 thí sinh, 20 ca)</h3>
+    <div class="bang"><table>
+      <tr><th>Yêu cầu (trung vị / 95% / chậm nhất)</th><th>1 API, chưa gộp tín hiệu</th><th>1 API, gộp tín hiệu</th><th>4 API, gộp tín hiệu</th></tr>
+      <tr><td>Lấy đề</td><td>3,7 / 12 / 18,6 giây</td><td>2,0 / 3,8 / 5,1 giây</td><td><b>0,15 / 1,4 / 2,4 giây</b></td></tr>
+      <tr><td>Tín hiệu kết nối</td><td>0,84 / 55 / 69 giây</td><td>0,16 / 1,2 / 16 giây</td><td><b>0,05 / 0,3 / 2,0 giây</b></td></tr>
+      <tr><td>Tự lưu</td><td>1,2 / 55 / 69 giây</td><td>0,19 / 1,5 / 16 giây</td><td><b>0,08 / 0,4 / 2,2 giây</b></td></tr>
+      <tr><td>Giám thị xem danh sách</td><td>0,9 / 57 / 63 giây</td><td>0,17 / 1,0 / 16 giây</td><td><b>0,06 / 0,2 / 0,8 giây</b></td></tr>
+      <tr><td>Nộp bài (rải 30 giây)</td><td>4,3 / 21,7 / 24 giây</td><td>4,2 / 20,8 / 24 giây</td><td><b>0,26 / 0,9 / 2,0 giây</b></td></tr>
+      <tr><td>Số lần gửi tín hiệu</td><td>6919</td><td>3539</td><td>3577</td></tr>
+    </table></div>
+    <p>Cả 3 lượt nghiệp vụ đều đạt hết. 4 tiến trình API chạy chung một VPS 4 nhân với MongoDB và máy tạo tải mà mọi yêu cầu vẫn dưới 2,5 giây. Gộp tín hiệu giảm một nửa số tín hiệu và bỏ được các đợt nghẽn hàng chục giây.</p>
+    <div class="chu-y"><b>Khuyến nghị cho ULSA.</b> 2000 thí sinh làm bài cần khoảng 170 yêu cầu/giây, tức gần 2 bản API chạy hết công suất chỉ để chịu tải thường; thêm lúc vào thi và lúc nộp. Đo thực tế: 4 tiến trình API chịu 1000 thí sinh cùng giờ mượt (mọi yêu cầu dưới 2,5 giây). Với 2000 thí sinh chạy <b>4–6 tiến trình API</b> (mỗi tiến trình một nhân CPU riêng, sau nginx), MongoDB trên máy khác; cho thí sinh vào rải trong vài phút; thử tải trên máy chủ ULSA trước ngày thi.</div>
     <p>API dùng tới 1,5 nhân CPU, MongoDB 0,3 nhân. Lấy đề là bước nặng nhất: 200 người dồn vào 15 giây trên một bản API yếu thì người chậm nhất chờ khoảng 13 giây. Với ULSA: cho thí sinh vào rải trong vài phút, chạy ít nhất 3 bản API, và thử tải trên máy chủ thật trước ngày thi.</p>
   </section>
 
@@ -490,10 +519,13 @@ flowchart TD
       <tr><td></td><td><code>c9375d77</code></td><td>Ma trận đủ 4 dạng câu (thêm Câu nối), kiểm tra trùng xét cả dạng câu</td></tr>
       <tr><td></td><td><code>2c78426a</code></td><td>Kết thúc ca không hỏng khi thiếu hồ sơ; xem bài thí sinh chưa nộp báo rõ</td></tr>
       <tr><td></td><td><code>e584347c</code></td><td>Bỏ ghi log ở mỗi yêu cầu thi; giữ bộ khóa SSO trong RAM</td></tr>
+      <tr><td></td><td><code>151058b6</code></td><td>Chặn thí sinh không đủ điều kiện, hoãn thi khi lấy đề</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
       <tr><td></td><td><code>f6f9e4cd</code></td><td>Hiện câu con của câu nhóm</td></tr>
+      <tr><td></td><td><code>b3c4ed45</code></td><td>Bỏ lượt tín hiệu ngay sau khi tự lưu</td></tr>
+      <tr><td></td><td><code>e7111db4</code></td><td>Đếm đúng câu đã làm khi vào lại; khôi phục đúng câu nhóm</td></tr>
       <tr><td class="nowrap">all_thi_online</td><td><code>9a4c83c</code></td><td>2 nút Excel ở trang Ma trận đề</td></tr>
       <tr><td></td><td><code>f386d11</code></td><td>Form ma trận thêm dạng Câu hỏi nối</td></tr>
     </table></div>
