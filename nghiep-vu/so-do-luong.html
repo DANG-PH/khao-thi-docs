@@ -29,10 +29,10 @@ code { font-family: var(--font-mono); font-size: 0.8rem; background: var(--soft)
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-NV-02</dd>
-      <dt>Phiên bản</dt><dd>1.0</dd>
+      <dt>Phiên bản</dt><dd>1.1</dd>
       <dt>Ngày</dt><dd>14/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>BA, Dev, Tester, người mới</dd>
-      <dt>Căn cứ</dt><dd>Code đang chạy trên bản demo (nhánh <code>feat/ulsa-on-dinh</code> của máy chủ, trang thi, trang quản trị) và tài liệu <a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a>. Tên API trên sơ đồ là đường dẫn thật trong code (bỏ tiền tố <code>/khao-thi-api</code>).</dd>
+      <dt>Căn cứ</dt><dd>Code đang chạy trên bản demo (nhánh <code>feat/ulsa-on-dinh</code> của máy chủ, trang thi, trang quản trị) và tài liệu <a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a>. Tên API trên sơ đồ là đường dẫn thật trong code (bỏ tiền tố <code>/khao-thi-api</code>), đã đối chiếu từng bước với code máy chủ và trang quản trị. So với nhánh <code>develop</code>: nhánh này có thêm tín hiệu kết nối lúc thi, Safe Exam Browser, nhập ma trận từ Excel; <code>develop</code> có thêm hiệu chỉnh điểm sau công bố.</dd>
       <dt>Liên quan</dt><dd>KT-NV-01 (quy trình QT-01 đến QT-09, quy tắc BR), KT-TK-01 (thi trực tuyến cho ULSA)</dd>
     </dl>
   </div>
@@ -91,26 +91,27 @@ flowchart TD
   end
   subgraph HT["Hệ thống của trường"]
     direction LR
-    SSO["SSO"] ~~~ QLDT["QLDT"] ~~~ TCNS["TCNS"] ~~~ CSVC["CSVC"] ~~~ TB["Thông báo"]
+    SSO["SSO"] ~~~ QLDT["QLDT"] ~~~ TCNS["TCNS"] ~~~ CSVC["CSVC"] ~~~ TC["Tài chính"] ~~~ TB["Thông báo"]
   end
 </pre>
     </div>
     <div class="bang"><table>
       <tr><th>Thành phần</th><th>Vai trò</th></tr>
       <tr><td>Cán bộ</td><td>Chuyên viên khảo thí, giảng viên, trưởng bộ môn, người ra đề, giám thị, cán bộ chấm, người duyệt điểm. Dùng trang quản trị.</td></tr>
-      <tr><td>Sinh viên</td><td>Dự thi trực tuyến trên trang thi; xem điểm, đăng ký phúc khảo qua cổng sinh viên.</td></tr>
-      <tr><td>Trang quản trị</td><td>Ứng dụng web <code>khao-thi-vwa</code>: lập kế hoạch, ngân hàng câu hỏi, ma trận, bộ đề, lịch thi, coi thi, chấm, điểm.</td></tr>
+      <tr><td>Sinh viên</td><td>Dự thi trực tuyến trên trang thi; đăng ký phúc khảo qua hệ thống quy trình của trường (hệ thống đó gọi vào API khảo thí).</td></tr>
+      <tr><td>Trang quản trị</td><td>Ứng dụng web <code>khao-thi-vwa</code>: lập kế hoạch, ngân hàng câu hỏi, ma trận, bộ đề, lịch thi, coi thi, chấm, điểm. Ẩn hiện menu, nút theo quyền chức năng của tài khoản. Một vài màn đọc danh mục thẳng từ QLDT và ký số qua dịch vụ chung của trường.</td></tr>
       <tr><td>Trang thi</td><td>Ứng dụng web <code>thi_online</code> cho thí sinh, chạy trên trình duyệt hoặc Safe Exam Browser.</td></tr>
       <tr><td>nginx</td><td>Cổng vào: chuyển <code>/khao-thi-api/</code> và <code>/socket.io/</code> tới API, chia tải giữa các tiến trình API.</td></tr>
-      <tr><td>API khảo thí</td><td>Máy chủ NestJS. Mọi nghiệp vụ đi qua đây; là thành phần duy nhất đọc ghi dữ liệu và gọi hệ thống khác. Lúc thi trực tuyến chạy nhiều tiến trình song song.</td></tr>
+      <tr><td>API khảo thí</td><td>Máy chủ NestJS. Mọi nghiệp vụ khảo thí đi qua đây; là thành phần duy nhất đọc ghi dữ liệu khảo thí. Lúc thi trực tuyến chạy nhiều tiến trình song song.</td></tr>
       <tr><td>MongoDB</td><td>Toàn bộ dữ liệu khảo thí: đợt thi, hồ sơ dự thi, ngân hàng, ma trận, bộ đề, ca thi, bài làm, kết quả, điểm.</td></tr>
-      <tr><td>Redis</td><td>Dùng chung giữa các tiến trình API: khóa chống nộp bài trùng, bộ khóa SSO, kênh socket để lệnh đình chỉ, dừng thi tới đúng máy.</td></tr>
-      <tr><td>Máy chủ file</td><td>Ảnh, âm thanh (MP3) của câu hỏi; tệp bài nộp.</td></tr>
-      <tr><td>SSO (Keycloak)</td><td>Đăng nhập cho cán bộ và sinh viên; API kiểm tra token bằng bộ khóa công khai (JWKS) của SSO.</td></tr>
-      <tr><td>QLDT</td><td>Học kỳ, học phần, lớp học phần, sinh viên, đề cương, kết quả học tập, học phí; nhận lại điểm thi khi công bố.</td></tr>
-      <tr><td>TCNS</td><td>Đơn vị, cán bộ (giám thị, cán bộ chấm, người ra đề).</td></tr>
-      <tr><td>CSVC</td><td>Phòng, lịch sử dụng phòng, để lịch thi không trùng phòng, trùng người.</td></tr>
-      <tr><td>Thông báo</td><td>Gửi thông báo, nhắc lịch thi.</td></tr>
+      <tr><td>Redis</td><td>Dùng chung giữa các tiến trình API: khóa chống nộp bài trùng; kênh chung của socket để lệnh đình chỉ, dừng thi tới máy thí sinh dù máy đó nối vào tiến trình nào.</td></tr>
+      <tr><td>Máy chủ file</td><td>Ảnh, âm thanh (MP3) và tệp đính kèm của câu hỏi.</td></tr>
+      <tr><td>SSO (Keycloak)</td><td>Đăng nhập cho cán bộ và sinh viên; cấp quyền chức năng cho trang quản trị; API kiểm tra token bằng bộ khóa công khai (JWKS) của SSO.</td></tr>
+      <tr><td>QLDT</td><td>Lớp học phần của đợt thi kèm sinh viên, đề cương; điều kiện học tập và công nợ để xét tư cách. Nhận điểm thi: bản nháp theo cài đặt đồng bộ điểm, bản chính thức khi công bố.</td></tr>
+      <tr><td>TCNS</td><td>Đơn vị (tên đơn vị phụ trách học phần).</td></tr>
+      <tr><td>CSVC</td><td>Lịch sử dụng phòng, lịch của sinh viên và cán bộ, để ca thi không trùng phòng, trùng người.</td></tr>
+      <tr><td>Tài chính</td><td>Tạo đợt thu lệ phí khi mở phúc khảo có thu phí.</td></tr>
+      <tr><td>Thông báo</td><td>Gửi thông báo cho sinh viên khi công bố lịch thi và khi công bố điểm.</td></tr>
     </table></div>
   </section>
 
@@ -135,14 +136,14 @@ sequenceDiagram
   alt Token sai hoặc hết hạn
     API-->>WEB: 401, trang chuyển về đăng nhập lại
   else Token hợp lệ
-    Note right of API: Kiểm tra quyền: vai trò, quyền theo chức năng, quyền theo học phần
+    Note right of API: Đọc người dùng, vai trò từ token, kiểm tra phân vùng dữ liệu nếu chức năng có bật
     API-->>WEB: Kết quả dạng success, data
   end
   deactivate API
 </pre>
     </div>
     <ul>
-      <li>Phân quyền hai lớp: quyền theo chức năng (thấy màn hình nào) và, riêng phần đề thi, quyền theo từng học phần (soạn, nhập, gửi duyệt, duyệt câu; tạo, duyệt ma trận; tạo, xem, sửa bộ đề).</li>
+      <li>Quyền chức năng (thấy menu, nút nào) do SSO cấp, trang quản trị ẩn hiện theo đó. Phần đề thi lọc thêm theo học phần được phân quyền. Ở phần điểm, chấm, API lọc dữ liệu theo học phần được phân quyền và túi bài được phân công.</li>
       <li>SSO đổi khóa thì token mang khóa mới vẫn được chấp nhận: API tải lại bộ khóa ngay một lần.</li>
     </ul>
   </section>
@@ -158,36 +159,39 @@ sequenceDiagram
   participant QT as Trang quản trị
   participant API as API khảo thí
   participant QLDT as QLDT
+  participant TCNS as TCNS
   participant DB as MongoDB
-  CV->>QT: Tạo đợt thi: học kỳ, bậc, hình thức đào tạo, các mốc thời gian
+  CV->>QT: Tạo đợt thi: học kỳ, trình độ, hình thức đào tạo, các mốc thời gian (đồng bộ tư cách, công nợ, phân công)
   QT->>API: POST /ky-thi
   API->>DB: Lưu đợt thi
-  CV->>QT: Khởi tạo học phần thi
-  QT->>API: PUT /hoc-phan-thi/init/ky-thi/:id
-  activate API
-  API->>QLDT: Lớp học phần kết thúc trong kỳ, đề cương (hình thức thi)
-  QLDT-->>API: Danh sách lớp, học phần
-  API->>DB: Tạo học phần thi
-  deactivate API
-  CV->>QT: Xét tư cách dự thi
+  CV->>QT: Màn Lớp thi: Khởi tạo học phần + tư cách dự thi
   QT->>API: PUT /ky-thi/:id/khoi-tao/hp-tu-cach
   activate API
-  API->>QLDT: Sinh viên của lớp, kết quả học tập, học phí
-  QLDT-->>API: Dữ liệu từng sinh viên
-  API->>DB: Hồ sơ dự thi: Đủ điều kiện hoặc Không đủ điều kiện
+  API->>QLDT: Lớp học phần của đợt thi kèm sinh viên, đề cương học phần
+  QLDT-->>API: Lớp, học phần, sinh viên
+  API->>TCNS: Tên đơn vị phụ trách học phần
+  API->>DB: Học phần thi, hồ sơ dự thi từng sinh viên, trạng thái Chưa duyệt
   deactivate API
-  opt Điều chỉnh từng trường hợp
-    CV->>QT: Sửa tư cách, hoãn thi
-    QT->>API: Cập nhật hồ sơ dự thi
+  CV->>QT: Màn Sinh viên thi: Cập nhật điều kiện học tập - công nợ
+  QT->>API: PUT /sinh-vien-thi/init/dot-thi/:id
+  activate API
+  API->>QLDT: Điều kiện học tập, công nợ của từng sinh viên
+  QLDT-->>API: Kết quả từng điều kiện
+  API->>DB: Học tập Đạt và công nợ Đủ hoặc Miễn: Đủ điều kiện, học tập chưa duyệt: Chưa duyệt, còn lại: Không đủ điều kiện
+  deactivate API
+  Note over API,QLDT: Trong khoảng thời gian đồng bộ đặt ở đợt thi, API tự cập nhật lại 30 phút một lần
+  opt Điều chỉnh từng sinh viên
+    CV->>QT: Sửa trạng thái (ví dụ Hoãn thi)
+    QT->>API: PUT /sinh-vien-thi/:id
   end
   CV->>QT: Chốt danh sách thí sinh
   QT->>API: PUT /lich-thi/sinh-vien-thi/chot/ky-thi/:id
-  API->>DB: Khóa danh sách
+  API->>DB: Đợt thi: đã chốt danh sách
 </pre>
     </div>
     <ul>
-      <li>Trạng thái hồ sơ dự thi: Chưa duyệt, Đủ điều kiện, Không đủ điều kiện, Hoãn thi (BR-02). Tư cách dựa trên kết quả học tập và công nợ học phí, cả hai lấy từ QLDT.</li>
-      <li>Sau khi chốt, không thêm hoặc xóa thí sinh trên màn tư cách dự thi được nữa (BR-03).</li>
+      <li>Trạng thái hồ sơ dự thi: Chưa duyệt, Đủ điều kiện, Không đủ điều kiện, Hoãn thi (BR-02). Tư cách dựa trên điều kiện học tập và công nợ, cả hai lấy từ QLDT. Ngoài khoảng thời gian đồng bộ thì điều kiện học tập không bị ghi đè, trừ khi chọn bỏ qua thời hạn trên form cập nhật.</li>
+      <li>Sau khi chốt: màn Sinh viên thi ẩn thêm, sửa, nhập; API không cho khởi tạo lại học phần và tư cách (BR-03).</li>
       <li>Thi trực tuyến chặn thí sinh "Không đủ điều kiện" và "Hoãn thi" ngay lúc lấy đề (SD-07), kể cả khi trạng thái đổi sau khi đã xếp ca.</li>
     </ul>
   </section>
@@ -209,20 +213,27 @@ sequenceDiagram
   alt Soạn trên form
     GV->>QT: Soạn câu: dạng, độ khó, nội dung, phương án, hình hoặc âm thanh
     QT->>API: POST /cau-hoi-ngan-hang/many
+    alt Có câu giống hệt câu đã có của môn
+      API-->>QT: Báo câu đã tồn tại, không lưu
+    else Câu mới
+      API->>DB: Lưu câu, trạng thái Chưa gửi
+    end
   else Nhập file Word theo mẫu
     GV->>QT: Chọn file .docx
     QT->>API: POST /cau-hoi-ngan-hang/import-cau-hoi/:maMonHoc
-    API-->>QT: Kết quả đọc file: câu hợp lệ, câu trùng, câu lỗi
-    GV->>QT: Xem trước, bấm Lưu
-    QT->>API: POST /cau-hoi-ngan-hang/insert
+    API->>DB: Tạo các khối kiến thức trong file mà môn chưa có
+    API-->>QT: Câu hợp lệ, câu trùng với ngân hàng, lỗi theo từng câu
+    GV->>QT: Sửa file đến khi hết lỗi, bấm Lưu
+    QT->>API: POST /cau-hoi-ngan-hang/insert (chỉ câu hợp lệ)
+    API->>DB: Lưu câu, trạng thái Chưa gửi
   end
-  API->>DB: Lưu câu, trạng thái Chưa gửi (bỏ câu trùng hệt câu đã có)
-  GV->>QT: Gửi duyệt câu đã chọn hoặc tất cả
+  GV->>QT: Gửi duyệt câu đã chọn hoặc tất cả câu Chưa gửi
   QT->>API: PUT /cau-hoi-ngan-hang/trang-thai-cau/:maMonHoc (Chờ duyệt)
   TBM->>QT: Xem các câu chờ duyệt
   alt Đạt
-    TBM->>QT: Duyệt
+    TBM->>QT: Duyệt câu đã chọn hoặc tất cả câu Chờ duyệt
     QT->>API: PUT /cau-hoi-ngan-hang/trang-thai-cau/:maMonHoc (Duyệt)
+    API->>DB: Câu Duyệt, được kích hoạt
   else Chưa đạt
     TBM->>QT: Yêu cầu chỉnh sửa, ghi lý do
     QT->>API: PUT /cau-hoi-ngan-hang/trang-thai-cau/:maMonHoc (Yêu cầu chỉnh sửa)
@@ -231,9 +242,9 @@ sequenceDiagram
 </pre>
     </div>
     <ul>
-      <li>Trạng thái câu: Chưa gửi → Chờ duyệt → Duyệt hoặc Yêu cầu chỉnh sửa. Chỉ câu Duyệt và đang kích hoạt mới được rút vào đề (BR-04).</li>
+      <li>Trạng thái câu: Chưa gửi → Chờ duyệt → Duyệt hoặc Yêu cầu chỉnh sửa. Duyệt thì câu tự được kích hoạt, trạng thái khác thì tắt; ma trận và bộ đề chỉ rút câu đang kích hoạt (BR-04).</li>
       <li>Dạng câu soạn được: trắc nghiệm một đáp án (kể cả câu có hình, âm thanh, chọn tranh), tự luận, câu nối, câu nhóm (BR-05). Độ khó: Dễ, Trung bình, Khó, Rất khó.</li>
-      <li>Câu giống hệt câu đã có (cả nội dung lẫn phương án) không được thêm (BR-07). Câu đã duyệt không sửa được, chỉ bật hoặc tắt kích hoạt (BR-08).</li>
+      <li>Câu giống hệt câu đã có của môn (cả nội dung lẫn phương án) không được thêm: soạn trên form thì báo lỗi, nhập Word thì câu đó nằm ở mục trùng và không được lưu (BR-07). Câu đã duyệt không sửa, xóa được trên màn ngân hàng (BR-08).</li>
       <li>Hình, âm thanh của câu tải lên máy chủ file (chỉ nhận ảnh và MP3); video dùng đường dẫn (YouTube hoặc link file).</li>
     </ul>
   </section>
@@ -270,17 +281,18 @@ sequenceDiagram
   NRD->>QT: Lưu
   QT->>API: POST /ma-tran-de
   activate API
-  API->>DB: Kiểm tra mỗi dòng đủ câu đã duyệt, không trùng dòng
+  API->>DB: Kiểm tra tên chưa có, dòng không trùng, mỗi dòng đủ câu đang kích hoạt
   API-->>QT: Ma trận ở trạng thái Chờ duyệt
   deactivate API
   TBM->>QT: Duyệt, yêu cầu chỉnh sửa lại, hoặc không duyệt
-  QT->>API: PUT /ma-tran-de/:id (trạng thái)
+  QT->>API: PUT /ma-tran-de/:id (trạng thái, người duyệt)
+  API->>DB: Duyệt thì ma trận được kích hoạt, trạng thái khác thì tắt
 </pre>
     </div>
     <ul>
       <li>Ma trận có 4 dạng câu như ngân hàng: trắc nghiệm, câu nối, tự luận, câu nhóm. Mỗi dòng chỉ rút đúng dạng của dòng đó; câu nhóm không theo độ khó.</li>
       <li>Hai dòng chỉ bị coi là trùng khi cùng chương, cùng độ khó và cùng dạng câu; một chương được lấy nhiều dạng ở cùng độ khó.</li>
-      <li>Dòng không đủ câu đã duyệt thì ma trận không lưu được (BR-10). Chỉ ma trận Duyệt mới chọn được khi tạo bộ đề (BR-09).</li>
+      <li>Dòng không đủ câu đang kích hoạt thì ma trận không lưu được (BR-10). Màn tạo bộ đề chỉ cho chọn ma trận Duyệt và đang kích hoạt (BR-09).</li>
     </ul>
   </section>
 
@@ -299,12 +311,12 @@ sequenceDiagram
   QT->>API: POST /bo-de-thi
   activate API
   loop Mỗi dòng ma trận
-    API->>DB: Rút ngẫu nhiên đủ số câu Duyệt, đang kích hoạt, đúng chương, độ khó, dạng
+    API->>DB: Rút ngẫu nhiên đủ số câu đang kích hoạt, đúng chương, độ khó, dạng (câu nhóm không theo độ khó)
   end
   alt Sinh từ đề gốc
-    Note right of API: Các mã đề cùng bộ câu, chỉ đảo thứ tự câu và phương án
+    Note right of API: Các mã đề cùng bộ câu, đảo thứ tự câu trong từng phần và đảo phương án
   else Sinh toàn bộ từ ngân hàng
-    Note right of API: Mỗi mã đề rút bộ câu riêng
+    Note right of API: Mỗi mã đề rút bộ câu riêng, đảo phương án
   end
   API->>DB: Lưu bộ đề (mọi mã đề, kèm đáp án)
   API-->>QT: Bộ đề
@@ -315,13 +327,21 @@ sequenceDiagram
     NRD->>QT: Sửa câu trong đề
     QT->>API: PUT /bo-de-thi/:id/update-noi-dung-bo-de
   end
-  NRD->>QT: Xuất Word hoặc PDF, kèm hoặc không kèm đáp án
-  QT->>API: POST /bo-de-thi/xuat-de hoặc /bo-de-thi/xuat-de-dap-an/:idBoDe/:soDe
-  API-->>QT: Tệp đề (dùng cho thi viết)
+  NRD->>QT: In đề đang xem
+  alt PDF
+    QT->>API: POST /bo-de-thi/xuat-de (nội dung đề đang xem)
+    API-->>QT: Tệp PDF
+  else Word hoặc in trực tiếp
+    QT->>QT: Trang quản trị tự tạo từ đề đang xem, không gọi API
+  end
+  opt Tải đáp án
+    QT->>API: POST /bo-de-thi/xuat-de-dap-an/:idBoDe/:soDe
+    API-->>QT: Đề kèm đáp án (PDF)
+  end
 </pre>
     </div>
     <ul>
-      <li>Thi viết: xuất đề ra Word/PDF để in. Thi trực tuyến: gắn bộ đề vào ca thi (SD-06), mỗi thí sinh nhận một mã đề.</li>
+      <li>Thi viết: in đề ra PDF, Word hoặc in thẳng. Thi trực tuyến: gắn bộ đề vào ca thi (SD-06), mỗi thí sinh nhận một mã đề.</li>
       <li>Sửa nội dung đề đã dùng để thi thì hệ thống chấm lại bài của sinh viên làm đề đó (BR-13).</li>
     </ul>
   </section>
@@ -338,14 +358,15 @@ sequenceDiagram
   participant API as API khảo thí
   participant CSVC as CSVC
   participant DB as MongoDB
+  participant TB as Thông báo
   opt Cài đặt thi trực tuyến (một lần)
-    CV->>QT: Quản trị, Cài đặt, Thi online: mật khẩu phòng, Safe Exam Browser, dải IP, mã hóa đề
+    CV->>QT: Cài đặt: mật khẩu vào thi (chung phòng hoặc riêng từng thí sinh), tự lưu bài, trả kết quả, Safe Exam Browser, dải IP, mã hóa đề
     QT->>API: Lưu cài đặt hệ thống
   end
-  CV->>QT: Tạo ca: phòng, học phần, bộ đề, giờ bắt đầu, số phút, giám thị, thí sinh
+  CV->>QT: Lịch thi, Online: thêm ca (phòng, học phần, bộ đề, giờ bắt đầu, số phút, giám sát viên, danh sách thí sinh)
   QT->>API: POST /lich-thi
   activate API
-  API->>CSVC: Phòng, sinh viên, cán bộ có trùng lịch không
+  API->>CSVC: Lịch của phòng, của sinh viên, của cán bộ trong khung giờ đó
   CSVC-->>API: Các lịch đang có
   alt Trùng lịch
     API-->>QT: Báo trùng lịch phòng, sinh viên hoặc cán bộ
@@ -354,16 +375,27 @@ sequenceDiagram
     API-->>QT: Ca thi chưa kích hoạt
   end
   deactivate API
+  opt Ca chưa có bộ đề
+    CV->>QT: Thêm bộ đề
+    QT->>API: PUT /lich-thi/:id (bộ đề, số phút theo ma trận)
+  end
+  CV->>QT: Phân công giám thị coi ca (màn Phân công coi thi)
+  QT->>API: Lưu phân công coi thi
   CV->>QT: Kích hoạt ca
   QT->>API: PUT /lich-thi/:id (kích hoạt)
-  API->>DB: Sinh mật khẩu phòng, mật khẩu từng thí sinh
-  CV->>QT: Công bố lịch
+  API->>DB: Sinh mật khẩu phòng, mật khẩu riêng từng thí sinh
+  CV->>QT: Công bố lịch thi của đợt
   QT->>API: PUT /lich-thi/public/ky-thi/:id
-  Note over QT,DB: Sinh viên, giám thị chỉ thấy ca sau khi công bố (BR-15)
+  activate API
+  API->>DB: Mọi ca của đợt: đã công bố, đợt: chốt lịch, sinh số báo danh
+  API->>TB: Thông báo lịch thi cho các sinh viên có tên trong ca
+  deactivate API
 </pre>
     </div>
     <ul>
-      <li>Lịch không được trùng phòng, trùng lịch sinh viên hoặc cán bộ; API đối chiếu lịch sử dụng phòng ở CSVC (BR-14).</li>
+      <li>Lịch không được trùng phòng, trùng lịch sinh viên hoặc cán bộ; API đối chiếu với CSVC khi thêm và khi sửa ca (BR-14).</li>
+      <li>Sinh viên chỉ thấy ca đã công bố (BR-15). Giám thị thấy các ca mình được phân công (kể cả thay thế), không phụ thuộc công bố.</li>
+      <li>Thí sinh nhập mật khẩu nào do cài đặt quyết định: mật khẩu riêng của mình, mật khẩu phòng, hoặc không cần nếu tắt mật khẩu vào thi.</li>
       <li>Giờ kết thúc làm bài = giờ bắt đầu + số phút của ca. Máy chủ nhận bài đến 2 phút sau giờ đó.</li>
       <li>Safe Exam Browser, dải IP, mã hóa đề mặc định tắt; bật trong cài đặt khi trường yêu cầu.</li>
     </ul>
@@ -371,7 +403,7 @@ sequenceDiagram
 
   <section id="sd07" class="luong">
     <h2>SD-07 Thí sinh thi trực tuyến: vào thi, làm bài, nộp bài (QT-05)</h2>
-    <div class="meta"><span><b>Mục tiêu:</b> thí sinh làm bài và có điểm ngay</span><span><b>Tác nhân:</b> sinh viên</span><span><b>Điều kiện:</b> ca đã kích hoạt, công bố; thí sinh có tên trong ca</span><span><b>Kết quả:</b> câu trả lời và kết quả thang 10 được lưu</span></div>
+    <div class="meta"><span><b>Mục tiêu:</b> thí sinh làm bài và có điểm ngay</span><span><b>Tác nhân:</b> sinh viên</span><span><b>Điều kiện:</b> ca đã công bố (mới hiện trong danh sách), có bộ đề; thí sinh có tên trong ca</span><span><b>Kết quả:</b> câu trả lời và kết quả thang 10 được lưu</span></div>
     <div class="so-do">
 <pre class="mermaid">
 sequenceDiagram
@@ -387,10 +419,10 @@ sequenceDiagram
   SV->>TT: Chọn ca, nhập mật khẩu phòng giám thị đọc
   TT->>API: GET /thi/sinh-vien/de-thi/:idCaThi
   activate API
-  Note right of API: Kiểm tra SEB và dải IP (nếu bật), đã đến giờ, có tên trong ca, ca chưa dừng hoặc kết thúc, không bị đình chỉ, đủ điều kiện dự thi, mật khẩu phòng
+  Note right of API: Kiểm tra SEB và dải IP (nếu bật), đã nộp thì báo đã làm, đã đến giờ, có tên trong ca, ca chưa dừng hoặc kết thúc, không bị đình chỉ, chưa quá hạn nộp, đủ điều kiện dự thi, mật khẩu (theo cài đặt)
   alt Vào lần đầu
-    API->>DB: Chọn mã đề theo thứ tự trong danh sách ca, lưu bài làm (bản đề riêng kèm đáp án, máy đang làm)
-  else Vào lại (tải lại trang, đổi máy)
+    API->>DB: Chọn mã đề theo vị trí trong danh sách ca, lưu bài làm (bản đề riêng kèm đáp án, máy đang làm)
+  else Vào lại (tải lại trang, đổi máy), khi bật tự lưu bài
     API->>DB: Đọc bài làm đã lưu, đúng đề cũ
   end
   API-->>TT: Đề đã bỏ đáp án đúng, hạn nộp theo giờ máy chủ
@@ -426,7 +458,7 @@ sequenceDiagram
 
   <section id="sd08" class="luong">
     <h2>SD-08 Giám thị coi thi trực tuyến: theo dõi, đình chỉ, dừng, kết thúc ca (QT-05)</h2>
-    <div class="meta"><span><b>Mục tiêu:</b> giám sát ca thi và đưa điểm sang hồ sơ điểm</span><span><b>Tác nhân:</b> giám thị (hoặc quản trị)</span><span><b>Kết quả:</b> ca kết thúc, điểm vào hồ sơ để rà soát</span></div>
+    <div class="meta"><span><b>Mục tiêu:</b> giám sát ca thi và đưa điểm sang hồ sơ điểm</span><span><b>Tác nhân:</b> giám thị (chuyên viên làm được trên màn lịch thi)</span><span><b>Kết quả:</b> ca kết thúc, điểm vào hồ sơ để rà soát</span></div>
     <div class="so-do">
 <pre class="mermaid">
 sequenceDiagram
@@ -453,14 +485,14 @@ sequenceDiagram
     API-->>QT: Kết quả từng thí sinh theo danh sách ca (còn câu tự luận thì "đang chấm")
   end
   opt Đình chỉ một thí sinh
-    GT->>QT: Đình chỉ, nhập lý do
+    GT->>QT: Xử lý vi phạm: Hủy bài thi hoặc Dừng thi, nhập lý do
     QT->>API: POST /thi/dinh-chi-thi
-    API->>DB: Ghi đình chỉ
+    API->>DB: Ghi đình chỉ vào log vào thi của thí sinh
     API-)TT: Socket DINH_CHI: máy thí sinh khóa màn hình làm bài
     Note over API,TT: Tín hiệu, tự lưu, nộp kế tiếp của thí sinh này bị từ chối
   end
   opt Dừng cả ca
-    GT->>QT: Dừng thi
+    GT->>QT: Dừng ca thi
     QT->>API: POST /thi/dung-thi
     API->>DB: Ca thi: đã dừng
     API-)TT: Socket DUNG_THI: khóa mọi máy trong ca
@@ -478,6 +510,7 @@ sequenceDiagram
     </div>
     <ul>
       <li>Trang thi gửi tín hiệu 20 giây một lần (hoặc tự lưu thay tín hiệu); màn giám thị coi là mất kết nối khi quá 60 giây không có tín hiệu.</li>
+      <li>Đình chỉ có hai loại cho từng thí sinh: Hủy bài thi, Dừng thi. Dừng cả ca là nút riêng.</li>
       <li>Lệnh đình chỉ, dừng thi đi qua socket nên tới máy thí sinh ngay; kể cả rớt socket thì lượt gửi kế tiếp cũng bị máy chủ từ chối.</li>
       <li>Kết thúc ca: thí sinh chưa nộp không gửi tiếp, không nộp được nữa.</li>
     </ul>
@@ -495,29 +528,43 @@ sequenceDiagram
   participant QT as Trang quản trị
   participant API as API khảo thí
   participant DB as MongoDB
-  CV->>QT: Sinh mã phách cho bài thi
-  QT->>API: PUT /lich-thi/ma-phach/init/ky-thi/:id
-  CV->>QT: Chia túi bài theo số bài mỗi túi
-  QT->>API: PUT /hoc-phan-thi/tui-thi/init/ky-thi/:id
-  API->>DB: Túi bài, danh sách bài theo phách
-  CV->>QT: Phân công cán bộ chấm lần 1, lần 2 cho từng túi
-  QT->>API: Lưu phân công chấm
-  CB->>QT: Chọn học phần, chọn túi được giao
-  CB->>QT: Nhập điểm theo phách (từng bài hoặc nhập Excel), xuất bảng điểm theo phách
+  CV->>QT: Màn Phách thi: sinh mã phách cho học phần
+  QT->>API: PUT /lich-thi/ma-phach/init/ky-thi-v2/:id
+  API->>DB: Mã phách từng bài, xếp theo số báo danh (đã có điểm thì không sinh lại)
+  CV->>QT: Chia túi bài thi: theo ca thi, theo lớp học phần hoặc theo số bài một túi
+  QT->>API: PUT /lich-thi/phan-cong-cham-thi/ky-thi/:id
+  activate API
+  API->>DB: Lưu cách chia, tạo túi bài
+  opt Tự phân công chấm theo lớp học phần
+    API->>DB: Giao túi cho giảng viên của lớp
+  end
+  deactivate API
+  opt Sửa số bài một túi, chia lại túi
+    QT->>API: PUT /hoc-phan-thi/tui-thi/init/ky-thi/:id
+  end
+  CV->>QT: Phân công cán bộ chấm cho từng túi
+  QT->>API: PUT /cham-thi/lich-cham
+  CB->>QT: Chấm điểm, Chính thức: chọn học phần, túi được giao
+  CB->>QT: Nhập điểm theo phách (từng bài hoặc nhập Excel)
   QT->>API: Lưu điểm chấm
   CB->>QT: Nộp điểm túi
-  QT->>API: PUT /cham-thi/nop-diem/hoc-phan/:maHocPhan/ky-thi/:id
-  opt Hủy nộp (trước khi chốt)
+  QT->>API: PUT /cham-thi/nop-diem/hoc-phan/:maHocPhan/ky-thi/:id (kèm túi)
+  opt Cần sửa điểm đã nộp
+    CV->>QT: Hủy nộp điểm
     QT->>API: PUT /cham-thi/huy-nop-diem/hoc-phan/:maHocPhan/ky-thi/:id
   end
-  CV->>QT: Đặt ngưỡng chênh lệch, sinh túi thẩm định, phân công thẩm định
-  QT->>API: PUT /diem-thi/tham-dinh/hoc-phan/:ma/ky-thi/:id
-  Note over CB,DB: Cán bộ thẩm định chấm túi thẩm định như các bước trên
+  opt Thẩm định
+    CV->>QT: Rà soát, Thẩm định: chọn cách lấy bài (chênh lệch giữa hai lần chấm, so với ngưỡng cố định, hoặc ngẫu nhiên theo phần trăm, số bài), số bài một túi, cán bộ thẩm định
+    QT->>API: PUT /diem-thi/phan-cong/xac-nhan/hoc-phan/:maHocPhan/ky-thi/:id
+    API->>DB: Túi thẩm định, phân công cán bộ
+    CB->>QT: Chấm điểm, Thẩm định: nhập, nộp điểm như chấm chính thức
+  end
 </pre>
     </div>
     <ul>
       <li>Bài thi viết được nhận diện bằng mã phách khi chấm (BR-20).</li>
-      <li>Điểm bài = trung bình điểm các lần chấm chính thức; có thẩm định thì lấy điểm thẩm định; có phúc khảo thì lấy điểm phúc khảo (BR-21). Vi phạm quy chế trừ theo phần trăm (BR-22). Điểm hợp lệ 0–10 (BR-23).</li>
+      <li>Điểm bài = trung bình điểm các lần chấm chính thức; có thẩm định thì lấy trung bình điểm thẩm định; có phúc khảo thì lấy trung bình điểm phúc khảo (BR-21). Vi phạm quy chế trừ theo phần trăm (BR-22). Điểm hợp lệ 0–10 (BR-23).</li>
+      <li>Đồng bộ điểm sang QLDT có thể chạy ngay khi nộp điểm, tùy cài đặt (SD-10).</li>
       <li>Thi trực tuyến không qua phách, túi: điểm đi thẳng từ kết thúc ca (SD-08) sang rà soát.</li>
     </ul>
   </section>
@@ -534,15 +581,24 @@ sequenceDiagram
   participant QT as Trang quản trị
   participant API as API khảo thí
   participant QLDT as QLDT
-  CV->>QT: Rà soát: lọc điểm lệch, bài không có, xử lý vi phạm, khóa rà soát từng bài
-  QT->>API: Lưu kết quả rà soát
+  participant TB as Thông báo
+  CV->>QT: Rà soát điểm: theo dõi nhập điểm, lọc điểm lệch, bài thiếu điểm, xử lý vi phạm
+  opt Khóa rà soát một bài
+    QT->>API: PUT /diem-thi/ra-soat/switch/block/:id
+  end
+  CV->>QT: Hoàn tất rà soát học phần
+  QT->>API: PUT /diem-thi/ra-soat/hoc-phan/:ma/ky-thi/:id
   CV->>QT: Chốt điểm học phần
   QT->>API: PUT /diem-thi/chot/hoc-phan/:ma/ky-thi/:id
   ND->>QT: Đối chiếu, duyệt điểm
   QT->>API: PUT /diem-thi/duyet/hoc-phan/:ma/ky-thi/:id
+  Note over QT,API: Nếu cài đặt yêu cầu, học phần phải chốt đủ mọi sinh viên mới duyệt được
   CV->>QT: Công bố điểm
   QT->>API: PUT /diem-thi/cong-bo/hoc-phan/:ma/ky-thi/:id
-  API->>QLDT: Đồng bộ điểm (theo cấu hình thời điểm)
+  activate API
+  API->>QLDT: Điểm chính thức của từng sinh viên (đã duyệt)
+  API->>TB: Thông báo kết quả thi cho sinh viên của học phần
+  deactivate API
   opt Ký số bảng điểm
     QT->>API: POST /hoc-phan-thi/ky-thi/:id/hoc-phan/:maHocPhan/ky-so
   end
@@ -552,9 +608,9 @@ sequenceDiagram
 </pre>
     </div>
     <ul>
-      <li>Thứ tự bắt buộc: rà soát → chốt → duyệt → công bố; học phần chưa chốt xong thì chưa duyệt được (BR-25). Bước nào cũng có thao tác hủy, mọi thao tác ghi nhật ký (BR-26).</li>
-      <li>Thời điểm đồng bộ điểm sang QLDT theo cấu hình: ngay, khi nộp điểm, khi chốt, hoặc theo luồng (BR-27).</li>
-      <li>Sửa điểm sau khi công bố đi qua quy trình hiệu chỉnh điểm (QT-08): đề xuất → bộ môn duyệt → khảo thí xác nhận, ký số lại bảng điểm.</li>
+      <li>Thứ tự: rà soát → chốt → duyệt → công bố; có cài đặt bắt học phần chốt đủ mới được duyệt (BR-25). Thao tác hủy có hai: hủy nộp điểm (trả cho cán bộ chấm sửa) và hủy công bố. Các bước điểm ghi nhật ký thao tác (BR-26).</li>
+      <li>Đẩy điểm nháp sang QLDT theo cài đặt Đồng bộ điểm: ngay, khi nộp điểm, khi chốt, hoặc theo luồng (BR-27). Khi công bố, API luôn đẩy điểm chính thức.</li>
+      <li>Sửa điểm sau khi công bố đi qua quy trình hiệu chỉnh điểm (QT-08, xem KT-NV-01). Phần này có trên nhánh <code>develop</code>, chưa có trên bản demo.</li>
     </ul>
   </section>
 
@@ -569,19 +625,34 @@ sequenceDiagram
   actor SV as Sinh viên
   actor CB as Cán bộ chấm
   participant QT as Trang quản trị
+  participant HQ as Hệ thống quy trình
   participant API as API khảo thí
-  CV->>QT: Tạo đợt phúc khảo: thời gian, học phần
-  QT->>API: Lưu đợt phúc khảo
-  SV->>API: Đăng ký phúc khảo qua cổng sinh viên (kèm lệ phí nếu có cấu hình)
-  CV->>QT: Chia túi phúc khảo, phân công chấm
+  participant TC as Tài chính
+  CV->>QT: Phúc khảo, Đợt phúc khảo: mở đăng ký (thời gian, có thu phí không)
+  QT->>API: PUT /phuc-khao-diem/dang-ky/open/ky-thi/:id
+  opt Có thu phí
+    API->>TC: Tạo đợt thu phúc khảo (nguồn, khoản, mức thu)
+  end
+  SV->>HQ: Đăng ký phúc khảo các học phần
+  HQ->>API: Gửi đơn phúc khảo (API nội bộ)
+  CV->>QT: Phân công: chia túi phúc khảo (số bài một túi, có gộp túi không)
   QT->>API: PUT /phuc-khao-diem/tui-phuc-khao
-  CB->>QT: Chấm phúc khảo
-  QT->>API: Lưu điểm phúc khảo
-  CV->>QT: Rà soát, chốt, duyệt, công bố điểm phúc khảo (như SD-10)
-  QT->>API: Các bước kết quả cho đợt phúc khảo
+  opt Chuyển bài giữa các túi
+    QT->>API: POST /tui-thi/:id/sinh-vien
+  end
+  CV->>QT: Bảng túi bài: giao túi phúc khảo cho cán bộ chấm
+  QT->>API: PUT /cham-thi/lich-cham
+  CB->>QT: Chấm điểm, Phúc khảo: nhập điểm, nộp điểm
+  QT->>API: Các API chấm như SD-09, loại điểm Phúc khảo
+  CV->>QT: Phúc khảo: rà soát, chốt, duyệt, công bố
+  QT->>API: Các API như SD-10, loại điểm Phúc khảo
   Note over QT,API: Có điểm phúc khảo thì điểm bài lấy theo điểm phúc khảo (BR-21)
 </pre>
     </div>
+    <ul>
+      <li>Màn rà soát, chốt, duyệt, công bố, chấm của phúc khảo dùng chung màn và API với điểm chính thức, chỉ khác loại điểm Phúc khảo.</li>
+      <li>Sinh viên không đăng ký trên trang khảo thí: hệ thống quy trình của trường nhận đơn rồi gọi API nội bộ của khảo thí.</li>
+    </ul>
   </section>
 
   <section id="anh">
