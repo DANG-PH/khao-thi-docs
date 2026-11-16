@@ -3,16 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Giải thích chuẩn đầu ra CLO, PLO, mức Bloom cho người mới vào nhóm: khái niệm, quan hệ với câu hỏi, ma trận, bộ đề, điểm; quy định 3410 ảnh hưởng gì tới màn hình; hệ thống đang có gì và sẽ làm gì.">
+<meta name="description" content="Yêu cầu nghiệp vụ chuẩn đầu ra CLO, PLO cho ngân hàng câu hỏi, ma trận đề, bộ đề và điểm thi cuối kỳ, theo cuộc họp ngày 16/11/2026.">
 <title>Chuẩn đầu ra CLO, PLO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="../assets/tai-lieu.css">
-<style>
-.loi-ich { border-left: 3px solid var(--strong); padding: 4px 0 4px 12px; margin: 0; }
-.nhanh { border: 1px solid var(--strong); padding: 14px 18px; display: grid; gap: 8px; }
-</style>
 </head>
 <body>
 <main class="doc">
@@ -20,217 +16,108 @@
 
   <header class="muc">
     <span class="nhan">Tài liệu nghiệp vụ</span>
-    <h1>Chuẩn đầu ra CLO, PLO cho người mới</h1>
+    <h1>Chuẩn đầu ra CLO, PLO</h1>
   </header>
 
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-NV-03</dd>
-      <dt>Phiên bản</dt><dd>1.1 (thêm hướng làm theo ghi chú ngày 16/11, dữ liệu đề cương theo kỳ)</dd>
+      <dt>Phiên bản</dt><dd>2.0</dd>
       <dt>Ngày</dt><dd>16/11/2026</dd>
-      <dt>Đối tượng đọc</dt><dd>Dev FE mới vào nhóm; ai cần hiểu nhanh CLO, PLO trước khi làm menu Ngân hàng câu hỏi</dd>
-      <dt>Căn cứ</dt><dd>Quy định xây dựng, quản lý và sử dụng ngân hàng câu hỏi thi theo chuẩn đầu ra (Quyết định 3410/QĐ-HV ngày 30/12/2025); ghi chú hướng làm CLO, PLO ngày 16/11/2026; mã nguồn máy chủ khảo thí và trang quản trị ngày 16/11/2026</dd>
-      <dt>Tài liệu liên quan</dt><dd><a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a> · <a href="dac-ta-tinh-nang.html#chuan-dau-ra">KT-DT-01 §3 Chuẩn đầu ra</a> (đặc tả chi tiết các tính năng CĐR-1 đến CĐR-4)</dd>
+      <dt>Đối tượng đọc</dt><dd>Dev FE, Dev BE</dd>
+      <dt>Căn cứ</dt><dd>Cuộc họp ngày 16/11/2026; Quyết định 3410/QĐ-HV về ngân hàng câu hỏi thi theo chuẩn đầu ra</dd>
     </dl>
   </div>
 
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
-      <li><a href="#doc-nhanh">Đọc nhanh</a></li>
-      <li><a href="#thuat-ngu">Thuật ngữ</a></li>
-      <li><a href="#quan-he">Các khái niệm nối với nhau thế nào</a></li>
-      <li><a href="#vi-du">Ví dụ xuyên suốt: môn Cơ sở dữ liệu</a></li>
-      <li><a href="#quy-dinh">Quy định 3410: điều gì ảnh hưởng tới màn hình</a></li>
-      <li><a href="#da-co">Hệ thống đang có gì</a></li>
-      <li><a href="#se-lam">Hướng làm sắp tới</a></li>
-      <li><a href="#hay-nham">Những chỗ hay nhầm</a></li>
+      <li><a href="#khai-niem">Khái niệm</a></li>
+      <li><a href="#pham-vi">Phạm vi</a></li>
+      <li><a href="#yeu-cau">Yêu cầu theo màn hình</a></li>
+      <li><a href="#cong-thuc">Công thức điểm CLO, PLO</a></li>
+      <li><a href="#du-lieu">Dữ liệu hiện có</a></li>
+      <li><a href="#can-chot">Vấn đề cần chốt</a></li>
     </ol>
   </nav>
 
-  <section id="doc-nhanh">
-    <h2>1. Đọc nhanh</h2>
-    <div class="nhanh">
-      <p><b>PLO</b> là cái <b>ngành</b> cam kết sinh viên ra trường làm được. <b>CLO</b> là cái <b>một học phần</b> cam kết sinh viên học xong làm được. Mỗi CLO góp vào một vài PLO.</p>
-      <p>Đề cương học phần ghi danh sách CLO và <b>tỉ lệ điểm</b> của từng CLO (ví dụ CLO1 40%, CLO2 60%).</p>
-      <p>Theo Quy định 3410, <b>mỗi câu hỏi trong ngân hàng phải ghi nó đo CLO nào và ở mức tư duy Bloom nào</b>. Đề thi phải chia điểm theo đúng tỉ lệ CLO của đề cương.</p>
-      <p>Chấm xong thì ra <b>điểm từng CLO</b> của mỗi sinh viên, từ đó tính tỉ lệ sinh viên đạt CLO. Tỉ lệ đạt PLO tổng hợp ở cấp chương trình (bên QLĐT).</p>
-      <p>Hệ thống <b>đã có</b> CLO trong đề cương, chấm thi viết theo CLO, thống kê tỉ lệ đạt CLO. <b>Chưa có</b> CLO và mức Bloom cho câu hỏi, ma trận, bài thi trực tuyến: đây là phần sắp làm.</p>
-      <p><b>Phạm vi sắp làm:</b> chỉ các CLO, PLO được đánh giá bằng <b>bài thi cuối kỳ</b>. Đề cương thay đổi theo học kỳ, nên ma trận đề và bộ đề phải gắn với <b>kỳ</b> (mục 7).</p>
-    </div>
-  </section>
-
-  <section id="thuat-ngu">
-    <h2>2. Thuật ngữ</h2>
+  <section id="khai-niem">
+    <h2>1. Khái niệm</h2>
     <div class="bang"><table>
       <thead><tr><th>Thuật ngữ</th><th>Nghĩa</th><th>Ví dụ</th></tr></thead>
       <tbody>
-        <tr><td>Chương trình đào tạo (CTĐT)</td><td>Toàn bộ các học phần của một ngành, một khóa.</td><td>Ngành Công nghệ thông tin, khóa 2025</td></tr>
-        <tr><td>PLO (Program Learning Outcome)</td><td>Chuẩn đầu ra <b>chương trình</b>: năng lực sinh viên có khi tốt nghiệp ngành. Do khoa, nhà trường quản lý bên QLĐT.</td><td>PLO2: Xây dựng được hệ thống thông tin đáp ứng yêu cầu thực tế</td></tr>
-        <tr><td>Đề cương học phần</td><td>Văn bản mô tả một học phần: mục tiêu, nội dung, cách đánh giá, các CLO và tỉ lệ điểm của CLO. Lưu bên QLĐT.</td><td>Đề cương môn Cơ sở dữ liệu áp dụng từ học kỳ 2 năm 2025–2026</td></tr>
-        <tr><td>CLO (Course Learning Outcome)</td><td>Chuẩn đầu ra <b>học phần</b>: việc sinh viên phải làm được sau khi học xong học phần, kèm tỉ lệ (%) điểm dành cho việc đó. Còn gọi "mục tiêu học phần".</td><td>CLO2: Viết được câu truy vấn SQL, 60%</td></tr>
-        <tr><td>Liên kết CLO–PLO</td><td>CLO nào góp vào PLO nào, ghi trong đề cương. Ngân hàng câu hỏi chỉ đọc, không nhập.</td><td>CLO2 góp vào PLO2</td></tr>
-        <tr><td>Mức Bloom</td><td>Mức tư duy câu hỏi đòi hỏi, 6 mức từ thấp tới cao: Nhớ, Hiểu, Vận dụng, Phân tích, Đánh giá, Sáng tạo.</td><td>Xem bảng ở mục 4</td></tr>
-        <tr><td>Khối kiến thức</td><td>Chương (hoặc phần) của học phần trong ngân hàng câu hỏi. Mỗi câu hỏi thuộc một khối.</td><td>Chương 3. Truy vấn SQL</td></tr>
-        <tr><td>Độ khó</td><td>Dễ, Trung bình, Khó, Rất khó (hệ thống 4 mức; quy định dùng 3 mức, đang chờ chốt). Khác với mức Bloom.</td><td>Câu "Nhớ" vẫn có thể Khó</td></tr>
-        <tr><td>Ma trận đề</td><td>Bảng quy định đề gồm bao nhiêu câu, lấy từ khối nào, độ khó nào, dạng câu nào. Quy định 3410 gọi là ma trận đánh giá (biểu mẫu BM.05), có thêm cột CLO và mức Bloom.</td><td>Chương 3, Khó, Trắc nghiệm: 6 câu</td></tr>
-        <tr><td>Bộ đề, mã đề</td><td>Sinh từ ma trận: một bộ đề gồm nhiều mã đề, mỗi mã đề bốc ngẫu nhiên câu theo ma trận.</td><td>Bộ đề CSDL kỳ 2, mã đề 001–010</td></tr>
-        <tr><td>Tỉ lệ đạt CLO</td><td>Số sinh viên có điểm CLO đạt ngưỡng chia cho tổng số sinh viên, theo từng CLO.</td><td>CLO2: 78% sinh viên đạt</td></tr>
+        <tr><td>PLO</td><td>Chuẩn đầu ra của chương trình đào tạo (ngành). Do QLĐT quản lý.</td><td>PLO2: Xây dựng được hệ thống thông tin</td></tr>
+        <tr><td>CLO</td><td>Chuẩn đầu ra của học phần. Mỗi CLO góp vào một hoặc nhiều PLO.</td><td>CLO2: Viết được câu truy vấn SQL; góp vào PLO2</td></tr>
+        <tr><td>Đề cương học phần</td><td>Ghi danh sách CLO, trọng số từng CLO và đầu điểm đánh giá CLO đó. Đề cương thay đổi <b>theo học kỳ</b>.</td><td>Đề cương CSDL học kỳ 2 năm 2025–2026</td></tr>
+        <tr><td>Trọng số CLO</td><td>Tỉ lệ điểm dành cho CLO trong đề cương.</td><td>CLO1 40%, CLO2 60%</td></tr>
+        <tr><td>Đầu điểm thi cuối kỳ</td><td>Đầu điểm trong đề cương ứng với bài thi cuối kỳ. Mỗi đầu điểm đánh giá một số CLO.</td><td>Thi cuối kỳ đánh giá CLO1, CLO2</td></tr>
       </tbody>
     </table></div>
   </section>
 
-  <section id="quan-he">
-    <h2>3. Các khái niệm nối với nhau thế nào</h2>
-    <p>Mũi tên đọc là "có" hoặc "dẫn tới". Phần nét đứt là phần sắp làm ở ngân hàng câu hỏi.</p>
-    <div class="so-do">
-<pre class="mermaid">
-flowchart LR
-  CTDT["Chương trình đào tạo"] --> PLO["PLO của ngành"]
-  CTDT --> HP["Học phần"]
-  HP --> DC["Đề cương học phần"]
-  DC --> CLO["CLO + tỉ lệ điểm"]
-  CLO -->|"góp vào"| PLO
-  HP --> KKT["Khối kiến thức (chương)"]
-  KKT --> CH["Câu hỏi: độ khó, dạng câu"]
-  CH -.->|"sắp làm: CLO, mức Bloom"| CLO
-  CH --> MT["Ma trận đề"]
-  MT -.->|"sắp làm: cột CLO, Bloom, kiểm tỉ lệ"| CLO
-  MT --> BD["Bộ đề, mã đề"]
-  BD --> BT["Bài thi của sinh viên"]
-  BT --> DCLO["Điểm từng CLO"]
-  DCLO --> TL["Tỉ lệ đạt CLO"]
-  TL -.->|"tổng hợp ở QLĐT"| PLO
-</pre>
-    </div>
-  </section>
-
-  <section id="vi-du">
-    <h2>4. Ví dụ xuyên suốt: môn Cơ sở dữ liệu</h2>
-    <div class="khoi">
-      <div class="khoi-dau"><span class="ma">Bước 1</span><h3>Đề cương ghi CLO và tỉ lệ</h3></div>
-      <div class="bang"><table>
-        <thead><tr><th>CLO</th><th>Sinh viên phải làm được</th><th>Tỉ lệ điểm</th><th>Góp vào PLO</th></tr></thead>
-        <tbody>
-          <tr><td>CLO1</td><td>Thiết kế được lược đồ cơ sở dữ liệu</td><td>40%</td><td>PLO2</td></tr>
-          <tr><td>CLO2</td><td>Viết được câu truy vấn SQL</td><td>60%</td><td>PLO2, PLO3</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-
-    <div class="khoi">
-      <div class="khoi-dau"><span class="ma">Bước 2</span><h3>Mỗi câu hỏi ghi CLO và mức Bloom</h3></div>
-      <div class="bang"><table>
-        <thead><tr><th>Mức Bloom</th><th>Câu hỏi đòi hỏi</th><th>Câu ví dụ</th><th>CLO</th></tr></thead>
-        <tbody>
-          <tr><td>Nhớ</td><td>Nhắc lại kiến thức</td><td>SQL là viết tắt của gì?</td><td>CLO2</td></tr>
-          <tr><td>Hiểu</td><td>Giải thích bằng lời của mình</td><td>Vì sao khóa chính không được trùng?</td><td>CLO1</td></tr>
-          <tr><td>Vận dụng</td><td>Dùng kiến thức vào tình huống cụ thể</td><td>Viết câu SELECT lấy sinh viên có điểm trên 8.</td><td>CLO2</td></tr>
-          <tr><td>Phân tích</td><td>Tách vấn đề, chỉ ra quan hệ</td><td>Cho lược đồ, chỉ ra phụ thuộc hàm gây dư thừa dữ liệu.</td><td>CLO1</td></tr>
-          <tr><td>Đánh giá</td><td>So sánh, chọn và lập luận</td><td>Hai thiết kế sau, thiết kế nào hợp với truy vấn X hơn, vì sao?</td><td>CLO1</td></tr>
-          <tr><td>Sáng tạo</td><td>Tạo ra cái mới</td><td>Thiết kế cơ sở dữ liệu cho hệ thống quản lý thư viện.</td><td>CLO1</td></tr>
-        </tbody>
-      </table></div>
-      <p>CLO không trùng với chương: câu "Viết lệnh CREATE TABLE cho lược đồ trên" nằm ở chương Thiết kế (thường là CLO1) nhưng kiểm tra viết SQL, nên ghi CLO2.</p>
-    </div>
-
-    <div class="khoi">
-      <div class="khoi-dau"><span class="ma">Bước 3</span><h3>Ma trận chia điểm theo đúng tỉ lệ CLO</h3></div>
-      <p>Đề 10 điểm: câu đo CLO1 cộng lại phải được 4 điểm, câu đo CLO2 được 6 điểm. Tỉ lệ tính theo <b>điểm</b>, không theo số câu. Mỗi dòng ma trận chọn thêm CLO để máy chủ chỉ bốc câu của CLO đó, nên mã đề nào cũng đúng tỉ lệ.</p>
-      <div class="bang"><table>
-        <thead><tr><th>Chương</th><th>CLO</th><th>Mức Bloom</th><th>Độ khó</th><th>Số câu × điểm</th></tr></thead>
-        <tbody>
-          <tr><td>Chương 2. Thiết kế CSDL</td><td>CLO1</td><td>Hiểu</td><td>Trung bình</td><td>8 × 0,5 = 4,0</td></tr>
-          <tr><td>Chương 3. Truy vấn SQL</td><td>CLO2</td><td>Vận dụng</td><td>Khó</td><td>12 × 0,5 = 6,0</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-
-    <div class="khoi">
-      <div class="khoi-dau"><span class="ma">Bước 4</span><h3>Chấm ra điểm từng CLO, rồi tỉ lệ đạt</h3></div>
-      <div class="bang"><table>
-        <thead><tr><th>Sinh viên</th><th>Điểm bài</th><th>CLO1 (tối đa 4)</th><th>CLO2 (tối đa 6)</th></tr></thead>
-        <tbody>
-          <tr><td>Nguyễn Văn A</td><td>7,5</td><td>3,5</td><td>4,0</td></tr>
-          <tr><td>Trần Thị B</td><td>5,0</td><td>1,5</td><td>3,5</td></tr>
-        </tbody>
-      </table></div>
-      <p>Cả lớp có điểm từng CLO thì tính được "bao nhiêu phần trăm sinh viên đạt CLO2". Nhà trường dùng số này khi kiểm định; cấp chương trình gộp các CLO thành tỉ lệ đạt PLO.</p>
-    </div>
-  </section>
-
-  <section id="quy-dinh">
-    <h2>5. Quy định 3410: điều gì ảnh hưởng tới màn hình</h2>
-    <div class="bang"><table>
-      <thead><tr><th>Quy định</th><th>Với giao diện nghĩa là</th></tr></thead>
-      <tbody>
-        <tr><td>Mỗi câu hỏi gắn ít nhất một CLO và một mức Bloom (BM.01). Nhóm đề xuất mỗi câu đúng một CLO, đang chờ chốt.</td><td>Form soạn câu có ô CLO (điền sẵn theo chương) và ô mức Bloom, đều bắt buộc. Danh sách câu lọc được theo CLO, Bloom.</td></tr>
-        <tr><td>Số câu tối thiểu: trắc nghiệm 20 câu mỗi CLO mỗi chương, tự luận 5 câu (Điều 9).</td><td>Tổng quan, Khối kiến thức đếm câu theo CLO và đánh dấu ô dưới mức tối thiểu.</td></tr>
-        <tr><td>Đề thi chia điểm đúng tỉ lệ CLO của đề cương; ma trận đánh giá theo mẫu BM.05 (CLO, Bloom, hình thức).</td><td>Form ma trận có cột CLO, mức Bloom và bảng tự tính tỉ lệ điểm từng CLO so với đề cương, báo lệch trước khi lưu.</td></tr>
-        <tr><td>Câu đã phát hành không sửa trực tiếp; sửa bằng phiên bản mới, giữ lịch sử.</td><td>Hiện tại: câu đang kích hoạt không sửa được, muốn sửa thì tắt kích hoạt trước. Phiên bản câu hỏi là tính năng KS-1 (đề xuất).</td></tr>
-        <tr><td>Phân tích câu hỏi sau kỳ thi (BM.04): tỉ lệ đúng, độ phân biệt.</td><td>Màn kết quả phân tích, gắn cờ câu cần sửa (TM-4, đề xuất).</td></tr>
-        <tr><td>Hồ sơ kiểm định: BM.01 danh sách câu hỏi, BM.04 phân tích, BM.05 ma trận.</td><td>Nút "Xuất BM.01" ở Ngân hàng câu hỏi, "Xuất BM.05" ở Ma trận đề (CĐR-4, đề xuất).</td></tr>
-        <tr><td>Liên kết CLO–PLO lấy từ đề cương.</td><td>Ngân hàng câu hỏi không có màn nhập PLO; nếu cần thì chỉ hiển thị (chỉ đọc).</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section id="da-co">
-    <h2>6. Hệ thống đang có gì</h2>
-    <p>Đối chiếu mã nguồn ngày 16/11/2026.</p>
-    <div class="bang"><table>
-      <thead><tr><th>Phần</th><th>Ở đâu</th><th>Ghi chú cho FE</th></tr></thead>
-      <tbody>
-        <tr><td>Đề cương học phần <b>theo học kỳ</b></td><td>Bên QLĐT. Máy chủ khảo thí đọc qua QLĐT (lệnh <code>de-cuong-hp-hk/one</code>, "hp-hk" là học phần, học kỳ).</td><td>Các đầu điểm thi: <code>trongSoThi1</code>…<code>trongSoThi5</code> (trọng số), mô tả trong <code>thongTinTrongSoThi</code> (hình thức đánh giá, ví dụ thi hết học phần). Danh sách CLO: <code>mucTieuHocPhanList</code>; mỗi CLO có <code>danhSachHinhThucMucTieu</code> ghi đầu điểm nào đánh giá CLO đó (<code>trongSoTuongUng</code>, ví dụ <code>"trongSoThi1"</code>), kèm <code>isTinhDiem</code>, <code>tyLeAnhHuong</code> (tỉ lệ %), <code>diemToiThieu</code> (ngưỡng đạt).</td></tr>
-        <tr><td>CLO của từng bài thi</td><td>Máy chủ ghép từ đề cương (<code>ObjectUtil.extractLoaiThiHocPhan</code>): mỗi đầu điểm thi của học phần có mảng <code>hinhThucMucTieuHocPhan</code>. Trang quản trị dùng mảng này ở màn Chấm thi.</td><td>Mỗi phần tử: <code>ma</code> (ví dụ "CLO1"), <code>cloId</code>, <code>tyLeAnhHuong</code>, <code>trongSoTuongUng</code>, <code>isTinhDiem</code>, <code>diemToiThieu</code>. <b>"CLO liên quan thi cuối kỳ"</b> chính là mảng này của đầu điểm thi cuối kỳ.</td></tr>
-        <tr><td>Chấm thi viết theo CLO</td><td>Màn Chấm thi (<code>pages/ChamThi/components/Form.tsx</code>): ngoài điểm thường, cán bộ chấm nhập điểm từng CLO.</td><td>Điểm lưu trong <code>danhSachDiemChamThi</code>, phần tử có <code>loaiDiem: "CLO"</code> và <code>diemChuanDauRa: [{ maClo, diem }]</code>.</td></tr>
-        <tr><td>Thống kê tỉ lệ đạt CLO</td><td>Thống kê báo cáo &gt; Kết quả học phần &gt; Tỉ lệ đạt CLO (<code>pages/DaoTao/KetQuaHocTap/ThongKeChuanDauRa/CLO</code>).</td><td>Ẩn với trường VWA (<code>cloPloAccessFilter</code> trong <code>access.ts</code>). Hiện chỉ có số liệu thi viết.</td></tr>
-        <tr><td>PLO, liên kết CLO–PLO</td><td>Bên QLĐT (chương trình đào tạo).</td><td>Phân hệ khảo thí chưa có màn PLO. Dữ liệu đề cương khảo thí đang đọc <b>chưa có trường PLO</b>; muốn gán hay thống kê PLO phải lấy thêm liên kết CLO–PLO (và trọng số nếu có) từ QLĐT.</td></tr>
-        <tr><td>Ngân hàng câu hỏi, ma trận, bộ đề</td><td>Câu hỏi có khối kiến thức, độ khó, dạng câu, mã câu; ma trận có khối, độ khó, dạng câu, số câu.</td><td><b>Chưa có</b> CLO, mức Bloom. Bài thi trực tuyến chỉ có điểm tổng, chưa có điểm từng CLO.</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section id="se-lam">
-    <h2>7. Hướng làm sắp tới</h2>
-    <p>Theo ghi chú ngày 16/11/2026. Bảng diễn giải từng ý thành việc cụ thể; ô có dấu (?) là cách hiểu cần chốt lại trước khi làm. Đặc tả đề xuất ban đầu nằm ở <a href="dac-ta-tinh-nang.html#chuan-dau-ra">KT-DT-01 §3</a>; chỗ nào lệch thì theo bảng này.</p>
-    <div class="bang"><table>
-      <thead><tr><th>Ý trong ghi chú</th><th>Nghĩa là</th><th>Dữ liệu, ghi chú</th></tr></thead>
-      <tbody>
-        <tr><td>Chỉ quan tâm CLO, PLO liên quan đến thi cuối kỳ</td><td>Chỉ dùng các CLO được đánh giá bằng đầu điểm thi cuối kỳ trong đề cương của kỳ đó. PLO là các PLO mà những CLO này góp vào.</td><td>CLO: mảng <code>hinhThucMucTieuHocPhan</code> của đầu điểm thi cuối kỳ (mục 6). PLO: phải lấy thêm từ QLĐT.</td></tr>
-        <tr><td>Ngân hàng câu hỏi: chọn từng câu gán với CLO, PLO; chỉ câu thi cuối kỳ mới cho chọn</td><td>Form soạn câu có ô chọn CLO, chỉ liệt kê CLO của bài thi cuối kỳ; PLO tự suy ra theo liên kết CLO–PLO, chỉ hiển thị. (?) "Chỉ câu thi cuối kỳ": câu dùng cho đề thi cuối kỳ mới có ô CLO; cần chốt câu nào được coi là câu thi cuối kỳ.</td><td>Câu hỏi chưa có trường CLO: máy chủ thêm. Cần chốt một câu một CLO hay nhiều CLO (quy định ghi ít nhất một).</td></tr>
-        <tr><td>Ngân hàng câu hỏi tổng quát: thống kê CLO, PLO; xem trọng số PLO, CLO</td><td>Màn Tổng quan, Ngân hàng câu hỏi có bảng số câu theo CLO (và theo PLO), cạnh đó là trọng số của CLO theo đề cương để so số câu với trọng số.</td><td>Trọng số CLO: <code>tyLeAnhHuong</code>. (?) Trọng số PLO: chưa có nguồn, phải hỏi QLĐT.</td></tr>
-        <tr><td>Ma trận đề theo kỳ, bổ sung CLO, PLO; lấy chương nhân với CLO, PLO</td><td>Ma trận gắn với một kỳ (đề cương của kỳ đó). Lập ma trận theo bảng chéo <b>chương × CLO</b>: mỗi ô là số câu (và điểm) của chương đó đo CLO đó; cộng theo cột ra tỉ lệ điểm từng CLO để so với đề cương.</td><td>Ma trận, bộ đề hiện chỉ gắn <code>maHocPhan</code>, chưa có trường kỳ. Mẫu Excel ma trận phải sửa: thêm chiều CLO.</td></tr>
-        <tr><td>Ma trận đề, bộ đề đều theo kỳ</td><td>Mỗi ma trận, bộ đề thuộc một kỳ; khi tạo, chọn kỳ và chỉ thấy CLO của đề cương kỳ đó. Ma trận kỳ trước dùng lại cho kỳ sau thì sao chép rồi sửa theo đề cương mới.</td><td>Thêm trường kỳ cho ma trận, bộ đề; dữ liệu cũ cần quy ước gán kỳ (?).</td></tr>
-        <tr><td>Mẫu nhập Word và Excel thêm CLO, PLO</td><td>File Word: mỗi câu thêm một hàng ghi mã CLO (ví dụ <code>CLO2</code>). File Excel: thêm cột CLO. PLO không cần nhập vì suy ra từ CLO.</td><td>Hướng dẫn <a href="../huong-dan/nhap-cau-hoi-tu-word.html">KT-HD-01</a> cập nhật theo. Mã CLO phải có trong đề cương kỳ đó, sai thì báo lỗi từng câu.</td></tr>
-        <tr><td>Công thức điểm CLO, PLO</td><td>Điểm CLO = (tổng điểm sinh viên đạt ở các câu thuộc CLO ÷ tổng điểm tối đa của các câu đó) × 10. Điểm PLO tính cùng cách trên các câu thuộc những CLO góp vào PLO đó (?).</td><td>Thang 10. So với <code>diemToiThieu</code> của CLO để biết đạt hay không, rồi ra tỉ lệ đạt.</td></tr>
-        <tr><td>Đẩy điểm thi về khảo thí</td><td>Nút "Kết thúc ca thi": chấm xong, đẩy điểm bài và điểm từng CLO của cả ca về phân hệ khảo thí, giống điểm thi viết đang lưu.</td><td>Sẽ làm việc thêm với thầy.</td></tr>
-      </tbody>
-    </table></div>
-    <div class="khoi">
-      <div class="khoi-dau"><span class="ma">Ví dụ</span><h3>Tính điểm CLO cho một sinh viên</h3></div>
-      <p>Đề 10 điểm. Các câu đo CLO1 có tổng tối đa 4 điểm, sinh viên đạt 3. Các câu đo CLO2 có tổng tối đa 6 điểm, sinh viên đạt 4,5.</p>
-      <ul>
-        <li>Điểm CLO1 = 3 ÷ 4 × 10 = 7,5</li>
-        <li>Điểm CLO2 = 4,5 ÷ 6 × 10 = 7,5</li>
-        <li>CLO1 và CLO2 cùng góp vào PLO2: điểm PLO2 = (3 + 4,5) ÷ (4 + 6) × 10 = 7,5</li>
-      </ul>
-      <p>Nếu ngưỡng đạt (<code>diemToiThieu</code>) của CLO2 là 5 thì sinh viên này đạt CLO2. Cả lớp tính như vậy rồi đếm số người đạt thì ra tỉ lệ đạt CLO.</p>
-    </div>
-  </section>
-
-  <section id="hay-nham">
-    <h2>8. Những chỗ hay nhầm</h2>
+  <section id="pham-vi">
+    <h2>2. Phạm vi</h2>
     <ul>
-      <li><b>CLO không phải chương.</b> Một chương có thể đo nhiều CLO; gắn theo chương chỉ là giá trị mặc định cho nhanh.</li>
-      <li><b>Mức Bloom không phải độ khó.</b> Bloom là kiểu tư duy; độ khó là tỉ lệ sinh viên làm đúng. Câu "Nhớ" có thể khó, câu "Vận dụng" có thể dễ.</li>
-      <li><b>Tỉ lệ CLO tính theo điểm,</b> không theo số câu: 3 câu tự luận 2 điểm nặng hơn 10 câu trắc nghiệm 0,25 điểm.</li>
-      <li><b>PLO không nhập ở ngân hàng câu hỏi.</b> Liên kết CLO–PLO đã có trong đề cương.</li>
-      <li><b>CLO của học phần có thể đổi giữa các khóa</b> (đề cương mới). Cách xử lý câu đã gắn CLO cũ đang chờ chốt (KT-DT-01 §3, mục "Cần thầy, BA chốt").</li>
+      <li>Chỉ xét các CLO được đánh giá bằng <b>bài thi cuối kỳ</b>, và các PLO mà những CLO này góp vào.</li>
+      <li>Đề cương thay đổi theo học kỳ, nên ma trận đề và bộ đề phải gắn với <b>học kỳ</b>.</li>
     </ul>
+  </section>
+
+  <section id="yeu-cau">
+    <h2>3. Yêu cầu theo màn hình</h2>
+    <div class="bang"><table>
+      <thead><tr><th>Màn hình</th><th>Yêu cầu</th><th>Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td>Tổng quan ngân hàng câu hỏi</td><td>Thống kê số câu theo CLO và theo PLO. Hiển thị trọng số CLO, PLO để đối chiếu với số câu.</td><td>Trọng số CLO lấy từ đề cương. Nguồn trọng số PLO cần chốt.</td></tr>
+        <tr><td>Ngân hàng câu hỏi</td><td>Gán CLO cho từng câu; PLO suy ra theo liên kết CLO–PLO. Chỉ câu dùng cho thi cuối kỳ mới được gán.</td><td>Chỉ chọn trong các CLO của đầu điểm thi cuối kỳ.</td></tr>
+        <tr><td>Nhập câu hỏi (Word, Excel)</td><td>Mẫu nhập có thêm thông tin CLO cho từng câu.</td><td>Mã CLO không có trong đề cương của học kỳ thì báo lỗi theo từng câu.</td></tr>
+        <tr><td>Ma trận đề</td><td>Ma trận gắn với học kỳ và bổ sung CLO, PLO. Lập theo bảng <b>chương × CLO (PLO)</b>: mỗi ô là số câu của chương đó đo CLO đó; cộng theo CLO để so với trọng số trong đề cương.</td><td>Mẫu Excel ma trận phải sửa theo.</td></tr>
+        <tr><td>Bộ đề</td><td>Bộ đề gắn với học kỳ của ma trận.</td><td></td></tr>
+        <tr><td>Ca thi</td><td>Nút <b>Kết thúc ca thi</b>: đẩy điểm thi (điểm bài và điểm CLO, PLO) về phân hệ khảo thí.</td><td>Chi tiết sẽ thống nhất với thầy.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="cong-thuc">
+    <h2>4. Công thức điểm CLO, PLO</h2>
+    <p><b>Điểm CLO</b> = (tổng điểm đạt được ở các câu thuộc CLO ÷ tổng điểm tối đa của các câu đó) × 10.</p>
+    <p><b>Điểm PLO</b> tính tương tự, trên các câu thuộc những CLO góp vào PLO đó.</p>
+    <div class="bang"><table>
+      <thead><tr><th>Ví dụ</th><th>Điểm tối đa</th><th>Sinh viên đạt</th><th>Điểm</th></tr></thead>
+      <tbody>
+        <tr><td>CLO1</td><td>4</td><td>3</td><td>3 ÷ 4 × 10 = 7,5</td></tr>
+        <tr><td>CLO2</td><td>6</td><td>4,5</td><td>4,5 ÷ 6 × 10 = 7,5</td></tr>
+        <tr><td>PLO2 (gồm CLO1, CLO2)</td><td>10</td><td>7,5</td><td>7,5 ÷ 10 × 10 = 7,5</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="du-lieu">
+    <h2>5. Dữ liệu hiện có</h2>
+    <div class="bang"><table>
+      <thead><tr><th>Dữ liệu</th><th>Hiện trạng</th></tr></thead>
+      <tbody>
+        <tr><td>Đề cương theo học kỳ</td><td>Máy chủ khảo thí đọc từ QLĐT. Có các đầu điểm thi (<code>trongSoThi1</code>…<code>trongSoThi5</code>) và danh sách CLO (<code>mucTieuHocPhanList</code>).</td></tr>
+        <tr><td>CLO của từng đầu điểm thi</td><td>Có sẵn trong <code>hinhThucMucTieuHocPhan</code> của học phần thi. Mỗi phần tử gồm <code>ma</code> (mã CLO), <code>tyLeAnhHuong</code> (trọng số), <code>diemToiThieu</code> (ngưỡng đạt).</td></tr>
+        <tr><td>Điểm CLO thi viết</td><td>Đã có: cán bộ chấm nhập điểm từng CLO; có màn thống kê tỉ lệ đạt CLO.</td></tr>
+        <tr><td>PLO, liên kết CLO–PLO</td><td><b>Chưa có</b> trong dữ liệu khảo thí; cần lấy từ QLĐT.</td></tr>
+        <tr><td>CLO của câu hỏi</td><td><b>Chưa có</b>.</td></tr>
+        <tr><td>Học kỳ của ma trận đề, bộ đề</td><td><b>Chưa có</b>; hiện chỉ gắn mã học phần.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="can-chot">
+    <h2>6. Vấn đề cần chốt</h2>
+    <ol>
+      <li>Tiêu chí xác định câu dùng cho thi cuối kỳ.</li>
+      <li>Mỗi câu gắn một CLO hay nhiều CLO.</li>
+      <li>Nguồn liên kết CLO–PLO và trọng số PLO từ QLĐT.</li>
+      <li>Học kỳ gán cho ma trận đề, bộ đề đã có.</li>
+      <li>Nội dung đẩy điểm khi kết thúc ca thi.</li>
+    </ol>
   </section>
 
   <footer>Repo công khai: không đưa mật khẩu, khóa bí mật hay dữ liệu cá nhân lên đây.</footer>
 </main>
-<script type="module" src="../assets/so-do.js"></script>
 </body>
 </html>
