@@ -29,7 +29,7 @@ code { font-family: var(--font-mono); font-size: 0.8rem; background: var(--soft)
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-NV-02</dd>
-      <dt>Phiên bản</dt><dd>1.1</dd>
+      <dt>Phiên bản</dt><dd>1.2</dd>
       <dt>Ngày</dt><dd>14/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>BA, Dev, Tester, người mới</dd>
       <dt>Căn cứ</dt><dd>Code đang chạy trên bản demo (nhánh <code>feat/ulsa-on-dinh</code> của máy chủ, trang thi, trang quản trị) và tài liệu <a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a>. Tên API trên sơ đồ là đường dẫn thật trong code (bỏ tiền tố <code>/khao-thi-api</code>), đã đối chiếu từng bước với code máy chủ và trang quản trị. So với nhánh <code>develop</code>: nhánh này có thêm tín hiệu kết nối lúc thi, Safe Exam Browser, nhập ma trận từ Excel; <code>develop</code> có thêm hiệu chỉnh điểm sau công bố.</dd>
@@ -244,7 +244,8 @@ sequenceDiagram
     <ul>
       <li>Trạng thái câu: Chưa gửi → Chờ duyệt → Duyệt hoặc Yêu cầu chỉnh sửa. Duyệt thì câu tự được kích hoạt, trạng thái khác thì tắt; ma trận và bộ đề chỉ rút câu đang kích hoạt (BR-04).</li>
       <li>Dạng câu soạn được: trắc nghiệm một đáp án (kể cả câu có hình, âm thanh, chọn tranh), tự luận, câu nối, câu nhóm (BR-05). Độ khó: Dễ, Trung bình, Khó, Rất khó.</li>
-      <li>Câu giống hệt câu đã có của môn (cả nội dung lẫn phương án) không được thêm: soạn trên form thì báo lỗi, nhập Word thì câu đó nằm ở mục trùng và không được lưu (BR-07). Câu đã duyệt không sửa, xóa được trên màn ngân hàng (BR-08).</li>
+      <li>Câu giống hệt câu đã có của môn (cả nội dung lẫn phương án) không được thêm: soạn trên form thì báo lỗi, nhập Word thì câu đó nằm ở mục trùng và không được lưu (BR-07). Câu đã duyệt chỉ bật hoặc tắt kích hoạt: từ 16/11 máy chủ chặn sửa nội dung và chặn chuyển về trạng thái khác (BR-08).</li>
+      <li>Câu mới được gán mã tự động dạng <code>&lt;mã học phần&gt;-0001</code>. File Word có nhiều hàng Đ là câu trắc nghiệm nhiều đáp án. Câu hỏi nối ẩn theo cài đặt "Cho phép câu hỏi nối" (mặc định tắt): tắt thì không tạo, không nhập được câu nối mới.</li>
       <li>Hình, âm thanh của câu tải lên máy chủ file (chỉ nhận ảnh và MP3); video dùng đường dẫn (YouTube hoặc link file).</li>
     </ul>
   </section>

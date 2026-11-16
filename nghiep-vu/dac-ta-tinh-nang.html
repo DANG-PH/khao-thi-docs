@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 17 tính năng mới theo 5 nhóm, 3 ý dùng AI nếu nhà trường cho phép, và 2 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
+<meta name="description" content="Đề xuất phát triển menu Ngân hàng câu hỏi: 16 tính năng mới theo 4 nhóm, 3 ý dùng AI nếu nhà trường cho phép, và 2 việc hoàn thiện phần đã có. Mỗi ý đã đối chiếu code, có tình huống, cách làm, phác thảo màn hình và lợi ích.">
 <title>Đặc tả tính năng phát triển</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,11 +30,11 @@
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-DT-01</dd>
-      <dt>Phiên bản</dt><dd>1.1 (bản đề xuất, chờ thầy và BA duyệt)</dd>
+      <dt>Phiên bản</dt><dd>1.2 (bản đề xuất, chờ thầy và BA duyệt)</dd>
       <dt>Ngày</dt><dd>16/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>PO, BA, Tester, Dev</dd>
-      <dt>Phạm vi</dt><dd>Menu Ngân hàng câu hỏi: Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi khi làm bài các dạng câu mới</dd>
-      <dt>Căn cứ</dt><dd>Buổi họp ngày 12/11/2026; phản hồi của BA ngày 11/11/2026; tài liệu mô tả luồng và workflow Ngân hàng câu hỏi của BA (bản đề xuất từ khảo sát, đối chiếu với máy chủ nhánh develop ngày 13/11/2026); đối chiếu mã nguồn: máy chủ nhánh develop (bản lấy về ngày 06/11/2026), trang quản trị và trang thi trong <code>all_thi_online</code> (bản 02/11/2026), trang thi GitLab nhánh <code>feature/thi-online</code>; thử trên bản demo ngày 12/11/2026</dd>
+      <dt>Phạm vi</dt><dd>Menu Ngân hàng câu hỏi: Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề, Phân quyền</dd>
+      <dt>Căn cứ</dt><dd>Quy định xây dựng, quản lý và sử dụng ngân hàng câu hỏi thi theo chuẩn đầu ra (Quyết định 3410/QĐ-HV ngày 30/12/2025, áp dụng từ học kỳ 2 năm học 2025–2026); yêu cầu ngày 16/11/2026; buổi họp ngày 12/11/2026; phản hồi của BA ngày 11/11/2026; tài liệu mô tả luồng và workflow Ngân hàng câu hỏi của BA (bản đề xuất từ khảo sát, đối chiếu với máy chủ nhánh develop ngày 13/11/2026); đối chiếu mã nguồn: máy chủ nhánh develop (bản lấy về ngày 06/11/2026), trang quản trị và trang thi trong <code>all_thi_online</code> (bản 02/11/2026), trang thi GitLab nhánh <code>feature/thi-online</code>; thử trên bản demo ngày 12/11/2026</dd>
       <dt>Tài liệu liên quan</dt><dd><a href="tong-quan-nghiep-vu.html">KT-NV-01 Tổng quan nghiệp vụ</a> · <a href="../huong-dan/nhap-cau-hoi-tu-word.html">KT-HD-01 Nhập câu hỏi từ Word</a></dd>
     </dl>
   </div>
@@ -42,9 +42,9 @@
   <nav class="muc-luc" aria-label="Mục lục">
     <ol>
       <li><a href="#tom-tat">Tóm tắt</a></li>
+      <li><a href="#tien-do">Đã làm ở máy chủ, việc cho FE</a></li>
       <li><a href="#chuan-dau-ra">Chuẩn đầu ra</a></li>
       <li><a href="#trai-nghiem">Tăng trải nghiệm người dùng</a></li>
-      <li><a href="#dang-cau">Câu hỏi đa dạng hơn</a></li>
       <li><a href="#thong-minh">Tính năng thông minh</a></li>
       <li><a href="#kiem-soat">Kiểm soát câu hỏi và bộ đề</a></li>
       <li><a href="#hoan-thien">Hoàn thiện phần đã có</a></li>
@@ -54,33 +54,31 @@
 
   <section id="tom-tat">
     <h2>1. Tóm tắt</h2>
-    <p>17 tính năng mới, chia 5 nhóm. Nhóm 1 đến 4 xếp theo thứ tự ưu tiên từ cao xuống thấp; nhóm 5 lấy từ tài liệu luồng nghiệp vụ của BA, chờ thầy xếp ưu tiên. Nhóm Thông minh có thêm 3 ý dùng AI, chỉ làm nếu nhà trường cho phép, không tính vào 17 ý. Mỗi ý đã đối chiếu code trang quản trị, máy chủ và trang thi: hệ thống chưa có. Những việc đã có một phần trong code nhưng người dùng chưa dùng được thì tách sang mục 7, không tính là tính năng mới. Mỗi ý gồm: vấn đề hiện nay, cách làm, phác thảo màn hình (chỉ để hình dung), lợi ích. Ví dụ lấy môn Cơ sở dữ liệu.</p>
+    <p>16 tính năng mới, chia 4 nhóm. Nhóm 1 đến 3 xếp theo thứ tự ưu tiên từ cao xuống thấp; nhóm 4 lấy từ tài liệu luồng nghiệp vụ của BA và Quy định 3410, chờ thầy xếp ưu tiên. Không thêm dạng câu hỏi mới (bỏ nhóm "Câu hỏi đa dạng hơn" của bản trước). Nhóm Thông minh có thêm 3 ý dùng AI, chỉ làm nếu nhà trường cho phép, không tính vào 16 ý. Mỗi ý đã đối chiếu code trang quản trị, máy chủ và trang thi: hệ thống chưa có. Những việc đã có một phần trong code nhưng người dùng chưa dùng được thì tách sang mục 7, không tính là tính năng mới. Việc máy chủ đã làm xong và việc còn lại cho FE xem mục 2. Mỗi ý gồm: vấn đề hiện nay, cách làm, phác thảo màn hình (chỉ để hình dung), lợi ích. Ví dụ lấy môn Cơ sở dữ liệu.</p>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Đề xuất</th><th>Lợi ích</th></tr></thead>
       <tbody>
-        <tr><th colspan="3">1. Chuẩn đầu ra (đề xuất; BA đã chốt mỗi câu tối đa một CLO)</th></tr>
-        <tr><td><span class="ma">CĐR-1</span></td><td><a href="#cdr-1">Gắn chuẩn đầu ra cho câu hỏi</a></td><td>Cả kho câu có chuẩn đầu ra trong vài phút; thấy ngay chuẩn đầu ra nào thiếu câu.</td></tr>
+        <tr><th colspan="3">1. Chuẩn đầu ra (theo Quy định 3410: mỗi câu bắt buộc gắn CLO và mức Bloom)</th></tr>
+        <tr><td><span class="ma">CĐR-1</span></td><td><a href="#cdr-1">Gắn chuẩn đầu ra và mức Bloom cho câu hỏi</a></td><td>Cả kho câu có chuẩn đầu ra trong vài phút; thấy ngay chuẩn đầu ra nào thiếu câu so với số tối thiểu của quy định.</td></tr>
         <tr><td><span class="ma">CĐR-2</span></td><td><a href="#cdr-2">Ma trận theo chuẩn đầu ra: bốc câu theo chuẩn đầu ra, kiểm tra tỉ lệ</a></td><td>Mỗi mã đề đúng tỉ lệ đề cương, không phụ thuộc may rủi khi bốc; có bảng làm minh chứng khi kiểm định.</td></tr>
         <tr><td><span class="ma">CĐR-3</span></td><td><a href="#cdr-3">Điểm theo chuẩn đầu ra cho bài thi trực tuyến</a></td><td>Học phần thi trực tuyến tự có tỉ lệ đạt chuẩn đầu ra, không ai phải nhập tay.</td></tr>
+        <tr><td><span class="ma">CĐR-4</span></td><td><a href="#cdr-4">Xuất biểu mẫu BM.01, BM.04, BM.05 từ hệ thống</a></td><td>Bộ môn có sẵn hồ sơ kiểm định hằng năm, không phải chép tay từ hệ thống ra Word.</td></tr>
         <tr><th colspan="3">2. Tăng trải nghiệm người dùng</th></tr>
         <tr><td><span class="ma">UX-1</span></td><td><a href="#ux-1">Làm lại giao diện menu Ngân hàng câu hỏi</a></td><td>Các màn gọn, dễ nhìn, cùng một kiểu; đọc câu và đáp án ngay trên danh sách.</td></tr>
         <tr><td><span class="ma">UX-2</span></td><td><a href="#ux-2">Nhập file có câu lỗi vẫn lưu được câu đúng</a></td><td>File 100 câu có 1 câu lỗi vẫn lưu được 99 câu, sửa câu lỗi ngay trên màn hình.</td></tr>
         <tr><td><span class="ma">UX-3</span></td><td><a href="#ux-3">Đổi câu trong mã đề</a></td><td>Không ưng một câu thì đổi riêng câu đó, khỏi sinh lại cả bộ đề.</td></tr>
         <tr><td><span class="ma">UX-4</span></td><td><a href="#ux-4">Báo khi có câu chờ duyệt hoặc bị trả về</a></td><td>Việc duyệt không bị tồn; giảng viên biết ngay câu cần sửa.</td></tr>
-        <tr><th colspan="3">3. Câu hỏi đa dạng hơn</th></tr>
-        <tr><td><span class="ma">DC-1</span></td><td><a href="#dc-1">Đúng/Sai nhiều ý</a></td><td>Dạng đề THPT mới, sinh viên đã quen; chấm đúng từng ý.</td></tr>
-        <tr><td><span class="ma">DC-2</span></td><td><a href="#dc-2">Điền khuyết</a></td><td>Sinh viên phải nhớ, không dựa vào phương án để đoán; máy tự chấm.</td></tr>
-        <tr><td><span class="ma">DC-3</span></td><td><a href="#dc-3">Sắp xếp thứ tự</a></td><td>Đo hiểu quy trình; soạn và làm bài tự nhiên, không phải mượn câu nối.</td></tr>
-        <tr><td><span class="ma">DC-4</span></td><td><a href="#dc-4">Câu nghe giới hạn số lần nghe</a></td><td>Học phần tiếng Anh thi phần nghe trực tuyến đúng quy chế.</td></tr>
-        <tr><th colspan="3">4. Tính năng thông minh</th></tr>
+        <tr><th colspan="3">3. Tính năng thông minh</th></tr>
         <tr><td><span class="ma">TM-1</span></td><td><a href="#tm-1">Bốc câu theo tỉ lệ làm đúng</a></td><td>Câu quá dễ, quá khó tự động ít vào đề (ý của thầy).</td></tr>
         <tr><td><span class="ma">TM-2</span></td><td><a href="#tm-2">Không lặp câu đã ra</a></td><td>Ca sau không gặp lại câu ca trước; đợt sau ít gặp lại câu đợt trước.</td></tr>
         <tr><td><span class="ma">TM-3</span></td><td><a href="#tm-3">Dự báo điểm của đề trước khi thi</a></td><td>Biết trước đề khó hay dễ, chỉnh ngay trước khi thi.</td></tr>
-        <tr><td><span class="ma">TM-4</span></td><td><a href="#tm-4">Báo câu cần xem lại sau mỗi đợt thi</a></td><td>Biết câu nào gán sai độ khó, câu nào nghi bị lộ, phương án nào vô dụng.</td></tr>
-        <tr><th colspan="3">5. Kiểm soát câu hỏi và bộ đề (theo tài liệu của BA, chờ thầy xếp ưu tiên)</th></tr>
-        <tr><td><span class="ma">KS-1</span></td><td><a href="#ks-1">Sửa câu đã duyệt bằng phiên bản mới</a></td><td>Sửa câu không làm hụt kho; xem lại được các bản trước.</td></tr>
+        <tr><td><span class="ma">TM-4</span></td><td><a href="#tm-4">Phân tích câu hỏi sau kỳ thi (biểu mẫu BM.04)</a></td><td>Tự tính độ khó, độ phân biệt từng câu; gắn cờ câu phải sửa hoặc loại theo ngưỡng của quy định.</td></tr>
+        <tr><th colspan="3">4. Kiểm soát câu hỏi và bộ đề (theo tài liệu của BA và Quy định 3410, chờ thầy xếp ưu tiên)</th></tr>
+        <tr><td><span class="ma">KS-1</span></td><td><a href="#ks-1">Phiên bản câu hỏi và trạng thái sử dụng</a></td><td>Đổi nội dung câu đã duyệt bằng phiên bản mới, giữ lịch sử thay đổi như quy định bắt buộc.</td></tr>
         <tr><td><span class="ma">KS-2</span></td><td><a href="#ks-2">Duyệt bộ đề</a></td><td>Đề và đáp án có người thứ hai soát trước khi thi.</td></tr>
-        <tr><th colspan="3">Chỉ làm nếu nhà trường cho phép dùng AI (không tính vào 17 ý)</th></tr>
+        <tr><td><span class="ma">KS-3</span></td><td><a href="#ks-3">Thẩm định hai vòng, phê duyệt nhiều cấp</a></td><td>Câu đi đúng quy trình bộ môn thẩm định, trưởng bộ môn và khoa duyệt, Trung tâm kích hoạt.</td></tr>
+        <tr><td><span class="ma">KS-4</span></td><td><a href="#ks-4">Rubric chấm cho câu tự luận</a></td><td>Câu tự luận có tiêu chí và thang 5 mức như quy định, chấm thống nhất giữa các giảng viên.</td></tr>
+        <tr><th colspan="3">Chỉ làm nếu nhà trường cho phép dùng AI (không tính vào 16 ý)</th></tr>
         <tr><td><span class="ma">TM-5</span></td><td><a href="#tm-5">AI soạn câu nháp từ bài giảng</a></td><td>Tải slide lên là có câu nháp; giảng viên sửa thay vì viết từ đầu.</td></tr>
         <tr><td><span class="ma">TM-6</span></td><td><a href="#tm-6">AI nhân bản câu hỏi</a></td><td>Một câu bài tập thành nhiều câu khác số liệu; sinh viên không học thuộc được.</td></tr>
         <tr><td><span class="ma">TM-7</span></td><td><a href="#tm-7">AI gợi ý chuẩn đầu ra cho câu hỏi</a></td><td>Gắn CLO cho từng câu mà không phải đọc lại cả kho.</td></tr>
@@ -92,9 +90,28 @@
     <div class="chu-y"><b>Nguyên tắc chung.</b> Tính năng mới bật/tắt được, mặc định tắt cho tới khi nghiệm thu, nên luồng đang chạy không đổi. Hệ thống chỉ gợi ý; người có thẩm quyền quyết định. Mọi tính năng theo phân quyền ngân hàng hiện có.</div>
   </section>
 
+  <section id="tien-do">
+    <h2>2. Đã làm ở máy chủ (16/11/2026), việc còn lại cho FE</h2>
+    <p>Phần máy chủ dưới đây đã làm, có kiểm thử, đang chạy trên bản demo (nhánh <code>feat/ulsa-on-dinh</code>). Giao diện do bên FE làm: cột cuối là việc FE cần làm để người dùng dùng được.</p>
+    <div class="bang"><table>
+      <thead><tr><th>Việc</th><th>Máy chủ đã làm</th><th>FE cần làm</th></tr></thead>
+      <tbody>
+        <tr><td>Trắc nghiệm nhiều đáp án (<a href="#ht-1">HT-1</a>)</td><td>Nhập Word: câu có nhiều hàng Đ là câu nhiều đáp án. Mẫu Excel ma trận có cột Nhiều đáp án. Bộ đề trộn phương án, in đề ghi "Chọn tất cả đáp án đúng", in đáp án đủ các phương án đúng. Chấm, trang thi đã có từ trước.</td><td>Form soạn câu và form ma trận thêm lựa chọn "Chọn nhiều đáp án" (loại câu 1).</td></tr>
+        <tr><td>Ẩn câu hỏi nối theo cài đặt</td><td>Cài đặt <code>choPhepCauHoiNoi</code>, mặc định tắt: mẫu Excel ma trận ẩn cột Câu nối; nhập Word, nhập Excel, tạo trên form không nhận câu nối. Câu nối đã có vẫn thi, chấm bình thường.</td><td>Ẩn lựa chọn Câu nối ở form soạn câu và form ma trận khi cài đặt tắt; thêm ô bật/tắt ở trang Cài đặt.</td></tr>
+        <tr><td>Mã câu hỏi tự sinh</td><td>Mã dạng <code>&lt;mã học phần&gt;-0001</code>, mỗi học phần một dãy số; gán khi tạo trên form, nhập Word. Câu cũ chưa có mã được gán khi máy chủ khởi động.</td><td>Không cần (cột Mã câu hỏi đã có).</td></tr>
+        <tr><td>Câu đã duyệt chỉ bật/tắt kích hoạt</td><td>Câu đã duyệt (đã kích hoạt) không sửa được nội dung, không chuyển về trạng thái khác; chỉ bật hoặc tắt kích hoạt. Đúng quy định "câu đã phát hành không sửa trực tiếp".</td><td>Ẩn nút sửa, nút "chuyển về chờ duyệt" với câu đã duyệt.</td></tr>
+        <tr><td>Nhập phân quyền từ Excel</td><td><code>GET /phan-quyen/mau-excel/:maMonHoc</code>: mẫu điền sẵn phân quyền hiện có (mỗi dòng một cán bộ, mỗi cột một quyền, đánh x). <code>POST /phan-quyen/import/:maMonHoc</code>: đọc, tra cán bộ theo mã, báo lỗi từng dòng; thêm <code>luu=true</code> thì lưu (thay toàn bộ phân quyền của học phần).</td><td>Tab Phân quyền thêm nút Tải mẫu, Nhập Excel (xem trước lỗi rồi lưu).</td></tr>
+        <tr><td>Thống kê độ khó của ngân hàng</td><td><code>thong-ke-all</code> trả thêm <code>soCauDe</code>, <code>soCauTrungBinh</code>, <code>soCauKho</code>, <code>soCauRatKho</code>.</td><td>Thêm 4 thẻ số câu theo độ khó cạnh 4 thẻ trạng thái.</td></tr>
+        <tr><td>Thống kê khối kiến thức</td><td><code>khoi-kien-thuc/thong-ke/:maMonHoc</code> (đã có số câu theo độ khó của từng khối) trả thêm <code>tongSoCau</code>, <code>soCauDangDung</code>, <code>soCauChoDuyet</code>, <code>theoDang</code>.</td><td>Màn Khối kiến thức thêm cột số câu (tổng, đang dùng, theo độ khó, theo dạng).</td></tr>
+        <tr><td>Mẫu Excel ma trận</td><td>Ô bắt buộc (tên ma trận, số phút, dùng tài liệu, tài liệu khi chọn Có) chữ đỏ, ô trống tô đỏ; nhập file báo thiếu.</td><td>Không cần.</td></tr>
+        <tr><td>Giao diện menu (<a href="#ux-1">UX-1</a>)</td><td>Không làm ở máy chủ.</td><td>Bên FE phụ trách.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
   <section id="chuan-dau-ra">
-    <h2>2. Chuẩn đầu ra</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> 1</span><span><b>Màn hình:</b> Khối kiến thức, Ngân hàng câu hỏi, Tổng quan, Ma trận đề; chấm thi trực tuyến</span><span><b>Tình trạng:</b> đề xuất; BA đã chốt mỗi câu tối đa một CLO, các ý khác chờ khảo sát</span></div>
+    <h2>3. Chuẩn đầu ra</h2>
+    <div class="meta"><span><b>Ưu tiên:</b> 1</span><span><b>Màn hình:</b> Khối kiến thức, Ngân hàng câu hỏi, Tổng quan, Ma trận đề; chấm thi trực tuyến</span><span><b>Tình trạng:</b> đề xuất; quy tắc theo Quy định 3410/QĐ-HV</span></div>
     <p><b>Chuẩn đầu ra là gì.</b> Mỗi học phần có vài chuẩn đầu ra (viết tắt CLO) ghi trong đề cương: những việc sinh viên phải làm được sau khi học, và mỗi việc chiếm bao nhiêu phần trăm điểm. Ví dụ môn Cơ sở dữ liệu:</p>
     <div class="bang"><table>
       <thead><tr><th>Mã</th><th>Sinh viên phải làm được</th><th>Tỉ lệ</th></tr></thead>
@@ -104,17 +121,19 @@
       </tbody>
     </table></div>
     <p><b>Hệ thống đã có:</b> danh sách CLO của từng học phần thi, kèm tỉ lệ ảnh hưởng (%); thi viết chấm điểm theo từng CLO; màn Thống kê báo cáo &gt; Kết quả học phần có "Thống kê tỉ lệ đạt CLO của sinh viên".</p>
-    <p><b>Quy tắc (BA chốt):</b> mỗi câu hỏi gắn tối đa một CLO, hoặc không gắn CLO.</p>
-    <p><b>Còn thiếu:</b> câu hỏi trong ngân hàng không ghi là đo CLO nào. Vì vậy không ai biết một đề có dành đúng 40% điểm cho CLO1, 60% cho CLO2 như đề cương không, và bài thi trực tuyến không cho ra điểm theo CLO.</p>
+    <p><b>Quy tắc (Quy định 3410/QĐ-HV, biểu mẫu BM.01):</b> mỗi câu hỏi phải gắn ít nhất một CLO và một mức Bloom. Mức Bloom là mức tư duy câu hỏi đòi hỏi: Nhớ, Hiểu, Vận dụng, Phân tích, Đánh giá, Sáng tạo (ví dụ "SQL viết tắt của gì" là Nhớ; "Viết câu SELECT lấy sinh viên điểm trên 8" là Vận dụng). Kết hợp với khảo sát của BA (tối đa một CLO), đề xuất mỗi câu gắn đúng một CLO. Bản 1.1 cho phép "Không gắn CLO" theo tài liệu BA; nay bỏ vì trái quy định.</p>
+    <p><b>Chuẩn đầu ra chương trình (PLO):</b> mỗi CLO góp vào một số PLO của ngành; phiếu thẩm định câu hỏi (BM.02) có mục "phù hợp với PLO". Hệ thống lấy liên kết CLO–PLO từ đề cương (QLĐT), không cần nhập ở ngân hàng.</p>
+    <p><b>Còn thiếu:</b> câu hỏi trong ngân hàng không ghi là đo CLO nào, ở mức Bloom nào. Vì vậy không ai biết một đề có dành đúng 40% điểm cho CLO1, 60% cho CLO2 như đề cương không, và bài thi trực tuyến không cho ra điểm theo CLO.</p>
 
     <div class="khoi" id="cdr-1">
-      <div class="khoi-dau"><span class="ma">CĐR-1</span><h3>Gắn chuẩn đầu ra cho câu hỏi</h3></div>
+      <div class="khoi-dau"><span class="ma">CĐR-1</span><h3>Gắn chuẩn đầu ra và mức Bloom cho câu hỏi</h3></div>
       <p><b>Vấn đề.</b> Câu hỏi chỉ có chương và độ khó, không có chỗ ghi CLO. Kho một môn có vài trăm câu; bắt ghi tay từng câu thì không ai làm.</p>
       <p><b>Cách làm:</b></p>
       <ol>
-        <li><b>Gắn theo chương, một lần cho cả chương.</b> Màn Khối kiến thức thêm cột "Chuẩn đầu ra"; trưởng bộ môn chọn CLO cho mỗi chương. Mọi câu trong chương, cả câu đã có lẫn câu thêm sau, được tính là đo CLO đó. Chương không chọn CLO thì câu trong chương là câu không gắn CLO.</li>
-        <li><b>Câu khác chương thì đổi riêng.</b> Form soạn câu có ô "Chuẩn đầu ra", điền sẵn theo chương, chọn một CLO hoặc "Không gắn". Ví dụ Chương 2 "Thiết kế CSDL" là CLO1, nhưng câu "Viết lệnh CREATE TABLE cho lược đồ trên" kiểm tra viết SQL nên đổi sang CLO2. Câu không đo CLO nào của đề cương thì chọn "Không gắn". File Word có thể ghi CLO cho từng câu; không ghi thì lấy theo chương.</li>
-        <li><b>Lọc và đếm theo CLO.</b> Danh sách câu lọc được theo CLO, kể cả lọc câu không gắn CLO; Tổng quan đếm câu theo CLO và độ khó, có dòng riêng cho câu không gắn, ô thiếu câu được đánh dấu.</li>
+        <li><b>Gắn theo chương, một lần cho cả chương.</b> Màn Khối kiến thức thêm cột "Chuẩn đầu ra"; trưởng bộ môn chọn CLO cho mỗi chương. Mọi câu trong chương, cả câu đã có lẫn câu thêm sau, được tính là đo CLO đó. Chương chưa chọn CLO thì câu trong chương bị đánh dấu thiếu CLO, chưa gửi duyệt được.</li>
+        <li><b>Câu khác chương thì đổi riêng.</b> Form soạn câu có ô "Chuẩn đầu ra", điền sẵn theo chương, chọn một CLO. Ví dụ Chương 2 "Thiết kế CSDL" là CLO1, nhưng câu "Viết lệnh CREATE TABLE cho lược đồ trên" kiểm tra viết SQL nên đổi sang CLO2. File Word có thể ghi CLO cho từng câu; không ghi thì lấy theo chương.</li>
+        <li><b>Mức Bloom.</b> Form soạn câu và file Word có ô mức Bloom, bắt buộc như quy định; lọc, đếm theo mức Bloom.</li>
+        <li><b>Lọc và đếm theo CLO.</b> Danh sách câu lọc được theo CLO; Tổng quan đếm câu theo CLO và độ khó. Ô dưới số câu tối thiểu của quy định được đánh dấu thiếu: trắc nghiệm 20 câu mỗi CLO mỗi chương, tự luận 5 câu (Điều 9).</li>
       </ol>
       <div class="minh-hoa">
         <span class="nhan-mh">Phác thảo: màn Khối kiến thức có thêm cột "Chuẩn đầu ra"</span>
@@ -132,7 +151,6 @@
           <tbody>
             <tr><td>CLO1</td><td>40</td><td>30</td><td>20</td><td>5</td></tr>
             <tr><td>CLO2</td><td>50</td><td>27</td><td><b>3 (thiếu)</b></td><td><b>0 (thiếu)</b></td></tr>
-            <tr><td>Không gắn CLO</td><td>6</td><td>2</td><td>0</td><td>0</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -144,8 +162,8 @@
       <p><b>Vấn đề.</b> Tỉ lệ của mỗi CLO đã có trong hệ thống (ví dụ CLO2 60%), nhưng mỗi dòng ma trận chỉ gồm chương, độ khó, dạng câu, số câu, và máy chủ bốc câu theo đúng ba điều kiện đó. Một chương có thể phục vụ nhiều CLO (và CĐR-1 cho đổi CLO từng câu), nên bốc theo chương thì mỗi mã đề có thể lệch tỉ lệ CLO tùy may rủi; người ra đề cũng không biết đề đang dành bao nhiêu điểm cho CLO2.</p>
       <p><b>Cách làm:</b></p>
       <ol>
-        <li><b>Bốc theo CLO:</b> mỗi dòng ma trận chọn thêm CLO (bên cạnh chương, độ khó); máy chủ chỉ bốc câu thuộc CLO đó. Mỗi mã đề vì vậy có đúng số câu của từng CLO như ma trận. Chọn "Không gắn CLO" thì dòng đó chỉ bốc câu chưa gắn CLO. Học phần chưa dùng CLO thì để trống cột này, ma trận chạy như hiện nay.</li>
-        <li><b>Kiểm tra tỉ lệ:</b> màn lập ma trận có bảng tự tính mỗi CLO chiếm bao nhiêu điểm so với tỉ lệ đề cương, cập nhật mỗi khi đổi số câu; lệch thì báo trước khi lưu. Điểm của câu không gắn CLO hiện thành dòng riêng, không cộng vào CLO nào.</li>
+        <li><b>Bốc theo CLO:</b> mỗi dòng ma trận chọn thêm CLO (bên cạnh chương, độ khó); máy chủ chỉ bốc câu thuộc CLO đó. Mỗi mã đề vì vậy có đúng số câu của từng CLO như ma trận. Dòng ma trận có thêm mức Bloom như mẫu BM.05 của quy định. Học phần chưa dùng CLO thì để trống cột này, ma trận chạy như hiện nay.</li>
+        <li><b>Kiểm tra tỉ lệ:</b> màn lập ma trận có bảng tự tính mỗi CLO chiếm bao nhiêu điểm so với tỉ lệ đề cương, cập nhật mỗi khi đổi số câu; lệch thì báo trước khi lưu. Bảng có thêm phân bố mức Bloom của đề.</li>
       </ol>
       <div class="minh-hoa">
         <span class="nhan-mh">Phác thảo: dòng ma trận có thêm cột CLO, và bảng kiểm tra</span>
@@ -155,7 +173,6 @@
             <tr><td>Chương 2. Thiết kế CSDL</td><td>CLO1</td><td>Trung bình</td><td>8</td></tr>
             <tr><td>Chương 2. Thiết kế CSDL</td><td>CLO2</td><td>Khó</td><td>2</td></tr>
             <tr><td>Chương 3. Truy vấn SQL</td><td>CLO2</td><td>Khó</td><td>6</td></tr>
-            <tr><td>Chương 1. Tổng quan về CSDL</td><td>Không gắn CLO</td><td>Dễ</td><td>2</td></tr>
           </tbody>
         </table></div>
         <div class="bang"><table>
@@ -163,7 +180,6 @@
           <tbody>
             <tr><td>CLO1</td><td>40%</td><td>4,0 điểm (40%)</td><td>Đạt</td></tr>
             <tr><td>CLO2</td><td>60%</td><td>5,5 điểm (55%)</td><td><b>Thiếu 0,5 điểm: thêm câu CLO2</b></td></tr>
-            <tr><td>Không gắn CLO</td><td>–</td><td>0,5 điểm (5%)</td><td>Không tính vào CLO nào</td></tr>
           </tbody>
         </table></div>
       </div>
@@ -173,7 +189,7 @@
     <div class="khoi" id="cdr-3">
       <div class="khoi-dau"><span class="ma">CĐR-3</span><h3>Điểm theo chuẩn đầu ra cho bài thi trực tuyến</h3></div>
       <p><b>Vấn đề.</b> Màn "Thống kê tỉ lệ đạt CLO" chỉ có số liệu thi viết, do cán bộ chấm nhập điểm từng CLO. Bài thi trực tuyến chỉ lưu một điểm tổng, nên học phần thi trực tuyến không có tỉ lệ đạt CLO.</p>
-      <p><b>Cách làm:</b> khi chấm bài thi trực tuyến, hệ thống cộng điểm các câu theo CLO của từng câu (đã gắn ở CĐR-1), ra điểm từng CLO của mỗi sinh viên, lưu giống điểm CLO của thi viết. Câu không gắn CLO vẫn tính vào điểm bài, không cộng vào CLO nào.</p>
+      <p><b>Cách làm:</b> khi chấm bài thi trực tuyến, hệ thống cộng điểm các câu theo CLO của từng câu (đã gắn ở CĐR-1), ra điểm từng CLO của mỗi sinh viên, lưu giống điểm CLO của thi viết.</p>
       <div class="minh-hoa">
         <span class="nhan-mh">Phác thảo: kết quả một sinh viên sau khi chấm</span>
         <div class="bang"><table>
@@ -186,16 +202,25 @@
       <p class="loi-ich"><b>Lợi ích:</b> ngay sau khi chấm, màn thống kê tỉ lệ đạt CLO đang có hiện được số liệu của học phần thi trực tuyến. Không nhập tay, không phải làm báo cáo mới. Cần điểm thi trực tuyến chạy đúng trước (xem Ghi chú cho Dev).</p>
     </div>
 
-    <div class="muc"><h4>Cần BA khảo sát</h4><ul>
-      <li>Có cần ghi thêm mức nhận thức (nhớ, hiểu, vận dụng, phân tích…) cho câu hỏi không.</li>
-      <li>Báo cáo kiểm định cần thêm số liệu gì ngoài tỉ lệ đạt CLO.</li>
-      <li>CLO của học phần có đổi giữa các khóa không; câu đã gắn CLO cũ xử lý thế nào.</li>
+    <div class="khoi" id="cdr-4">
+      <div class="khoi-dau"><span class="ma">CĐR-4</span><h3>Xuất biểu mẫu BM.01, BM.04, BM.05 từ hệ thống</h3></div>
+      <p><b>Vấn đề.</b> Quy định 3410 bắt bộ môn nộp hồ sơ ngân hàng câu hỏi theo biểu mẫu khi kiểm định hằng năm: BM.01 (danh sách câu hỏi theo CLO, mức Bloom, độ khó, điểm, đáp án, phiên bản, trạng thái, người soạn), BM.04 (phân tích câu hỏi sau kỳ thi), BM.05 (ma trận đánh giá CLO – Bloom – hình thức). Dữ liệu đã nằm trong hệ thống nhưng phải chép tay ra Word.</p>
+      <p><b>Cách làm:</b> màn Ngân hàng câu hỏi có nút "Xuất BM.01"; màn Ma trận đề có nút "Xuất BM.05"; kết quả phân tích sau kỳ thi (TM-4) xuất BM.04. File Excel đúng cột của biểu mẫu, bộ môn chỉ việc ký.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> hồ sơ kiểm định có ngay, khớp với dữ liệu thật trong hệ thống.</p>
+    </div>
+
+    <div class="muc"><h4>Cần thầy, BA chốt</h4><ul>
+      <li>Một câu có được gắn nhiều CLO không: quy định ghi "ít nhất 1"; đề xuất đúng 1.</li>
+      <li>Độ khó: quy định dùng 3 mức (Dễ, Trung bình, Khó), hệ thống có 4 mức (thêm Rất khó): giữ hay gộp.</li>
+      <li>Ngưỡng độ phân biệt: Điều 8 ghi 0,20, Điều 9 ghi 0,3 cho trắc nghiệm; lấy số nào.</li>
+      <li>CLO của học phần đổi giữa các khóa thì câu đã gắn CLO cũ xử lý thế nào (quy định: ma trận cập nhật ít nhất mỗi năm hoặc khi CLO đổi).</li>
+      <li>Quy định còn yêu cầu ngân hàng cho vấn đáp, thực hành, tiểu luận, thuyết trình; hệ thống chỉ có trắc nghiệm, tự luận. Chưa đưa vào tài liệu này.</li>
     </ul></div>
   </section>
 
   <section id="trai-nghiem">
-    <h2>3. Tăng trải nghiệm người dùng</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> cả 5 màn trong menu</span><span><b>Tình trạng:</b> đề xuất, BA xác nhận với 2–3 giảng viên soạn đề</span></div>
+    <h2>4. Tăng trải nghiệm người dùng</h2>
+    <div class="meta"><span><b>Ưu tiên:</b> 2</span><span><b>Màn hình:</b> cả 5 màn trong menu</span><span><b>Tình trạng:</b> giao diện do bên FE phụ trách; BA xác nhận với 2–3 giảng viên soạn đề</span></div>
     <p><b>Hệ thống đã có, không đề xuất lại:</b> bộ đề bật/tắt từng câu, sinh lại cả bộ đề, xem từng mã đề, chỉnh bản in; nút Kiểm tra xem toàn bộ câu của học phần kèm đáp án; nút Xem trước khi sửa câu; duyệt, gửi duyệt hàng loạt; lọc theo khối, độ khó, dạng, tìm theo nội dung câu; tải file mẫu nhập, màn kết quả nhập chia Hợp lệ, Thất bại, Trùng.</p>
 
     <div class="khoi" id="ux-1">
@@ -277,78 +302,9 @@
     </div>
   </section>
 
-  <section id="dang-cau">
-    <h2>4. Câu hỏi đa dạng hơn</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> 3</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Ma trận đề, Bộ đề; trang thi</span><span><b>Tình trạng:</b> BA chốt danh sách và thứ tự</span></div>
-    <p><b>Hệ thống đã có:</b> giảng viên soạn được 4 dạng: trắc nghiệm một đáp án, tự luận, câu nối (ghép cặp 1–1), câu nhóm; câu đính kèm được hình, âm thanh, video; có công thức toán (trình soạn có nút công thức, nhập Word giữ được công thức). <b>Câu chọn tranh</b> (phương án là hình) đã làm được: chèn hình vào từng phương án khi soạn trên web hoặc trong file Word; đã thử trên demo ngày 12/11/2026, hình hiển thị đủ và câu được chấm đúng. <b>Câu Đúng/Sai một ý</b> làm được bằng trắc nghiệm hai phương án "Đúng", "Sai".</p>
-    <p>Đề xuất 5 dạng: 4 dạng mới dưới đây, và trắc nghiệm nhiều đáp án đã có một phần trong code cần làm nốt (xem HT-1). Không đề xuất: đáp án số (đã bỏ theo buổi họp 12/11), chỉ vị trí trên hình (giá trị thấp, không nhập được từ Word), ghi âm và nộp file (cần chấm tay, thi trực tuyến chưa có chấm tay).</p>
-
-    <div class="khoi" id="dc-1">
-      <div class="khoi-dau"><span class="ma">DC-1</span><h3>Đúng/Sai nhiều ý</h3></div>
-      <div class="minh-hoa">
-        <span class="nhan-mh">Sinh viên thấy khi thi</span>
-        <p>Cho lược đồ SINHVIEN(MaSV, HoTen, MaLop), LOP(MaLop, TenLop).</p>
-        <div class="bang"><table>
-          <tbody>
-            <tr><td>a) MaSV là khóa chính của SINHVIEN</td><td>○ Đúng ○ Sai</td></tr>
-            <tr><td>b) MaLop trong SINHVIEN là khóa ngoại</td><td>○ Đúng ○ Sai</td></tr>
-            <tr><td>c) Một lớp chỉ có một sinh viên</td><td>○ Đúng ○ Sai</td></tr>
-            <tr><td>d) Xóa một LOP luôn xóa được dù còn sinh viên</td><td>○ Đúng ○ Sai</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      <p><b>Hiện nay:</b> chưa làm được (dạng một ý thì làm được bằng trắc nghiệm hai phương án). <b>Khác trắc nghiệm nhiều đáp án (HT-1):</b> ở đây sinh viên phải chọn Đúng hoặc Sai cho từng ý và được điểm theo số ý đúng; nhiều đáp án chỉ tích các ý đúng, đúng hết mới có điểm.</p>
-      <p><b>Cách làm:</b> làm trên nền câu nối: mỗi ý là một nội dung, hai nhóm là Đúng và Sai, nhiều ý chọn được cùng một nhóm; có form soạn và giao diện riêng (hai nút Đúng/Sai cạnh mỗi ý). Chấm theo số ý đúng, ví dụ đúng 1 ý 10%, 2 ý 25%, 3 ý 50%, 4 ý 100% điểm câu (giống đề thi tốt nghiệp THPT mới).</p>
-      <p class="loi-ich"><b>Lợi ích:</b> dạng sinh viên đã quen từ THPT; chấm đúng từng phần nên phân loại sinh viên tốt hơn câu một đáp án. Rẻ vì dùng lại câu nối.</p>
-    </div>
-
-    <div class="khoi" id="dc-2">
-      <div class="khoi-dau"><span class="ma">DC-2</span><h3>Điền khuyết</h3></div>
-      <div class="minh-hoa">
-        <span class="nhan-mh">Sinh viên thấy khi thi</span>
-        <p>Câu lệnh [__________] dùng để thêm dữ liệu, câu lệnh [__________] dùng để xóa dữ liệu.</p>
-      </div>
-      <p><b>Hiện nay:</b> máy chủ không chấm và trang quản trị không soạn được dạng này; trang thi chỉ có một khung ô trống chưa dùng tới.</p>
-      <p><b>Cách làm:</b> giảng viên ghi các đáp án chấp nhận trong ngoặc nhọn, cách nhau bằng dấu chấm phẩy, theo đúng cú pháp của iTest, ví dụ <code>{INSERT; INSERT INTO}</code>, nên file soạn cho iTest nhập thẳng được. Chấm theo từng ô; không phân biệt hoa thường, bỏ khoảng trắng thừa. Câu trả lời ngắn (gõ một từ, một cụm từ) là điền khuyết có một ô, không cần dạng riêng.</p>
-      <p class="loi-ich"><b>Lợi ích:</b> sinh viên phải nhớ, không dựa vào phương án để đoán. Hợp với ngoại ngữ, lập trình, thuật ngữ chuyên ngành.</p>
-    </div>
-
-    <div class="khoi" id="dc-3">
-      <div class="khoi-dau"><span class="ma">DC-3</span><h3>Sắp xếp thứ tự</h3></div>
-      <div class="minh-hoa">
-        <span class="nhan-mh">Sinh viên thấy khi thi</span>
-        <p>Kéo thả các mệnh đề theo đúng thứ tự viết trong câu lệnh SELECT:</p>
-        <p>[ WHERE ] [ ORDER BY ] [ FROM ] [ GROUP BY ] → đáp án: FROM, WHERE, GROUP BY, ORDER BY</p>
-      </div>
-      <p><b>Hiện nay:</b> chỉ làm tạm được bằng câu nối: người soạn kẻ bảng câu nối, tạo các mục 1, 2, 3, 4 rồi ghi mỗi bước thuộc mục nào; khi thi, sinh viên chọn số thứ tự cho từng bước trong danh sách thả xuống, không thấy cả chuỗi đang xếp. BA đề xuất dạng riêng ngày 11/11.</p>
-      <p><b>Cách làm:</b> người soạn chỉ gõ các bước theo đúng thứ tự (trên web hoặc trong file Word); hệ thống tự xáo khi sinh đề; sinh viên kéo thả cả chuỗi. Chấm theo số bước đúng vị trí, hoặc đúng toàn bộ mới có điểm (BA chốt).</p>
-      <p class="loi-ich"><b>Lợi ích:</b> đo được hiểu quy trình, thứ tự các bước, điều câu trắc nghiệm khó hỏi trực tiếp; soạn và làm bài tự nhiên, không phải mượn câu nối.</p>
-    </div>
-
-    <div class="khoi" id="dc-4">
-      <div class="khoi-dau"><span class="ma">DC-4</span><h3>Câu nghe giới hạn số lần nghe</h3></div>
-      <div class="minh-hoa">
-        <span class="nhan-mh">Sinh viên thấy khi thi</span>
-        <p>🔊 Đoạn hội thoại 1 <b>[ ▶ Nghe ]</b> <span class="muted">(còn 1/2 lượt nghe, không tua được)</span><br>What time does the meeting start? ○ 8:00 ○ 8:30 ○ 9:00 ○ 9:30</p>
-      </div>
-      <p><b>Hiện nay:</b> câu đính kèm được âm thanh, nhưng trang thi dùng trình phát mặc định: nghe bao nhiêu lần cũng được, tua tự do. Học phần tiếng Anh muốn thi phần nghe theo quy chế (chỉ nghe 1–2 lần) thì không làm được.</p>
-      <p><b>Cách làm:</b> người soạn đặt số lần nghe cho câu (mặc định không giới hạn, như hiện nay). Khi thi, nút nghe đếm lượt, không cho tua; số lượt đã nghe được lưu lại, tải lại trang không được nghe lại từ đầu. Câu hỏi đi kèm là trắc nghiệm, điền khuyết… và chấm như dạng đó.</p>
-      <p class="loi-ich"><b>Lợi ích:</b> các học phần tiếng Anh thi phần nghe trực tuyến đúng quy chế, công bằng giữa các sinh viên.</p>
-    </div>
-
-    <div class="muc"><h4>Mỗi dạng cần chốt đủ 6 điểm trước khi làm</h4><ol>
-      <li><b>Soạn trên web:</b> form của dạng đó.</li>
-      <li><b>File Word:</b> theo định dạng iTest nếu iTest có dạng đó, để file cũ dùng được; file không có hàng mới thì đọc như hiện nay.</li>
-      <li><b>Hiển thị khi thi trực tuyến.</b></li>
-      <li><b>Quy tắc chấm:</b> đúng đủ hay đúng từng phần, đúng một phần được bao nhiêu phần trăm.</li>
-      <li><b>Ma trận, bộ đề:</b> mỗi dạng là một dạng riêng trong ma trận, rút theo chương và độ khó; điểm câu theo Mức điểm như hiện nay.</li>
-      <li><b>Xuất Word:</b> cách in đề và đáp án.</li>
-    </ol></div>
-  </section>
-
   <section id="thong-minh">
     <h2>5. Tính năng thông minh</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> 4</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Bộ đề</span><span><b>Tình trạng:</b> đề xuất</span></div>
+    <div class="meta"><span><b>Ưu tiên:</b> 3</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Bộ đề</span><span><b>Tình trạng:</b> đề xuất</span></div>
     <p><b>Hệ thống đã có:</b> bốc câu ngẫu nhiên đều theo ma trận; trộn câu và phương án; chặn câu giống hệt từng ký tự; máy chủ đã lưu từng câu trả lời của bài thi trực tuyến (chọn phương án nào, đúng hay sai) nhưng chưa tổng hợp. Chưa có thống kê theo câu, gợi ý hay AI.</p>
     <p><b>Hướng của nhóm này</b> theo gợi ý của thầy ở buổi họp 12/11: ngân hàng câu hỏi tự tốt lên sau mỗi đợt thi. Bốn ý đầu không cần AI, làm được ngay: hệ thống học từ kết quả thi để bốc câu hợp lý hơn (TM-1), không lặp câu (TM-2), báo trước đề khó hay dễ (TM-3), chỉ ra câu cần sửa (TM-4). TM-1, TM-2 quyết định câu nào được bốc; nút Đổi câu (UX-3) chọn câu theo đúng cách này nên không vênh. TM-1, TM-3, TM-4 cần điểm thi trực tuyến chạy đúng (xem Ghi chú cho Dev). Ba ý sau (TM-5 đến TM-7) dùng AI, chỉ làm nếu nhà trường cho phép.</p>
 
@@ -399,7 +355,8 @@
     </div>
 
     <div class="khoi" id="tm-4">
-      <div class="khoi-dau"><span class="ma">TM-4</span><h3>Báo câu cần xem lại sau mỗi đợt thi</h3></div>
+      <div class="khoi-dau"><span class="ma">TM-4</span><h3>Phân tích câu hỏi sau kỳ thi (biểu mẫu BM.04)</h3></div>
+      <p><b>Quy định 3410 (Điều 8) bắt buộc:</b> sau mỗi kỳ thi phân tích từng câu: tỉ lệ trả lời đúng (p), độ phân biệt (r: câu phân biệt được sinh viên giỏi với yếu), hiệu lực phương án nhiễu. Câu có p &gt; 0,85, p &lt; 0,25 hoặc r &lt; 0,20 phải sửa hoặc loại. Hệ thống tính tự động cho bài thi trực tuyến, gắn cờ theo đúng ngưỡng này và xuất biểu mẫu BM.04.</p>
       <p><b>Vấn đề.</b> Độ khó do người soạn tự gán và không ai kiểm lại. Câu bị lộ (sinh viên chép lại, truyền qua các khóa) thì không ai biết, vẫn tiếp tục được bốc vào đề. Phương án sai mà không ai chọn thì câu dễ hơn người soạn nghĩ.</p>
       <p><b>Cách làm:</b> sau mỗi đợt thi, hệ thống tự lập danh sách câu cần xem cho người phụ trách học phần; mỗi dòng một gợi ý và một nút. TM-1 đã tự giảm bốc câu quá dễ, quá khó; danh sách này để người phụ trách sửa tận gốc.</p>
       <div class="minh-hoa">
@@ -460,11 +417,12 @@
 
   <section id="kiem-soat">
     <h2>6. Kiểm soát câu hỏi và bộ đề</h2>
-    <div class="meta"><span><b>Ưu tiên:</b> chờ thầy xếp</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Bộ đề; chọn bộ đề khi tạo ca thi</span><span><b>Tình trạng:</b> đề xuất theo tài liệu luồng nghiệp vụ của BA</span></div>
+    <div class="meta"><span><b>Ưu tiên:</b> chờ thầy xếp</span><span><b>Màn hình:</b> Ngân hàng câu hỏi, Bộ đề; chọn bộ đề khi tạo ca thi</span><span><b>Tình trạng:</b> đề xuất theo tài liệu của BA và Quy định 3410; KS-1, KS-3 là yêu cầu bắt buộc của quy định</span></div>
     <p><b>Hệ thống đã có, không đề xuất lại:</b> duyệt câu hỏi, duyệt ma trận; câu chưa duyệt không vào đề (duyệt thì câu mới được kích hoạt); câu tự luận bắt buộc có gợi ý đáp án (form bắt buộc nhập, file Word nhận câu tự luận nhờ chính hàng đáp án); mỗi đề lưu bản sao câu hỏi, nên sửa câu trong ngân hàng không làm đổi đề đã sinh.</p>
 
     <div class="khoi" id="ks-1">
-      <div class="khoi-dau"><span class="ma">KS-1</span><h3>Sửa câu đã duyệt bằng phiên bản mới</h3></div>
+      <div class="khoi-dau"><span class="ma">KS-1</span><h3>Phiên bản câu hỏi và trạng thái sử dụng</h3></div>
+      <p><b>Đã làm (16/11):</b> câu đã duyệt không sửa được nội dung, chỉ bật hoặc tắt kích hoạt. Muốn đổi nội dung hiện phải soạn câu mới, câu mới không nối với câu cũ. Quy định 3410 (Điều 12) bắt buộc: mỗi lần đổi nội dung tạo phiên bản mới, lưu toàn bộ lịch sử, bản cũ bị loại chỉ được xem; trạng thái câu gồm Đang sử dụng, Tạm dừng sử dụng, Loại bỏ, Chờ chỉnh sửa, Mới phê duyệt; dữ liệu lưu tối thiểu 5 năm (câu Loại bỏ không xóa).</p>
       <p><b>Vấn đề.</b> Câu đã duyệt không sửa được. Muốn sửa phải chuyển câu về Chờ duyệt; từ lúc đó câu bị tắt, rút khỏi kho cho tới khi duyệt lại. Ví dụ ngay trước đợt ra đề phát hiện một câu Khó Chương 3 có phương án sai: chuyển về Chờ duyệt thì kho hụt một câu Khó Chương 3, nếu kho vừa đủ thì sinh đề báo thiếu câu cho tới khi trưởng bộ môn duyệt lại. Nội dung mới ghi đè lên bản cũ, không xem lại được câu trước khi sửa trông thế nào.</p>
       <p><b>Cách làm:</b></p>
       <ol>
@@ -506,6 +464,20 @@
       <p class="loi-ich"><b>Lợi ích:</b> đề và đáp án có người thứ hai soát trước khi thi; đủ chuỗi duyệt câu, ma trận, bộ đề như quy trình BA mô tả.</p>
     </div>
 
+    <div class="khoi" id="ks-3">
+      <div class="khoi-dau"><span class="ma">KS-3</span><h3>Thẩm định hai vòng, phê duyệt nhiều cấp</h3></div>
+      <p><b>Vấn đề.</b> Hệ thống có một bước duyệt câu (một quyền "Duyệt ngân hàng câu hỏi" theo học phần). Quy định 3410 (Điều 8, 11) yêu cầu: bộ môn thẩm định vòng 1 theo phiếu BM.02 (phù hợp PLO, CLO, mức Bloom, độ khó, ngôn ngữ, đáp án; kết luận Đạt, Sửa, Loại); trưởng bộ môn phê duyệt; khoa phê duyệt cuối; Trung tâm Khảo thí thẩm định vòng 2 (chuẩn hóa, phiên bản, bảo mật), mã hóa và kích hoạt.</p>
+      <p><b>Cách làm:</b> câu đi qua các bước Chờ thẩm định → Thẩm định vòng 1 (phiếu BM.02 điền ngay trên hệ thống) → Trưởng bộ môn duyệt → Khoa duyệt → Trung tâm thẩm định vòng 2, kích hoạt. Mỗi bước một quyền trong tab Phân quyền; người thẩm định ghi vào câu (thông tin bắt buộc của quy định). Bật/tắt theo cài đặt: tắt thì dùng một bước duyệt như hiện nay.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> đúng quy trình của quy định; phiếu thẩm định có sẵn làm hồ sơ.</p>
+    </div>
+
+    <div class="khoi" id="ks-4">
+      <div class="khoi-dau"><span class="ma">KS-4</span><h3>Rubric chấm cho câu tự luận</h3></div>
+      <p><b>Vấn đề.</b> Câu tự luận chỉ có ô "Gợi ý đáp án". Quy định 3410 (Điều 9, BM.03) yêu cầu mỗi câu tự luận có đáp án chi tiết, thang điểm và rubric 5 mức (Không đạt, Đạt cơ bản, Đạt, Tốt, Xuất sắc) theo các tiêu chí, có trọng số.</p>
+      <p><b>Cách làm:</b> form soạn câu tự luận thêm bảng rubric: mỗi dòng một tiêu chí, 5 ô mô tả theo mức, cột trọng số; có sẵn mẫu rubric tự luận của quy định để chọn rồi sửa. In đáp án kèm rubric cho cán bộ chấm.</p>
+      <p class="loi-ich"><b>Lợi ích:</b> các giảng viên chấm cùng một thang; đủ thông tin bắt buộc khi thẩm định.</p>
+    </div>
+
     <div class="muc"><h4>Cần BA làm rõ</h4><ul>
       <li>Ai duyệt bộ đề: trưởng bộ môn hay chuyên viên khảo thí.</li>
       <li>Nhánh "trộn từ đề có sẵn" trong tài liệu của BA: đề có sẵn là mã đề đã sinh trong hệ thống, hay đề giảng viên tự soạn (file Word). Hiện "Sinh từ đề gốc" do hệ thống tự bốc một đề gốc theo ma trận rồi trộn thứ tự câu và phương án; chưa chọn được đề có sẵn làm gốc.</li>
@@ -518,6 +490,7 @@
 
     <div class="khoi" id="ht-1">
       <div class="khoi-dau"><span class="ma">HT-1</span><h3>Mở dạng trắc nghiệm nhiều đáp án</h3></div>
+      <p><b>Tình trạng (16/11):</b> máy chủ đã làm xong (nhập Word nhiều hàng Đ, cột Nhiều đáp án trong mẫu Excel ma trận, trộn phương án, in đề và đáp án). Còn form soạn câu và form ma trận trên trang quản trị (FE).</p>
       <div class="minh-hoa">
         <span class="nhan-mh">Sinh viên thấy khi thi</span>
         <p>Những câu lệnh nào thuộc nhóm DDL? <i>(chọn tất cả đáp án đúng)</i><br>☐ CREATE &nbsp; ☐ INSERT &nbsp; ☐ ALTER &nbsp; ☐ UPDATE</p>
@@ -544,20 +517,20 @@
     <h2>8. Ghi chú cho Dev</h2>
     <ul>
       <li><b>Làm trước, gộp bản sửa điểm thi trực tuyến:</b> trang thi trên GitLab (nhánh <code>feature/thi-online</code>, bản đang chạy trên demo) gửi mã ca thi vào chỗ mã đề khi nộp bài, nên máy chủ không tìm được đề và điểm ra 0 (đã thử trên demo ngày 12/11/2026: đúng 1/1 câu, điểm 0). Bản sửa đã có (trang thi trong <code>all_thi_online</code>, và đợt sửa bảo mật đang chờ gộp gửi đúng <code>maDe</code>); cần đưa lên nhánh chạy thật và kiểm lại luồng chấm. CĐR-3, TM-1, TM-3 và TM-4 đọc kết quả chấm nên phụ thuộc việc này.</li>
-      <li><b>Mã dạng câu:</b> đang khai báo lặp ở ba mô-đun máy chủ, trang quản trị, trang thi, và đánh số lệch nhau. Làm trước nhóm 3 và HT-1: một danh mục dùng chung, máy chủ là nguồn duy nhất; mỗi dạng gom đủ đọc Word, kiểm tra, chấm, xuất Word.</li>
+      <li><b>Mã dạng câu:</b> đang khai báo lặp ở ba mô-đun máy chủ, trang quản trị, trang thi, và đánh số lệch nhau. Khi sửa: một danh mục dùng chung, máy chủ là nguồn duy nhất; mỗi dạng gom đủ đọc Word, kiểm tra, chấm, xuất Word.</li>
       <li><b>Chọn câu:</b> logic rút câu đang lặp giữa ma trận (kiểm tra khi lưu) và bộ đề (sinh đề, sinh lại). Gom về một hàm dùng chung cho sinh đề, sinh lại và đổi câu (UX-3). Hàm nhận thêm: ràng buộc CLO (CĐR-2), trọng số theo tỉ lệ làm đúng (TM-1), câu cần tránh lấy từ các bộ đề được chọn và lịch sử đã ra (TM-2), câu trùng gần giống (TM-2). Số câu còn trong kho theo từng ô dùng chung cho báo số câu tối đa và báo số ca không lặp (TM-2).</li>
       <li><b>Thống kê theo câu:</b> bảng tổng hợp theo câu (lượt làm, tỉ lệ đúng, số lượt chọn từng phương án, đợt và ca đã ra), tính bằng tác vụ nền sau mỗi ca thi; dùng chung cho TM-1, TM-2 (đợt đã ra), TM-3 và TM-4.</li>
-      <li><b>Dữ liệu:</b> thêm CLO cho khối kiến thức và câu hỏi (câu không ghi riêng thì lấy theo chương); mã nhóm câu trùng gần giống (TM-2); số lần sử dụng của câu (trường <code>soLuongSuDung</code> đã khai báo nhưng chưa được cập nhật ở đâu, dùng lại cho TM-2); người soạn câu (hiện câu chỉ lưu người duyệt; UX-4 cần biết người soạn để báo câu bị trả về). Điểm CLO của thi trực tuyến (CĐR-3) lưu cùng dạng với điểm thi viết để thống kê tỉ lệ đạt CLO đang có đọc được.</li>
+      <li><b>Dữ liệu:</b> thêm CLO cho khối kiến thức và câu hỏi (câu không ghi riêng thì lấy theo chương), mức Bloom cho câu hỏi, người thẩm định, rubric cho câu tự luận (KS-4); mã nhóm câu trùng gần giống (TM-2); số lần sử dụng của câu (trường <code>soLuongSuDung</code> đã khai báo nhưng chưa được cập nhật ở đâu, dùng lại cho TM-2); người soạn câu (hiện câu chỉ lưu người duyệt; UX-4 cần biết người soạn để báo câu bị trả về). Điểm CLO của thi trực tuyến (CĐR-3) lưu cùng dạng với điểm thi viết để thống kê tỉ lệ đạt CLO đang có đọc được.</li>
       <li><b>So khớp gần đúng (TM-2):</b> mã chống trùng hiện tại (<code>maHash</code>) ghép nguyên HTML câu hỏi và phương án, nên khác một ký tự là khác mã. Bản không cần AI: bỏ thẻ HTML, đưa về chữ thường, gộp khoảng trắng, bỏ dấu câu, rồi so độ trùng từ với các câu cùng học phần; ngưỡng chốt bằng cách thử trên kho thật.</li>
       <li><b>AI (TM-5 đến TM-7, chỉ khi được phép):</b> một dịch vụ dùng chung ở máy chủ, bật/tắt bằng cấu hình, mặc định tắt; lưu nhật ký đã gửi nội dung gì; kết quả AI luôn là nháp hoặc gợi ý, gắn nhãn AI, không tự ghi vào kho.</li>
-      <li><b>Tận dụng:</b> trang thi có sẵn một khung ô trống chưa dùng, dùng được cho DC-2; dịch vụ thông báo đang dùng để nhắc lịch thi, dùng lại cho UX-4.</li>
+      <li><b>Tận dụng:</b> trang thi có sẵn một khung ô trống chưa dùng, dịch vụ thông báo đang dùng để nhắc lịch thi, dùng lại cho UX-4.</li>
       <li><b>Phiên bản câu (KS-1):</b> bản mới là một câu riêng trỏ về câu gốc (mã câu gốc, số phiên bản); mỗi lúc chỉ một bản đang dùng, bản nháp không vào kho. Đề đã sinh không cần đổi vì đã lưu bản sao câu. Thống kê theo câu của nhóm Thông minh gom theo câu gốc.</li>
       <li><b>Duyệt bộ đề (KS-2):</b> thêm trạng thái và người duyệt cho bộ đề giống ma trận; ô chọn bộ đề khi tạo ca thi và nút in đề chỉ nhận bộ đề Duyệt khi bật cài đặt.</li>
       <li><b>Nhập Word:</b> khi đổi file mẫu (HT-2), giữ đúng cách máy chủ đang đọc (nhãn hàng, chương in đậm, <code>##</code>, <code>/#</code>) để file cũ vẫn nhập được.</li>
     </ul>
   </section>
 
-  <footer>KT-DT-01 · Phiên bản 1.1 · 16/11/2026 · Phần "Hệ thống đã có" đối chiếu từ mã nguồn bản đang chạy. Phác thảo màn hình chỉ để hình dung. Khi đưa vào phát triển, mỗi đề xuất được tách thành user story chi tiết, kèm thiết kế màn hình.</footer>
+  <footer>KT-DT-01 · Phiên bản 1.2 · 16/11/2026 · Phần "Hệ thống đã có" đối chiếu từ mã nguồn bản đang chạy. Phác thảo màn hình chỉ để hình dung. Khi đưa vào phát triển, mỗi đề xuất được tách thành user story chi tiết, kèm thiết kế màn hình.</footer>
 </main>
 </body>
 </html>

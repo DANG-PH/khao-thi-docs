@@ -35,8 +35,8 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.4</dd>
-      <dt>Ngày</dt><dd>13/11/2026</dd>
+      <dt>Phiên bản</dt><dd>2.5</dd>
+      <dt>Ngày</dt><dd>16/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
       <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
       <dt>Căn cứ</dt><dd>Đối chiếu code của nhánh trên; số liệu "trước đây" lấy từ commit ngay trước đợt tối ưu</dd>
@@ -231,6 +231,17 @@ flowchart TD
         <dt>Chỗ sửa</dt><dd>thi_online <code>LamBai/index.tsx</code> (<code>daTraLoi</code>)</dd>
       </dl>
     </div>
+
+    <div class="sua">
+      <h4><span class="ma">L10</span> SEB trên macOS không vào thi được (16/11/2026)</h4>
+      <dl>
+        <dt>Hiện tượng</dt><dd>Mở bằng Safe Exam Browser trên máy Mac thì mọi thao tác thi báo "Bài thi yêu cầu làm bằng Safe Exam Browser"; trên Windows vẫn bình thường.</dd>
+        <dt>Nguyên nhân</dt><dd>Máy chủ nhận ra SEB nhờ mã băm SEB tự gắn vào header của mỗi yêu cầu. SEB cho macOS 3.x dùng trình duyệt nhân WebKit mới, không gắn được header này vào các yêu cầu trang thi gọi máy chủ, nên máy chủ coi như không phải SEB. Nhà phát triển SEB ghi rõ giới hạn này và khuyên dùng JavaScript API của SEB.</dd>
+        <dt>Cách sửa</dt><dd>Trang thi đọc mã qua JavaScript API của SEB (<code>SafeExamBrowser.security.configKey</code>) rồi gửi kèm, cùng địa chỉ trang. Máy chủ tự tính lại mã từ chính file cấu hình <code>.seb</code> đã sinh, chỉ nhận địa chỉ thuộc trang thi. SEB Windows vẫn kiểm như cũ. File <code>.seb</code> thêm khóa ưu tiên trình duyệt mới để API này luôn có.</dd>
+        <dt>Hai màn hình</dt><dd>Không cho thi: SEB mặc định chỉ cho một màn hình đang hoạt động; cắm thêm màn hình (kể cả chế độ nhân bản) thì SEB báo lỗi và không vào bài, phải rút màn hình phụ. Đây là chống gian lận có chủ đích của SEB; trường muốn khác thì đổi trong file cấu hình.</dd>
+        <dt>Chỗ sửa</dt><dd>khao-thi <code>safe-exam-browser.service.ts</code>; thi_online <code>utils/seb.ts</code></dd>
+      </dl>
+    </div>
   </section>
 
   <section id="trang-thi">
@@ -370,12 +381,14 @@ flowchart TD
     <h3>6.1 Người dùng làm gì</h3>
     <ol>
       <li>Trang quản trị › Ngân hàng câu hỏi › <b>Ma trận đề</b>, chọn học phần. Hai nút hiện cạnh ô chọn học phần, chỉ với người có quyền tạo ma trận.</li>
-      <li>Bấm <b>Tải mẫu Excel</b>. File có sẵn tên các chương của học phần, mỗi chương một dòng; các cột là đủ 4 dạng câu của ngân hàng: Trắc nghiệm, Câu nối, Tự luận (mỗi dạng theo 4 độ khó) và Câu nhóm.</li>
+      <li>Bấm <b>Tải mẫu Excel</b>. File có sẵn tên các chương của học phần, mỗi chương một dòng; các cột là các dạng câu của ngân hàng: Trắc nghiệm, Nhiều đáp án (thêm ngày 16/11), Câu nối, Tự luận (mỗi dạng theo 4 độ khó) và Câu nhóm.</li>
       <li>Gõ số câu vào ô, điền tên ma trận và thời gian làm bài ở phần đầu file. Đầu file có dòng cách dùng và dòng lưu ý quy tắc (Trắc nghiệm là câu một đáp án, kể cả câu có hình, âm thanh, chọn tranh; một chương được lấy nhiều dạng ở cùng độ khó). Ngay dưới bảng nhập có bảng "Số câu đang có trong kho" cùng cột, nhìn thẳng xuống là biết kho còn bao nhiêu. Rê chuột vào ô cũng thấy "Kho đang có N câu"; Excel không cho gõ quá số đó hoặc gõ chữ; ô tô xám là kho đang trống; cột Tổng tự cộng.</li>
       <li>Bấm <b>Nhập từ Excel</b>, chọn file. Có lỗi thì hiện danh sách lỗi theo ô (ví dụ "Chương 2, Trắc nghiệm – Khó: kho chỉ có 3 câu"). Không lỗi thì form "Thêm ma trận" mở sẵn với đủ các dòng; người dùng xem lại rồi bấm Lưu như cũ.</li>
     </ol>
     <h3>6.2 Máy chủ kiểm tra gì khi đọc file</h3>
     <ul>
+      <li>Ô bắt buộc (tên ma trận, số phút thi, được dùng tài liệu, tài liệu được dùng khi chọn Có) có nhãn chữ đỏ, ô còn trống tô đỏ; thiếu thì báo lỗi.</li>
+      <li>Câu hỏi nối: ẩn theo cài đặt "Cho phép câu hỏi nối" (mặc định tắt). Tắt thì cột Câu nối ẩn và file có số câu nối bị báo lỗi. File mẫu cũ (chưa có cột Nhiều đáp án) vẫn đọc được.</li>
       <li>Đúng file mẫu của hệ thống (có đánh dấu ở ô A1) và đúng học phần.</li>
       <li>Mỗi ô là số nguyên không âm, không vượt số câu đã duyệt trong kho. Kiểm tra lại ở máy chủ vì dán dữ liệu vào Excel có thể vượt qua ràng buộc của ô.</li>
       <li>Chương trong file vẫn còn trong hệ thống.</li>
@@ -440,6 +453,8 @@ flowchart TD
       <tr><td class="nowrap">nginx</td><td>Bật nén, cache file tĩnh trang thi, websocket (Upgrade, timeout dài), <code>worker_connections</code> đủ cho 2000+ kết nối.</td></tr>
       <tr><td class="nowrap">Biến môi trường</td><td><code>TRUST_PROXY_HOPS</code> bằng đúng số proxy đứng trước API, để lấy đúng IP máy thí sinh khi lọc dải IP phòng thi. Trang thi: <code>APP_CONFIG_IP_KHAO_THI</code>, <code>APP_CONFIG_SOCKET_URL</code> trỏ máy chủ ULSA.</td></tr>
       <tr><td class="nowrap">SEB</td><td>Cho phép tên miền trang thi, API, Keycloak, máy chủ file; đặt <code>SEB_ALLOWED_ORIGINS</code>; thử Config Key khi đi qua gateway của ULSA.</td></tr>
+      <tr><td class="nowrap">Câu hỏi nối</td><td>Từ 16/11 câu hỏi nối ẩn theo cài đặt "Cho phép câu hỏi nối" (<code>choPhepCauHoiNoi</code>), mặc định tắt. ULSA có dùng câu nối thì bật trước khi soạn đề, lập ma trận. Câu nối đã có vẫn thi, chấm bình thường dù cài đặt tắt.</td></tr>
+      <tr><td class="nowrap">Câu đã duyệt</td><td>Từ 16/11 câu đã duyệt chỉ bật hoặc tắt kích hoạt, không sửa nội dung, không chuyển về chờ duyệt. Báo trước giảng viên ULSA.</td></tr>
       <tr><td class="nowrap">Cài đặt thi</td><td>SEB, dải IP, mã hóa đề mặc định tắt; bật ở Quản trị › Cài đặt › Thi online sau khi thử. Phiên đăng nhập Keycloak dài hơn giờ thi.</td></tr>
       <tr><td class="nowrap">Triển khai</td><td>Máy chủ, trang thi, trang quản trị lên cùng lúc (trang thi mới gửi cờ <code>noiTiep</code> mà máy chủ cũ không hiểu). Không khởi động lại API, web khi đang có ca thi.</td></tr>
       <tr><td class="nowrap">Trước ngày thi</td><td>Chạy trọn một ca với SEB trên máy phòng thi ULSA; thử tải trên máy chủ ULSA; hỏi ULSA đề có câu tự luận không (mục 10).</td></tr>
@@ -520,12 +535,18 @@ flowchart TD
       <tr><td></td><td><code>2c78426a</code></td><td>Kết thúc ca không hỏng khi thiếu hồ sơ; xem bài thí sinh chưa nộp báo rõ</td></tr>
       <tr><td></td><td><code>e584347c</code></td><td>Bỏ ghi log ở mỗi yêu cầu thi; giữ bộ khóa SSO trong RAM</td></tr>
       <tr><td></td><td><code>151058b6</code></td><td>Chặn thí sinh không đủ điều kiện, hoãn thi khi lấy đề</td></tr>
+      <tr><td></td><td><code>772710e5</code></td><td>Gộp code mới của main (phân công coi, chấm thi theo đơn vị; sinh số báo danh theo ca; sinh phách)</td></tr>
+      <tr><td></td><td><code>e1bcc6f3</code></td><td>SEB trên macOS vào thi được (L10)</td></tr>
+      <tr><td></td><td><code>64cc9080</code></td><td>Trắc nghiệm nhiều đáp án; cài đặt câu hỏi nối; mẫu Excel tô đỏ ô bắt buộc</td></tr>
+      <tr><td></td><td><code>4f54d973</code></td><td>Mã câu hỏi tự sinh; câu đã duyệt chỉ bật/tắt; thống kê theo độ khó</td></tr>
+      <tr><td></td><td><code>c277613a</code></td><td>Nhập phân quyền từ Excel; thống kê khối kiến thức</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
       <tr><td></td><td><code>f6f9e4cd</code></td><td>Hiện câu con của câu nhóm</td></tr>
       <tr><td></td><td><code>b3c4ed45</code></td><td>Bỏ lượt tín hiệu ngay sau khi tự lưu</td></tr>
       <tr><td></td><td><code>e7111db4</code></td><td>Đếm đúng câu đã làm khi vào lại; khôi phục đúng câu nhóm</td></tr>
+      <tr><td></td><td><code>d8111514</code></td><td>SEB trên macOS: gửi mã đọc từ JavaScript API của SEB</td></tr>
       <tr><td class="nowrap">all_thi_online</td><td><code>9a4c83c</code></td><td>2 nút Excel ở trang Ma trận đề</td></tr>
       <tr><td></td><td><code>f386d11</code></td><td>Form ma trận thêm dạng Câu hỏi nối</td></tr>
     </table></div>
