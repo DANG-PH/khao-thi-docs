@@ -35,7 +35,7 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.7</dd>
+      <dt>Phiên bản</dt><dd>2.8</dd>
       <dt>Ngày</dt><dd>17/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
       <dt>Nhánh</dt><dd>Máy chủ <code>khao-thi</code>: <code>develop</code> (khi MR chưa duyệt: <code>merge/ulsa-on-dinh-vao-develop</code>). Trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code>: <code>feat/ulsa-on-dinh</code></dd>
@@ -460,11 +460,11 @@ flowchart TD
       <tr><td class="nowrap">API</td><td>4–6 tiến trình sau nginx cho 2000 thí sinh (đo thực tế ở mục 10), mỗi tiến trình một nhân CPU; chỉ 1 bản <code>SERVER_MASTER=1</code> (bản chạy việc định kỳ); tắt OTEL; đặt <code>TRUST_PROXY_HOPS</code>.</td></tr>
       <tr><td class="nowrap">MongoDB</td><td>Replica set, <code>maxPoolSize=200</code>. Deploy trước ngày thi ít nhất 1 ngày để chỉ mục mới (M8) tạo xong ngoài giờ thi.</td></tr>
       <tr><td class="nowrap">nginx</td><td>Bật nén, cache file tĩnh trang thi, websocket (Upgrade, timeout dài), <code>worker_connections</code> đủ cho 2000+ kết nối.</td></tr>
-      <tr><td class="nowrap">Biến môi trường</td><td><code>TRUST_PROXY_HOPS</code> bằng đúng số proxy đứng trước API, để lấy đúng IP máy thí sinh khi lọc dải IP phòng thi. Trang thi: <code>APP_CONFIG_IP_KHAO_THI</code>, <code>APP_CONFIG_SOCKET_URL</code> trỏ máy chủ ULSA.</td></tr>
+      <tr><td class="nowrap">Biến môi trường</td><td><code>TRUST_PROXY_HOPS</code> bằng đúng số proxy đứng trước API, để lấy đúng IP máy thí sinh khi lọc dải IP phòng thi. Trang thi: <code>APP_CONFIG_IP_KHAO_THI</code>, <code>APP_CONFIG_SOCKET_URL</code> trỏ máy chủ ULSA. Bật mã hóa đề thì đặt <code>THI_MA_HOA_KEY</code> (máy chủ) trùng <code>APP_CONFIG_THI_MA_HOA_KEY</code> (trang thi).</td></tr>
       <tr><td class="nowrap">SEB theo nền tảng</td><td>Máy phòng thi, máy sinh viên cài đúng bản SEB hiện hành (Windows 3.10.3, macOS 3.7.2, iPad 3.7.2; macOS 26.6 trở lên phải 3.7.1+). Thi trên iPad thì đặt mật khẩu thoát SEB. Chỉ một màn hình: rút màn hình phụ trước giờ thi. Thử vào một ca trên mỗi loại máy sẽ dùng.</td></tr>
       <tr><td class="nowrap">SEB</td><td>Cho phép tên miền trang thi, API, Keycloak, máy chủ file; đặt <code>SEB_ALLOWED_ORIGINS</code>; thử Config Key khi đi qua gateway của ULSA.</td></tr>
       <tr><td class="nowrap">Câu hỏi nối</td><td>Từ 16/11 câu hỏi nối ẩn theo cài đặt "Cho phép câu hỏi nối" (<code>choPhepCauHoiNoi</code>), mặc định tắt. ULSA có dùng câu nối thì bật trước khi soạn đề, lập ma trận. Câu nối đã có vẫn thi, chấm bình thường dù cài đặt tắt.</td></tr>
-      <tr><td class="nowrap">Câu đã duyệt</td><td>Từ 16/11 câu đã duyệt chỉ bật hoặc tắt kích hoạt, không sửa nội dung, không chuyển về chờ duyệt. Báo trước giảng viên ULSA.</td></tr>
+      <tr><td class="nowrap">Câu đang kích hoạt</td><td>Từ 16/11 câu đang kích hoạt không sửa được, không chuyển trạng thái được; muốn sửa thì tắt kích hoạt trước, sửa xong bật lại. Báo trước giảng viên ULSA.</td></tr>
       <tr><td class="nowrap">Cài đặt thi</td><td>SEB, dải IP, mã hóa đề mặc định tắt; bật ở Quản trị › Cài đặt › Thi online sau khi thử. Phiên đăng nhập Keycloak dài hơn giờ thi.</td></tr>
       <tr><td class="nowrap">Triển khai</td><td>Máy chủ, trang thi, trang quản trị lên cùng lúc (trang thi mới gửi cờ <code>noiTiep</code> mà máy chủ cũ không hiểu). Không khởi động lại API, web khi đang có ca thi.</td></tr>
       <tr><td class="nowrap">Trước ngày thi</td><td>Chạy trọn một ca với SEB trên máy phòng thi ULSA; thử tải trên máy chủ ULSA; hỏi ULSA đề có câu tự luận không (mục 10).</td></tr>
@@ -532,7 +532,7 @@ flowchart TD
 
   <section id="commit">
     <h2>11. Commit</h2>
-    <p>Commit trên nhánh <code>feat/ulsa-on-dinh</code>. Các commit máy chủ đã đưa sang <code>develop</code> với cùng nội dung, trừ <code>772710e5</code> là bản gộp <code>main</code>.</p>
+    <p>Commit trên nhánh <code>feat/ulsa-on-dinh</code>. Các commit máy chủ đã đưa sang <code>develop</code> với cùng nội dung, trừ <code>772710e5</code> là bản gộp <code>main</code>. Nhánh đưa sang <code>develop</code> có thêm các commit chỉnh cho khớp code <code>develop</code>, kiểm thử, lint và file env mẫu.</p>
     <div class="bang"><table>
       <tr><th>Repo</th><th>Commit</th><th>Nội dung</th></tr>
       <tr><td class="nowrap">khao-thi</td><td><code>73a7935a</code></td><td>Bảo mật thi, Safe Exam Browser</td></tr>
@@ -549,9 +549,13 @@ flowchart TD
       <tr><td></td><td><code>772710e5</code></td><td>Gộp code mới của main (phân công coi, chấm thi theo đơn vị; sinh số báo danh theo ca; sinh phách)</td></tr>
       <tr><td></td><td><code>e1bcc6f3</code></td><td>SEB trên macOS vào thi được (L10)</td></tr>
       <tr><td></td><td><code>64cc9080</code></td><td>Trắc nghiệm nhiều đáp án; cài đặt câu hỏi nối; mẫu Excel tô đỏ ô bắt buộc</td></tr>
-      <tr><td></td><td><code>4f54d973</code></td><td>Mã câu hỏi tự sinh; câu đã duyệt chỉ bật/tắt; thống kê theo độ khó</td></tr>
+      <tr><td></td><td><code>4f54d973</code></td><td>Mã câu hỏi tự sinh; thống kê theo độ khó; khóa sửa câu (quy tắc đổi lại ở <code>768aee09</code>)</td></tr>
       <tr><td></td><td><code>c277613a</code></td><td>Nhập phân quyền từ Excel; thống kê khối kiến thức</td></tr>
       <tr><td></td><td><code>642ecbef</code></td><td>File .seb chỉ dùng khóa có từ lâu (mã khớp mọi nền tảng); log phiên bản SEB</td></tr>
+      <tr><td></td><td><code>768aee09</code></td><td>Bộ đề không bốc trùng câu nối; chỉ khóa sửa câu đang kích hoạt; ghi log khi SEB không gửi mã</td></tr>
+      <tr><td></td><td><code>7316cb30</code></td><td>Ô tìm kiếm có ký tự đặc biệt không còn lỗi 500</td></tr>
+      <tr><td></td><td><code>3d94e30b</code>, <code>851b8364</code></td><td>Nhập phân quyền ngân hàng câu hỏi theo luồng import chung</td></tr>
+      <tr><td></td><td><code>67dcec1b</code></td><td>API thẻ thống kê khối kiến thức</td></tr>
       <tr><td></td><td><code>5837a5ce</code>, trang thi <code>4618cbd0</code></td><td>Ép WebView mới trên macOS (Force Modern); cho phép tải file bài làm; trang thi gọi lại updateKeys bằng hàm có tên, chờ mã hợp lệ, báo lỗi kèm Thử lại</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
@@ -561,8 +565,13 @@ flowchart TD
       <tr><td></td><td><code>e7111db4</code></td><td>Đếm đúng câu đã làm khi vào lại; khôi phục đúng câu nhóm</td></tr>
       <tr><td></td><td><code>d8111514</code></td><td>SEB trên macOS: gửi mã đọc từ JavaScript API của SEB</td></tr>
       <tr><td></td><td><code>4fd2a183</code></td><td>Gửi phiên bản SEB; trong SEB không tính rời tab là vi phạm</td></tr>
+      <tr><td></td><td><code>00694bfb</code>, <code>3da0a400</code></td><td>Chờ SEB cấp mã rồi mới hỏi trạng thái, lấy đề; bấm Vào thi thì hỏi lại trạng thái SEB</td></tr>
+      <tr><td></td><td><code>46ea3ca1</code></td><td>Cột Giờ thi ghi kèm ngày kết thúc khi ca kéo dài sang ngày khác</td></tr>
+      <tr><td></td><td><code>c4ec201d</code></td><td>Thêm khóa mã hóa đề vào file env</td></tr>
       <tr><td class="nowrap">all_thi_online</td><td><code>9a4c83c</code></td><td>2 nút Excel ở trang Ma trận đề</td></tr>
       <tr><td></td><td><code>f386d11</code></td><td>Form ma trận thêm dạng Câu hỏi nối</td></tr>
+      <tr><td></td><td><code>3b8b9ed</code></td><td>Câu nhiều đáp án ở form soạn câu và form ma trận; ẩn câu nối theo cài đặt</td></tr>
+      <tr><td></td><td><code>75f6f4f</code></td><td>Bộ đề không tạo trùng khi bấm lưu nhiều lần; xem đáp án câu nhiều đáp án; chọn bộ đề nhanh hơn; tên học phần khi thêm sinh viên vào ca</td></tr>
     </table></div>
   </section>
 

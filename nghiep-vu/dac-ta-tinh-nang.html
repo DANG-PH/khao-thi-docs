@@ -30,8 +30,8 @@
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-DT-01</dd>
-      <dt>Phiên bản</dt><dd>1.2 (bản đề xuất, chờ thầy và BA duyệt)</dd>
-      <dt>Ngày</dt><dd>16/11/2026</dd>
+      <dt>Phiên bản</dt><dd>1.3 (bản đề xuất, chờ thầy và BA duyệt)</dd>
+      <dt>Ngày</dt><dd>17/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>PO, BA, Tester, Dev</dd>
       <dt>Phạm vi</dt><dd>Menu Ngân hàng câu hỏi: Tổng quan, Khối kiến thức, Ngân hàng câu hỏi, Ma trận đề, Bộ đề, Phân quyền</dd>
       <dt>Căn cứ</dt><dd>Quy định xây dựng, quản lý và sử dụng ngân hàng câu hỏi thi theo chuẩn đầu ra (Quyết định 3410/QĐ-HV ngày 30/12/2025, áp dụng từ học kỳ 2 năm học 2025–2026); yêu cầu ngày 16/11/2026; buổi họp ngày 12/11/2026; phản hồi của BA ngày 11/11/2026; tài liệu mô tả luồng và workflow Ngân hàng câu hỏi của BA (bản đề xuất từ khảo sát, đối chiếu với máy chủ nhánh develop ngày 13/11/2026); đối chiếu mã nguồn: máy chủ nhánh develop (bản lấy về ngày 06/11/2026), trang quản trị và trang thi trong <code>all_thi_online</code> (bản 02/11/2026), trang thi GitLab nhánh <code>feature/thi-online</code>; thử trên bản demo ngày 12/11/2026</dd>
@@ -422,8 +422,8 @@
 
     <div class="khoi" id="ks-1">
       <div class="khoi-dau"><span class="ma">KS-1</span><h3>Phiên bản câu hỏi và trạng thái sử dụng</h3></div>
-      <p><b>Đã làm (16/11):</b> câu đã duyệt không sửa được nội dung, chỉ bật hoặc tắt kích hoạt. Muốn đổi nội dung hiện phải soạn câu mới, câu mới không nối với câu cũ. Quy định 3410 (Điều 12) bắt buộc: mỗi lần đổi nội dung tạo phiên bản mới, lưu toàn bộ lịch sử, bản cũ bị loại chỉ được xem; trạng thái câu gồm Đang sử dụng, Tạm dừng sử dụng, Loại bỏ, Chờ chỉnh sửa, Mới phê duyệt; dữ liệu lưu tối thiểu 5 năm (câu Loại bỏ không xóa).</p>
-      <p><b>Vấn đề.</b> Câu đã duyệt không sửa được. Muốn sửa phải chuyển câu về Chờ duyệt; từ lúc đó câu bị tắt, rút khỏi kho cho tới khi duyệt lại. Ví dụ ngay trước đợt ra đề phát hiện một câu Khó Chương 3 có phương án sai: chuyển về Chờ duyệt thì kho hụt một câu Khó Chương 3, nếu kho vừa đủ thì sinh đề báo thiếu câu cho tới khi trưởng bộ môn duyệt lại. Nội dung mới ghi đè lên bản cũ, không xem lại được câu trước khi sửa trông thế nào.</p>
+      <p><b>Đã làm (16/11):</b> câu đang kích hoạt không sửa được, không chuyển trạng thái được; muốn sửa thì tắt kích hoạt, sửa xong bật lại. Sửa xong vẫn là câu cũ, không lưu lại nội dung trước khi sửa. Quy định 3410 (Điều 12) bắt buộc: mỗi lần đổi nội dung tạo phiên bản mới, lưu toàn bộ lịch sử, bản cũ bị loại chỉ được xem; trạng thái câu gồm Đang sử dụng, Tạm dừng sử dụng, Loại bỏ, Chờ chỉnh sửa, Mới phê duyệt; dữ liệu lưu tối thiểu 5 năm (câu Loại bỏ không xóa).</p>
+      <p><b>Vấn đề.</b> Muốn sửa câu đang dùng phải tắt kích hoạt; từ lúc đó câu rút khỏi kho cho tới khi bật lại. Ví dụ ngay trước đợt ra đề phát hiện một câu Khó Chương 3 có phương án sai: tắt kích hoạt để sửa thì kho hụt một câu Khó Chương 3, nếu kho vừa đủ thì sinh đề báo thiếu câu cho tới khi sửa xong và bật lại. Nội dung mới ghi đè lên bản cũ, không xem lại được câu trước khi sửa trông thế nào.</p>
       <p><b>Cách làm:</b></p>
       <ol>
         <li>Câu đã duyệt có nút "Sửa (tạo phiên bản mới)". Hệ thống tạo bản nháp v2; bản v1 vẫn được dùng bình thường.</li>
