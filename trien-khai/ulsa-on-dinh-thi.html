@@ -35,10 +35,10 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.6</dd>
+      <dt>Phiên bản</dt><dd>2.7</dd>
       <dt>Ngày</dt><dd>17/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
-      <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
+      <dt>Nhánh</dt><dd>Máy chủ <code>khao-thi</code>: <code>develop</code> (khi MR chưa duyệt: <code>merge/ulsa-on-dinh-vao-develop</code>). Trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code>: <code>feat/ulsa-on-dinh</code></dd>
       <dt>Căn cứ</dt><dd>Đối chiếu code của nhánh trên; số liệu "trước đây" lấy từ commit ngay trước đợt tối ưu</dd>
     </dl>
   </div>
@@ -455,8 +455,8 @@ flowchart TD
     <h2>9. Checklist triển khai</h2>
     <div class="bang"><table>
       <tr><th>Hạng mục</th><th>Cần làm</th></tr>
-      <tr><td class="nowrap">Nguồn mã</td><td>Trang thi phải lấy từ nhánh <code>feat/ulsa-on-dinh</code> (bản gốc gửi sai mã đề nên điểm luôn 0, xem L1). Nhánh máy chủ dựng trên <code>main</code>: chạy image từ main hoặc tag thì khớp; chạy <code>develop</code> hoặc <code>product-*</code> thì phải rebase rồi thử lại.</td></tr>
-      <tr><td class="nowrap">Image</td><td>CI chỉ build <code>develop</code>, <code>product-*</code> và tag. Cần MR vào <code>main</code> rồi gắn tag, hoặc đẩy sang nhánh <code>product-ulsa</code>.</td></tr>
+      <tr><td class="nowrap">Nguồn mã</td><td>Trang thi phải lấy từ nhánh <code>feat/ulsa-on-dinh</code> (bản gốc gửi sai mã đề nên điểm luôn 0, xem L1). Máy chủ lấy từ <code>develop</code>: các commit máy chủ ở mục 11 đã đưa sang <code>develop</code> qua MR, giữ nguyên nội dung; khi MR chưa duyệt thì dùng nhánh <code>merge/ulsa-on-dinh-vao-develop</code>. Nhánh <code>feat/ulsa-on-dinh</code> của máy chủ dựng trên <code>main</code>, không phát triển tiếp.</td></tr>
+      <tr><td class="nowrap">Image</td><td>CI chỉ build <code>develop</code>, <code>product-*</code> và tag. MR vào <code>develop</code> được duyệt thì image <code>develop</code> có đủ thay đổi ở mục 11.</td></tr>
       <tr><td class="nowrap">API</td><td>4–6 tiến trình sau nginx cho 2000 thí sinh (đo thực tế ở mục 10), mỗi tiến trình một nhân CPU; chỉ 1 bản <code>SERVER_MASTER=1</code> (bản chạy việc định kỳ); tắt OTEL; đặt <code>TRUST_PROXY_HOPS</code>.</td></tr>
       <tr><td class="nowrap">MongoDB</td><td>Replica set, <code>maxPoolSize=200</code>. Deploy trước ngày thi ít nhất 1 ngày để chỉ mục mới (M8) tạo xong ngoài giờ thi.</td></tr>
       <tr><td class="nowrap">nginx</td><td>Bật nén, cache file tĩnh trang thi, websocket (Upgrade, timeout dài), <code>worker_connections</code> đủ cho 2000+ kết nối.</td></tr>
@@ -490,7 +490,7 @@ flowchart TD
     <h3>Đã kiểm tra</h3>
     <ul>
       <li>Máy chủ build và lint qua; trang thi build qua (Node 22); không còn code debug trong phần thay đổi.</li>
-      <li>Bản demo chạy nhánh này từ 13/11/2026; tester đã thi thử trên đó.</li>
+      <li>Bản demo chạy nhánh này từ 13/11/2026; tester đã thi thử trên đó. Từ 17/11/2026 máy chủ demo chạy <code>develop</code> cùng các commit ở mục 11.</li>
     </ul>
     <h3>Thử 200 thí sinh ảo trên bản demo (13/11/2026)</h3>
     <p>Bản demo là một VPS 4 GB RAM dùng chung với dịch vụ khác, chỉ một bản API; máy tạo tải chạy ngay trên VPS đó nên con số chỉ để soát lỗi và so tương đối, không phải sức chịu thật. Kịch bản: 200 thí sinh vào thi trong 15 giây, làm bài 2 phút (tín hiệu 20 giây, tự lưu 25–35 giây, giám thị xem danh sách), rồi nộp rải trong 30 giây; đề đủ dạng câu hỏi (5 trắc nghiệm có hình, âm thanh, chọn tranh, công thức; 1 nhiều đáp án; 1 tự luận; 1 câu nối; 1 câu nhóm).</p>
@@ -532,6 +532,7 @@ flowchart TD
 
   <section id="commit">
     <h2>11. Commit</h2>
+    <p>Commit trên nhánh <code>feat/ulsa-on-dinh</code>. Các commit máy chủ đã đưa sang <code>develop</code> với cùng nội dung, trừ <code>772710e5</code> là bản gộp <code>main</code>.</p>
     <div class="bang"><table>
       <tr><th>Repo</th><th>Commit</th><th>Nội dung</th></tr>
       <tr><td class="nowrap">khao-thi</td><td><code>73a7935a</code></td><td>Bảo mật thi, Safe Exam Browser</td></tr>
