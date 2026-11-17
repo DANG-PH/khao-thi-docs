@@ -35,8 +35,8 @@ dl.tu dd { margin: 0; }
   <div class="thong-tin">
     <dl>
       <dt>Mã tài liệu</dt><dd>KT-TK-01</dd>
-      <dt>Phiên bản</dt><dd>2.5</dd>
-      <dt>Ngày</dt><dd>16/11/2026</dd>
+      <dt>Phiên bản</dt><dd>2.6</dd>
+      <dt>Ngày</dt><dd>17/11/2026</dd>
       <dt>Đối tượng đọc</dt><dd>Dev, Tester, người mới chưa nắm nghiệp vụ thi trực tuyến</dd>
       <dt>Nhánh</dt><dd><code>feat/ulsa-on-dinh</code> ở 3 repo: máy chủ <code>khao-thi</code>, trang thi <code>thi_online</code>, trang quản trị <code>all_thi_online/khao-thi-vwa</code></dd>
       <dt>Căn cứ</dt><dd>Đối chiếu code của nhánh trên; số liệu "trước đây" lấy từ commit ngay trước đợt tối ưu</dd>
@@ -237,12 +237,12 @@ flowchart TD
       <dl>
         <dt>Hiện tượng</dt><dd>Mở bằng Safe Exam Browser trên máy Mac thì mọi thao tác thi báo "Bài thi yêu cầu làm bằng Safe Exam Browser"; trên Windows vẫn bình thường.</dd>
         <dt>Nguyên nhân</dt><dd>Máy chủ nhận ra SEB nhờ mã băm SEB tự gắn vào header của mỗi yêu cầu. SEB cho macOS 3.x dùng trình duyệt nhân WebKit mới, không gắn được header này vào các yêu cầu trang thi gọi máy chủ, nên máy chủ coi như không phải SEB. Nhà phát triển SEB ghi rõ giới hạn này và khuyên dùng JavaScript API của SEB.</dd>
-        <dt>Cách sửa</dt><dd>Trang thi đọc mã qua JavaScript API của SEB (<code>SafeExamBrowser.security.configKey</code>) rồi gửi kèm, cùng địa chỉ trang. Máy chủ tự tính lại mã từ chính file cấu hình <code>.seb</code> đã sinh, chỉ nhận địa chỉ thuộc trang thi. SEB Windows vẫn kiểm bằng header như cũ. File <code>.seb</code> chỉ dùng các khóa có từ lâu (giống mẫu của plugin SEB cho Moodle), vì SEB bỏ qua khóa mới thêm khi tính mã nếu khóa đó đang ở giá trị mặc định, dễ làm lệch mã giữa các bản. Trong SEB, trang không tính "rời tab" là vi phạm (hệ điều hành đã khóa, trang bị ẩn chỉ do màn hình tắt hay hộp thoại của SEB). Đối chiếu sai thì máy chủ ghi log kèm phiên bản SEB.</dd>
+        <dt>Cách sửa</dt><dd>Trang thi đọc mã qua JavaScript API của SEB (<code>SafeExamBrowser.security.configKey</code>) rồi gửi kèm, cùng địa chỉ trang. Máy chủ tự tính lại mã từ chính file cấu hình <code>.seb</code> đã sinh, chỉ nhận địa chỉ thuộc trang thi. SEB Windows vẫn kiểm bằng header như cũ. File <code>.seb</code> đặt <code>browserWindowWebView = 3</code> (Force Modern): nếu không, vì bật <code>sendBrowserExamKey</code> nên SEB macOS dùng WebView cũ (Classic, đã lỗi thời), gây trang trắng hoặc cảnh báo. Khóa này khác giá trị mặc định nên SEB vẫn tính vào mã, khớp với máy chủ. File cũng bật <code>allowUploads</code>, <code>allowUploadsiOS</code>, <code>allowOpenAndSavePanel</code> để câu tự luận tải file được trong SEB. Trong SEB, trang không tính "rời tab" là vi phạm (hệ điều hành đã khóa, trang bị ẩn chỉ do màn hình tắt hay hộp thoại của SEB). Đối chiếu sai thì máy chủ ghi log kèm phiên bản SEB.</dd>
         <dt>Theo nền tảng</dt><dd>
           <div class="bang"><table>
             <tr><th>Nền tảng</th><th>Bản SEB hiện hành</th><th>Máy chủ nhận ra SEB bằng</th><th>Lưu ý</th></tr>
             <tr><td>Windows</td><td>3.10.3, Windows 10 (1803) trở lên, Windows 11</td><td>Header SEB tự gắn; bản 3.4 trở lên có thêm JavaScript API</td><td>Như trước nay.</td></tr>
-            <tr><td>macOS</td><td>3.7.2, macOS 12 trở lên</td><td>JavaScript API (WebView mới không gửi header); WebView cũ thì header</td><td>macOS 26.6, 27 phải dùng SEB 3.7.1 trở lên, bản cũ hiện màn hình khóa đỏ.</td></tr>
+            <tr><td>macOS</td><td>3.7.2, macOS 12 trở lên</td><td>JavaScript API (file .seb ép WebView mới)</td><td>macOS 26.6, 27 phải dùng SEB 3.7.1 trở lên, bản cũ hiện màn hình khóa đỏ.</td></tr>
             <tr><td>iPadOS, iOS</td><td>3.7.2, iOS 12 trở lên</td><td>JavaScript API</td><td>Dùng Assessment Mode của Apple, bắt buộc có mật khẩu thoát SEB: đặt ở Quản trị › Cài đặt › Thi online trước khi thi trên iPad.</td></tr>
           </table></div>
           Nguồn: trang tải SEB và đặc tả Config Key của nhà phát triển SEB.
@@ -551,6 +551,7 @@ flowchart TD
       <tr><td></td><td><code>4f54d973</code></td><td>Mã câu hỏi tự sinh; câu đã duyệt chỉ bật/tắt; thống kê theo độ khó</td></tr>
       <tr><td></td><td><code>c277613a</code></td><td>Nhập phân quyền từ Excel; thống kê khối kiến thức</td></tr>
       <tr><td></td><td><code>642ecbef</code></td><td>File .seb chỉ dùng khóa có từ lâu (mã khớp mọi nền tảng); log phiên bản SEB</td></tr>
+      <tr><td></td><td><code>5837a5ce</code>, trang thi <code>4618cbd0</code></td><td>Ép WebView mới trên macOS (Force Modern); cho phép tải file bài làm; trang thi gọi lại updateKeys bằng hàm có tên, chờ mã hợp lệ, báo lỗi kèm Thử lại</td></tr>
       <tr><td class="nowrap">thi_online</td><td><code>4a971686</code></td><td>Bảo mật trang làm bài, Safe Exam Browser, gửi đúng mã đề</td></tr>
       <tr><td></td><td><code>9ad264a5</code></td><td>Giảm tải trang làm bài, chặn nộp trùng</td></tr>
       <tr><td></td><td><code>5c697bd9</code></td><td>Không gửi log trong SEB</td></tr>
